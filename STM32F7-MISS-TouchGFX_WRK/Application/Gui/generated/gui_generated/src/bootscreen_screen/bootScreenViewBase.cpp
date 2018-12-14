@@ -25,11 +25,15 @@ bootScreenViewBase::bootScreenViewBase() :
     textArea2.setLinespacing(0);
     textArea2.setTypedText(TypedText(T_SINGLEUSEID2));
 
+    incBtn.setDelay(30);
+    incBtn.setInterval(15);
     incBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID));
     incBtn.setIconXY(0, 0);
     incBtn.setPosition(538, 22, 48, 48);
     incBtn.setAction(flexButtonCallback);
 
+    decBtn.setDelay(30);
+    decBtn.setInterval(15);
     decBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID));
     decBtn.setIconXY(0, 0);
     decBtn.setPosition(538, 120, 48, 48);

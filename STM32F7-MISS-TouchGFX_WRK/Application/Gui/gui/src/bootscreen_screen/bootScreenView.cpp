@@ -16,9 +16,9 @@ void bootScreenView::tearDownScreen()
 }
 
 void bootScreenView::incBrightness() {
-//	presenter->
+	presenter->incBrightness();
 }
 
 void bootScreenView::decBrightness() {
-
+	presenter->decBrightness();
 }

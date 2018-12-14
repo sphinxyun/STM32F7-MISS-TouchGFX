@@ -45,8 +45,8 @@ protected:
     touchgfx::Image image;
     touchgfx::TextArea textArea1;
     touchgfx::TextArea textArea2;
-    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > incBtn;
-    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > decBtn;
+    touchgfx::IconButtonStyle< touchgfx::RepeatButtonTrigger > incBtn;
+    touchgfx::IconButtonStyle< touchgfx::RepeatButtonTrigger > decBtn;
     touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > homeBtn;
 
 private:

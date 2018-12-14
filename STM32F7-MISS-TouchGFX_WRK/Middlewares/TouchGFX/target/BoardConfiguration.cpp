@@ -377,6 +377,19 @@ static uint8_t LCD_Init(void)
     return 0;
 }
 
+extern "C" bool SetBacklight(uint32_t backlight) {
+	uint32_t pulse_width = backlight * 0.01 * 5400;
+
+//	DEBUG_SendTextFrame("SetBacklight: %d%% (%d jedn.)", backlight, pulse_width);
+
+	__HAL_TIM_SET_COMPARE(&htim13, TIM_CHANNEL_1, pulse_width);
+
+	if ((backlight <= 0) || (backlight >= 100))
+		return false;
+
+	return true;
+}
+
 namespace touchgfx
 {
 void hw_init()

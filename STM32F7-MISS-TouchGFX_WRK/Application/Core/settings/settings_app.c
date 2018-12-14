@@ -42,6 +42,7 @@ SETTINGS_ErrorTypdef SETTINGS_CheckHBrightness(void) {
 		return SETTINGS_ERROR_NONE;
 }
 
+extern bool SetBacklight(uint32_t backlight);
 SETTINGS_ErrorTypdef SETTINGS_IncBrightness(void) {
 	bool bOnLimit = false;
 
