@@ -41,6 +41,8 @@
 #include "stm32f7xx_hal_dma2d.h"
 #include "stm32f7xx_hal_ltdc.h"
 
+#include "debug_uart.h"
+
 #include <stdbool.h>
 
 #include <cmsis_os.h>
@@ -132,6 +134,7 @@ void DebugMon_Handler(void)
 void SysTick_Handler(void)
 {
   osSystickHandler();
+  DEBUG_UART_SysTick();
 }
 
 /**

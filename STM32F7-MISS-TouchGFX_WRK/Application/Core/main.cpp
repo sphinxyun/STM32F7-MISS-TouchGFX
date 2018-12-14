@@ -26,6 +26,8 @@ using namespace touchgfx;
 #include "task.h"
 #include "queue.h"
 
+#include "debug.h"
+
 /**
  * Define the FreeRTOS task priorities and stack sizes
  */
@@ -45,6 +47,9 @@ int main(void)
 {
     hw_init();
     touchgfx_init();
+
+    DEBUG_Init();
+    DEBUG_SendTextHeader();
 
     static uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
     CanvasWidgetRenderer::setupBuffer(canvasBuffer, CANVAS_BUFFER_SIZE);

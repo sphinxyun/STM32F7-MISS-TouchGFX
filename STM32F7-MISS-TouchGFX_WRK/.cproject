@@ -72,6 +72,7 @@
 								</option>
 								<option id="com.atollic.truestudio.gcc.symbols.defined.382120242" name="Defined symbols" superClass="com.atollic.truestudio.gcc.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ST"/>
+									<listOptionValue builtIn="false" value="USE_FULL_LL_DRIVER"/>
 									<listOptionValue builtIn="false" value="STM32F746xx"/>
 									<listOptionValue builtIn="false" value="USE_BPP=16"/>
 									<listOptionValue builtIn="false" value="USE_FLOATING_POINT"/>
@@ -126,6 +127,7 @@
 								</option>
 								<option id="com.atollic.truestudio.gpp.symbols.defined.1809958185" name="Defined symbols" superClass="com.atollic.truestudio.gpp.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ST"/>
+									<listOptionValue builtIn="false" value="USE_FULL_LL_DRIVER"/>
 									<listOptionValue builtIn="false" value="STM32F746xx"/>
 									<listOptionValue builtIn="false" value="USE_BPP=16"/>
 									<listOptionValue builtIn="false" value="USE_FLOATING_POINT"/>
