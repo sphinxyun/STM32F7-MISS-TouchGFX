@@ -82,9 +82,129 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon68",
+                "IconReleased": "__designer\\blue_icons_up_arrow_48.png",
+                "IconPressed": "__designer\\blue_icons_up_arrow_48.png"
+              }
+            ],
+            "Name": "incBtn",
+            "X": 538,
+            "Y": 22,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon14",
+                "IconReleased": "__designer\\blue_icons_down_arrow_48.png",
+                "IconPressed": "__designer\\blue_icons_down_arrow_48.png"
+              }
+            ],
+            "Name": "decBtn",
+            "X": 538,
+            "Y": 120,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon28",
+                "IconReleased": "__designer\\blue_icons_home_48.png",
+                "IconPressed": "__designer\\blue_icons_home_48.png"
+              }
+            ],
+            "Name": "homeBtn",
+            "X": 404,
+            "Y": 429,
+            "Width": 50,
+            "Height": 50,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
-        "Interactions": [],
+        "Interactions": [
+          {
+            "InteractionName": "home",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "homeBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "Screen2",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "incBrightness",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "incBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "incBrightness",
+              "Type": "ActionCustom"
+            }
+          },
+          {
+            "InteractionName": "decBrightness",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "decBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "decBrightness",
+              "Type": "ActionCustom"
+            }
+          }
+        ],
         "Name": "bootScreen",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0

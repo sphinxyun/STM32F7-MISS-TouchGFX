@@ -6,7 +6,8 @@
 #include "BitmapDatabase.hpp"
 #include <texts/TextKeysAndLanguages.hpp>
 
-bootScreenViewBase::bootScreenViewBase()
+bootScreenViewBase::bootScreenViewBase() :
+    flexButtonCallback(this, &bootScreenViewBase::flexButtonCallbackHandler)
 {
     box1.setPosition(0, 0, 640, 480);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
@@ -24,13 +25,56 @@ bootScreenViewBase::bootScreenViewBase()
     textArea2.setLinespacing(0);
     textArea2.setTypedText(TypedText(T_SINGLEUSEID2));
 
+    incBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID));
+    incBtn.setIconXY(0, 0);
+    incBtn.setPosition(538, 22, 48, 48);
+    incBtn.setAction(flexButtonCallback);
+
+    decBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID));
+    decBtn.setIconXY(0, 0);
+    decBtn.setPosition(538, 120, 48, 48);
+    decBtn.setAction(flexButtonCallback);
+
+    homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID), Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID));
+    homeBtn.setIconXY(0, 0);
+    homeBtn.setPosition(404, 429, 50, 50);
+    homeBtn.setAction(flexButtonCallback);
+
     add(box1);
     add(image);
     add(textArea1);
     add(textArea2);
+    add(incBtn);
+    add(decBtn);
+    add(homeBtn);
 }
 
 void bootScreenViewBase::setupScreen()
 {
 
+}
+
+void bootScreenViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src)
+{
+    if (&src == &incBtn)
+    {
+        //incBrightness
+        //When incBtn clicked call virtual function
+        //Call incBrightness
+        incBrightness();
+    }
+    else if (&src == &decBtn)
+    {
+        //decBrightness
+        //When decBtn clicked call virtual function
+        //Call decBrightness
+        decBrightness();
+    }
+    else if (&src == &homeBtn)
+    {
+        //home
+        //When homeBtn clicked change screen to Screen2
+        //Go to Screen2 with screen transition towards East
+        application().gotoScreen2ScreenSlideTransitionEast();
+    }
 }

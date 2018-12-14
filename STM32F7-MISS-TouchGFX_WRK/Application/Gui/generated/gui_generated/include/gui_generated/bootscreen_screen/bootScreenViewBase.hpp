@@ -10,6 +10,7 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/containers/buttons/Buttons.hpp>
 
 class bootScreenViewBase : public touchgfx::View<bootScreenPresenter>
 {
@@ -18,6 +19,19 @@ public:
     virtual ~bootScreenViewBase() {}
 
     virtual void setupScreen();
+
+    /*
+     * Custom Action Handlers
+     */
+    virtual void incBrightness()
+    {
+        // Override and implement this function in bootScreenView
+    }
+
+    virtual void decBrightness()
+    {
+        // Override and implement this function in bootScreenView
+    }
 
 protected:
     FrontendApplication& application() {
@@ -31,8 +45,21 @@ protected:
     touchgfx::Image image;
     touchgfx::TextArea textArea1;
     touchgfx::TextArea textArea2;
+    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > incBtn;
+    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > decBtn;
+    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > homeBtn;
 
 private:
+
+    /*
+     * Callback Handler Declarations
+     */
+    void flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src);
+
+    /*
+     * Callback Declarations
+     */
+    touchgfx::Callback<bootScreenViewBase, const touchgfx::AbstractButtonContainer&> flexButtonCallback;
 
 };
 

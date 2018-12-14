@@ -98,7 +98,7 @@ static void StateMachine_Thread(void * argument) {
 			device_state = eLevel;
 			bUpdate = true;
 		} else {
-			DEBUG_SendTextFrame("state change -> %d", xTaskGetTickCount() - xTimeBefore);
+//			DEBUG_SendTextFrame("state change -> %d", xTaskGetTickCount() - xTimeBefore);
 		}
 
 //		osDelay(1000);

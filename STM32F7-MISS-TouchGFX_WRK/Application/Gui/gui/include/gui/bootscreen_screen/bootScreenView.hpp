@@ -11,6 +11,10 @@ public:
     virtual ~bootScreenView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    void incBrightness();
+    void decBrightness();
+
 protected:
 };
 

@@ -37,11 +37,16 @@ public:
      * the ModelListener interface.
      */
     void tick();
+
+    void incBrightness();
+    void decBrightness();
+
 protected:
     /**
      * Pointer to the currently active presenter.
      */
     ModelListener* modelListener;
+
 };
 
 #endif /* MODEL_HPP */

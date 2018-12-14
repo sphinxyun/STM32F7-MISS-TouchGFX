@@ -18,6 +18,10 @@ public:
     // bootScreen
     void gotobootScreenScreenNoTransition();
 
+
+    // Screen2
+    void gotoScreen2ScreenSlideTransitionEast();
+
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
@@ -25,6 +29,10 @@ protected:
 
     // bootScreen
     void gotobootScreenScreenNoTransitionImpl();
+
+
+    // Screen2
+    void gotoScreen2ScreenSlideTransitionEastImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP

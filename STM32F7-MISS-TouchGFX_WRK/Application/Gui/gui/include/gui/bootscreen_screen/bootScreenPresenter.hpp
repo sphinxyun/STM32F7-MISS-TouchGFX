@@ -27,6 +27,10 @@ public:
 
     virtual ~bootScreenPresenter() {};
 
+    //from View
+    void incBrightness(void);
+    void decBrightness(void);
+
 private:
     bootScreenPresenter();
 

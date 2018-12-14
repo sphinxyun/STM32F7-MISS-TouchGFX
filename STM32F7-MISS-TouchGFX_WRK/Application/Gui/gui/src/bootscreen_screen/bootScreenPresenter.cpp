@@ -15,3 +15,11 @@ void bootScreenPresenter::deactivate()
 {
 
 }
+
+void bootScreenPresenter::incBrightness(void) {
+	model->incBrightness();
+}
+
+void bootScreenPresenter::decBrightness(void) {
+	model->decBrightness();
+}
