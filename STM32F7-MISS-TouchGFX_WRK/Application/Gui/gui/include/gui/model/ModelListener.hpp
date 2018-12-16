@@ -27,6 +27,9 @@ public:
     {
         model = m;
     }
+
+    virtual void brightnessValueUpdate(uint32_t u32Val) {}
+
 protected:
     Model* model;
 };

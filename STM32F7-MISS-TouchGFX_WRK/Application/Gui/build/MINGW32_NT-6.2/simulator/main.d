@@ -93,9 +93,9 @@ build/MINGW32_NT-6.2/simulator/main.o: simulator/main.cpp \
  touchgfx//framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.hpp \
  touchgfx//framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
  touchgfx//framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp \
- gui/include/gui/screen2_screen/Screen2View.hpp \
- generated/gui_generated/include/gui_generated/screen2_screen/Screen2ViewBase.hpp \
- gui/include/gui/screen2_screen/Screen2Presenter.hpp \
+ gui/include/gui/settingsscreen_screen/settingsScreenView.hpp \
+ generated/gui_generated/include/gui_generated/settingsscreen_screen/settingsScreenViewBase.hpp \
+ gui/include/gui/settingsscreen_screen/settingsScreenPresenter.hpp \
  touchgfx//framework/include/touchgfx/widgets/ToggleButton.hpp \
  touchgfx//framework/include/touchgfx/widgets/Button.hpp \
  touchgfx//framework/include/touchgfx/widgets/AbstractButton.hpp \
@@ -293,11 +293,11 @@ touchgfx//framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
 
 touchgfx//framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp:
 
-gui/include/gui/screen2_screen/Screen2View.hpp:
+gui/include/gui/settingsscreen_screen/settingsScreenView.hpp:
 
-generated/gui_generated/include/gui_generated/screen2_screen/Screen2ViewBase.hpp:
+generated/gui_generated/include/gui_generated/settingsscreen_screen/settingsScreenViewBase.hpp:
 
-gui/include/gui/screen2_screen/Screen2Presenter.hpp:
+gui/include/gui/settingsscreen_screen/settingsScreenPresenter.hpp:
 
 touchgfx//framework/include/touchgfx/widgets/ToggleButton.hpp:
 

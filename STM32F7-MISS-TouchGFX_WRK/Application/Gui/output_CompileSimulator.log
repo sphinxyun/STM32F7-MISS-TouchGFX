@@ -1,6 +1,6 @@
 Converting images
 Compiling gui/src/model/Model.cpp
-Compiling generated/gui_generated/src/bootscreen_screen/bootScreenViewBase.cpp
+Compiling gui/src/bootscreen_screen/bootScreenPresenter.cpp
 gui/src/model/Model.cpp:4:35: fatal error: settings/settings_app.h: No such file or directory
  #include "settings/settings_app.h"
                                    ^
@@ -8,6 +8,12 @@ compilation terminated.
 simulator/gcc/Makefile:214: recipe for target 'build/MINGW32_NT-6.2/gui/src/model/Model.o' failed
 make[2]: *** [build/MINGW32_NT-6.2/gui/src/model/Model.o] Error 1
 make[2]: *** Waiting for unfinished jobs....
+gui/src/bootscreen_screen/bootScreenPresenter.cpp:29:2: error: extra ';' [-Werror=pedantic]
+ };
+  ^
+cc1plus.exe: all warnings being treated as errors
+simulator/gcc/Makefile:214: recipe for target 'build/MINGW32_NT-6.2/gui/src/bootscreen_screen/bootScreenPresenter.o' failed
+make[2]: *** [build/MINGW32_NT-6.2/gui/src/bootscreen_screen/bootScreenPresenter.o] Error 1
 simulator/gcc/Makefile:176: recipe for target 'generate_assets' failed
 make[1]: *** [generate_assets] Error 2
 simulator/gcc/Makefile:37: recipe for target 'all' failed

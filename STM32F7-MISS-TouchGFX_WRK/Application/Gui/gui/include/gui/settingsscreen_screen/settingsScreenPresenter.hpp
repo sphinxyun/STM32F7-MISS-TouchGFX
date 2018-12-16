@@ -1,17 +1,17 @@
-#ifndef BOOTSCREEN_PRESENTER_HPP
-#define BOOTSCREEN_PRESENTER_HPP
+#ifndef SETTINGSSCREEN_PRESENTER_HPP
+#define SETTINGSSCREEN_PRESENTER_HPP
 
 #include <gui/model/ModelListener.hpp>
 #include <mvp/Presenter.hpp>
 
 using namespace touchgfx;
 
-class bootScreenView;
+class settingsScreenView;
 
-class bootScreenPresenter : public Presenter, public ModelListener
+class settingsScreenPresenter : public Presenter, public ModelListener
 {
 public:
-    bootScreenPresenter(bootScreenView& v);
+    settingsScreenPresenter(settingsScreenView& v);
 
     /**
      * The activate function is called automatically when this screen is "switched in"
@@ -25,19 +25,15 @@ public:
      */
     virtual void deactivate();
 
-    virtual ~bootScreenPresenter() {};
+    virtual ~settingsScreenPresenter() {};
 
-    //from View
-    void incBrightness(void);
-    void decBrightness(void);
-
-    void brightnessValueUpdate(uint32_t u32Val);
+    void brightnessValueUpdate(uint32_t u32Val) {};
 
 private:
-    bootScreenPresenter();
+    settingsScreenPresenter();
 
-    bootScreenView& view;
+    settingsScreenView& view;
 };
 
 
-#endif // BOOTSCREEN_PRESENTER_HPP
+#endif // SETTINGSSCREEN_PRESENTER_HPP

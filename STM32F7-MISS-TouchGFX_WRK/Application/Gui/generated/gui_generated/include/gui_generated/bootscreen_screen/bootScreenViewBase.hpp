@@ -11,6 +11,7 @@
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/buttons/Buttons.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class bootScreenViewBase : public touchgfx::View<bootScreenPresenter>
 {
@@ -48,6 +49,7 @@ protected:
     touchgfx::IconButtonStyle< touchgfx::RepeatButtonTrigger > incBtn;
     touchgfx::IconButtonStyle< touchgfx::RepeatButtonTrigger > decBtn;
     touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > homeBtn;
+    touchgfx::TextAreaWithOneWildcard brightnessValue;
 
 private:
 

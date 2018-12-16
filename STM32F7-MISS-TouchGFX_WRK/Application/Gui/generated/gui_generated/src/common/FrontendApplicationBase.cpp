@@ -9,8 +9,8 @@
 #include <touchgfx/Texts.hpp>
 #include <gui/bootscreen_screen/bootScreenView.hpp>
 #include <gui/bootscreen_screen/bootScreenPresenter.hpp>
-#include <gui/screen2_screen/Screen2View.hpp>
-#include <gui/screen2_screen/Screen2Presenter.hpp>
+#include <gui/settingsscreen_screen/settingsScreenView.hpp>
+#include <gui/settingsscreen_screen/settingsScreenPresenter.hpp>
 
 using namespace touchgfx;
 
@@ -40,16 +40,28 @@ void FrontendApplicationBase::gotobootScreenScreenNoTransitionImpl()
     makeTransition<bootScreenView, bootScreenPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-// Screen2
 
-void FrontendApplicationBase::gotoScreen2ScreenSlideTransitionEast()
+void FrontendApplicationBase::gotobootScreenScreenSlideTransitionWest()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoScreen2ScreenSlideTransitionEastImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotobootScreenScreenSlideTransitionWestImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotoScreen2ScreenSlideTransitionEastImpl()
+void FrontendApplicationBase::gotobootScreenScreenSlideTransitionWestImpl()
 {
-    makeTransition<Screen2View, Screen2Presenter, touchgfx::SlideTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    makeTransition<bootScreenView, bootScreenPresenter, touchgfx::SlideTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+// settingsScreen
+
+void FrontendApplicationBase::gotosettingsScreenScreenSlideTransitionEast()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotosettingsScreenScreenSlideTransitionEastImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotosettingsScreenScreenSlideTransitionEastImpl()
+{
+    makeTransition<settingsScreenView, settingsScreenPresenter, touchgfx::SlideTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 

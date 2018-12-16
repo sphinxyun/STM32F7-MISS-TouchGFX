@@ -19,12 +19,12 @@
     <ClCompile Include="..\..\gui\src\common\FrontendApplication.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\common\FrontendApplicationBase.cpp"/>
     <ClCompile Include="..\..\gui\src\model\Model.cpp"/>
-    <ClCompile Include="..\..\gui\src\screen2_screen\Screen2Presenter.cpp"/>
-    <ClCompile Include="..\..\gui\src\screen2_screen\Screen2View.cpp"/>
-    <ClCompile Include="..\..\generated\gui_generated\src\screen2_screen\Screen2ViewBase.cpp"/>
     <ClCompile Include="..\..\gui\src\bootscreen_screen\bootScreenPresenter.cpp"/>
     <ClCompile Include="..\..\gui\src\bootscreen_screen\bootScreenView.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\bootscreen_screen\bootScreenViewBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\settingsscreen_screen\settingsScreenPresenter.cpp"/>
+    <ClCompile Include="..\..\gui\src\settingsscreen_screen\settingsScreenView.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\settingsscreen_screen\settingsScreenViewBase.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\assets\texts\texts.xlsx"/>
@@ -171,12 +171,12 @@
     <ClInclude Include="..\..\gui\include\gui\model\Model.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\model\ModelListener.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\SimConstants.hpp"/>
-    <ClInclude Include="..\..\gui\include\gui\screen2_screen\Screen2Presenter.hpp"/>
-    <ClInclude Include="..\..\gui\include\gui\screen2_screen\Screen2View.hpp"/>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\screen2_screen\Screen2ViewBase.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\bootscreen_screen\bootScreenPresenter.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\bootscreen_screen\bootScreenView.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\bootscreen_screen\bootScreenViewBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\settingsscreen_screen\settingsScreenPresenter.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\settingsscreen_screen\settingsScreenView.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\settingsscreen_screen\settingsScreenViewBase.hpp"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\touchgfx.rc"/>

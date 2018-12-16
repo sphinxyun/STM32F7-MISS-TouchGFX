@@ -18,9 +18,11 @@ public:
     // bootScreen
     void gotobootScreenScreenNoTransition();
 
+    void gotobootScreenScreenSlideTransitionWest();
 
-    // Screen2
-    void gotoScreen2ScreenSlideTransitionEast();
+
+    // settingsScreen
+    void gotosettingsScreenScreenSlideTransitionEast();
 
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
@@ -30,9 +32,11 @@ protected:
     // bootScreen
     void gotobootScreenScreenNoTransitionImpl();
 
+    void gotobootScreenScreenSlideTransitionWestImpl();
 
-    // Screen2
-    void gotoScreen2ScreenSlideTransitionEastImpl();
+
+    // settingsScreen
+    void gotosettingsScreenScreenSlideTransitionEastImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP

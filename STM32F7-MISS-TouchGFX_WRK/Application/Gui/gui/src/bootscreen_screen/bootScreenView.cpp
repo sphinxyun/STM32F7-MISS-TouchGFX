@@ -22,3 +22,13 @@ void bootScreenView::incBrightness() {
 void bootScreenView::decBrightness() {
 	presenter->decBrightness();
 }
+
+void bootScreenView::brightnessValueUpdate(uint32_t u32Val) {
+//	brightnessValue->setTypedText(TypedText());
+	Unicode::snprintf(txtBuffer, 10, "%d", u32Val);
+	brightnessValue.setWildcard(txtBuffer);
+    brightnessValue.resizeToCurrentText();
+
+	brightnessValue.invalidate();
+
+}

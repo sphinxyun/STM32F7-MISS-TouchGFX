@@ -69,7 +69,6 @@ bool CheckLPresetPressure(void) {
 static void StateMachine_Thread(void * argument) {
 	WM_MAIN_ActionsTypdef action;
 
-
 	uint32_t u32BtnFlags = 0xFFFF;
 
 	bool bUpdate = true;
@@ -81,28 +80,11 @@ static void StateMachine_Thread(void * argument) {
 	guiStatus.fIrrigationPresetPressureMMHG = set->u32IrrigationPressure;
 	guiStatus.fIrrigationPresetFlowLPM = set->fIrrigationFlow;
 
-//	module_prop[state].in_use = 1;
-//	module_prop[state].module->startup(WM_GetDesktopWindowEx(0), 0, 0);
-//
-//	osDelay(500);
-//
-//	module_prop[state].in_use = 1;
-//	module_prop[state].module->startup(WM_GetDesktopWindowEx(0), 0, 0);
-
 	TickType_t xTimeBefore;
 	xTimeBefore = xTaskGetTickCount();
 
 	for (;;) {
-		  DEBUG_UART_SysTick();
-
-
-//		if (((xTaskGetTickCount() - xTimeBefore) > 500) && ((xTaskGetTickCount() - xTimeBefore) < 700)) {
-//			DEBUG_SendTextFrame("state change -> LEVEL");
-//			device_state = eLevel;
-//			bUpdate = true;
-//		} else {
-////			DEBUG_SendTextFrame("state change -> %d", xTaskGetTickCount() - xTimeBefore);
-//		}
+		DEBUG_UART_SysTick();
 
 		if (xQueueReceive(xGuiActions, &action, 25)) {
 			bUpdate = true;
@@ -163,6 +145,7 @@ static void StateMachine_Thread(void * argument) {
 		if (bUpdate) {
 			guiStatus.eDevMode = device_state;
 			guiStatus.u32ButtonFlags = u32BtnFlags;
+			guiStatus.u32BrightnessPercent = SETTINGS_GetBrightness();
 
 			DEBUG_SendTextFrame("StateMachine_Thread: xGuiStatus SEND");
 

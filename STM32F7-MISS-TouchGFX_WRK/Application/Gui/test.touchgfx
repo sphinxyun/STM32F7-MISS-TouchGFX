@@ -151,9 +151,9 @@
                 "Type": "IconButtonStyle",
                 "X": 0,
                 "Y": 0,
-                "Style": "Icon28",
-                "IconReleased": "__designer\\blue_icons_home_48.png",
-                "IconPressed": "__designer\\blue_icons_home_48.png"
+                "Style": "Icon58",
+                "IconReleased": "__designer\\blue_icons_settings_48.png",
+                "IconPressed": "__designer\\blue_icons_settings_48.png"
               }
             ],
             "Name": "homeBtn",
@@ -162,6 +162,34 @@
             "Width": 50,
             "Height": 50,
             "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId3",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId4",
+              "UseBuffer": false,
+              "BufferSize": 0
+            },
+            "Name": "brightnessValue",
+            "X": 537,
+            "Y": 76,
+            "Width": 37,
+            "Height": 20,
+            "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -180,7 +208,7 @@
             "Action": {
               "ScreenTransitionType": "ScreenTransitionSlide",
               "ScreenTransitionDirection": "East",
-              "ActionComponent": "Screen2",
+              "ActionComponent": "settingsScreen",
               "Type": "ActionGotoScreen"
             }
           },
@@ -266,21 +294,52 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon58",
+                "IconReleased": "__designer\\blue_icons_settings_48.png",
+                "IconPressed": "__designer\\blue_icons_settings_48.png"
+              }
+            ],
+            "Name": "homeBtn",
+            "X": 13,
+            "Y": 418,
+            "Width": 50,
+            "Height": 50,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [
           {
-            "InteractionName": "Interaction1",
+            "InteractionName": "bootScreen",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerNone"
+              "TriggerComponent": "homeBtn",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionNone"
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "West",
+              "ActionComponent": "bootScreen",
+              "Type": "ActionGotoScreen"
             }
           }
         ],
-        "Name": "Screen2",
+        "Name": "settingsScreen",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0
       }
@@ -293,6 +352,14 @@
       },
       {
         "TextEntryId": "SingleUseId2",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId3",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId4",
         "IsResource": false
       }
     ],

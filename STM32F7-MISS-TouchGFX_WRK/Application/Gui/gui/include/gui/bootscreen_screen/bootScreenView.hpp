@@ -15,7 +15,10 @@ public:
     void incBrightness();
     void decBrightness();
 
+    void brightnessValueUpdate(uint32_t u32Val);
+
 protected:
+    Unicode::UnicodeChar txtBuffer[10];
 };
 
 #endif // BOOTSCREEN_VIEW_HPP

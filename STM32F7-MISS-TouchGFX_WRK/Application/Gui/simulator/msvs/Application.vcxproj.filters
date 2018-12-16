@@ -151,18 +151,6 @@
     <Filter Include="Header Files\generated\gui_generated\common">
       <UniqueIdentifier>4FD67D50-D1E1-4575-A778-7A7F4A23005A</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\screen2_screen">
-      <UniqueIdentifier>BB8B032C-8910-42C9-871B-E6A682F1D1C4</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\screen2_screen">
-      <UniqueIdentifier>10A4924F-2F28-4F37-BC27-FD88383F0DD6</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\screen2_screen">
-      <UniqueIdentifier>C1747C73-6392-45BF-A6B8-6925D2B16ACD</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\generated\gui_generated\screen2_screen">
-      <UniqueIdentifier>E0CFEF54-E40D-4F95-BCD7-5D8552B607AA</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\gui\bootscreen_screen">
       <UniqueIdentifier>9558E5F9-18E1-4734-AD72-8E5B973A2B23</UniqueIdentifier>
     </Filter>
@@ -174,6 +162,18 @@
     </Filter>
     <Filter Include="Header Files\generated\gui_generated\bootscreen_screen">
       <UniqueIdentifier>EA6F5DEE-7B00-4C3C-9A15-64D405AE2EDD</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\settingsscreen_screen">
+      <UniqueIdentifier>A8091611-E8B3-4CB7-A4E7-14D34514D317</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gui\settingsscreen_screen">
+      <UniqueIdentifier>02F0D280-E324-4266-B2E2-156DCE34E69B</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\settingsscreen_screen">
+      <UniqueIdentifier>EA90BC18-41FA-40EA-981C-68AD38924BF4</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\settingsscreen_screen">
+      <UniqueIdentifier>3A61859B-05A1-43AA-B9F2-418419A3F0D5</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -201,15 +201,6 @@
     <ClCompile Include="..\..\gui\src\model\Model.cpp">
       <Filter>Source Files\gui\model</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\screen2_screen\Screen2Presenter.cpp">
-      <Filter>Source Files\gui\screen2_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\gui\src\screen2_screen\Screen2View.cpp">
-      <Filter>Source Files\gui\screen2_screen</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\screen2_screen\Screen2ViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\screen2_screen</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\gui\src\bootscreen_screen\bootScreenPresenter.cpp">
       <Filter>Source Files\gui\bootscreen_screen</Filter>
     </ClCompile>
@@ -218,6 +209,15 @@
     </ClCompile>
     <ClCompile Include="..\..\generated\gui_generated\src\bootscreen_screen\bootScreenViewBase.cpp">
       <Filter>Source Files\generated\gui_generated\bootscreen_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\settingsscreen_screen\settingsScreenPresenter.cpp">
+      <Filter>Source Files\gui\settingsscreen_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\settingsscreen_screen\settingsScreenView.cpp">
+      <Filter>Source Files\gui\settingsscreen_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\settingsscreen_screen\settingsScreenViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\settingsscreen_screen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -649,15 +649,6 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\SimConstants.hpp">
       <Filter>Header Files\generated\gui_generated\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\screen2_screen\Screen2Presenter.hpp">
-      <Filter>Header Files\gui\screen2_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\screen2_screen\Screen2View.hpp">
-      <Filter>Header Files\gui\screen2_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\screen2_screen\Screen2ViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\screen2_screen</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\gui\include\gui\bootscreen_screen\bootScreenPresenter.hpp">
       <Filter>Header Files\gui\bootscreen_screen</Filter>
     </ClInclude>
@@ -666,6 +657,15 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\bootscreen_screen\bootScreenViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\bootscreen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\settingsscreen_screen\settingsScreenPresenter.hpp">
+      <Filter>Header Files\gui\settingsscreen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\settingsscreen_screen\settingsScreenView.hpp">
+      <Filter>Header Files\gui\settingsscreen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\settingsscreen_screen\settingsScreenViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\settingsscreen_screen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -23,3 +23,8 @@ void bootScreenPresenter::incBrightness(void) {
 void bootScreenPresenter::decBrightness(void) {
 	model->decBrightness();
 }
+
+void bootScreenPresenter::brightnessValueUpdate(uint32_t u32Val) {
+	view.brightnessValueUpdate(u32Val);
+};
+

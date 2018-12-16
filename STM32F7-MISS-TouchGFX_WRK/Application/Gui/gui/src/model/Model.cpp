@@ -11,6 +11,7 @@
 extern "C" {
 	extern QueueHandle_t xAudioEffectsQueue;
 	extern QueueHandle_t xGuiActions;
+	extern QueueHandle_t xGuiStatus;
 }
 
 Model::Model() : modelListener(0)
@@ -19,6 +20,12 @@ Model::Model() : modelListener(0)
 
 void Model::tick()
 {
+	WM_MAIN_GuiStatus guiStatus;
+
+	if (xGuiStatus && xQueueReceive(xGuiStatus, &guiStatus, 0)  == pdTRUE) {
+		DEBUG_SendTextFrame("  tick: xGuiStatus");
+		modelListener->brightnessValueUpdate(guiStatus.u32BrightnessPercent);
+	}
 }
 
 void Model::incBrightness() {

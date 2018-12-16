@@ -39,10 +39,17 @@ bootScreenViewBase::bootScreenViewBase() :
     decBtn.setPosition(538, 120, 48, 48);
     decBtn.setAction(flexButtonCallback);
 
-    homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID), Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID));
+    homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID), Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID));
     homeBtn.setIconXY(0, 0);
     homeBtn.setPosition(404, 429, 50, 50);
     homeBtn.setAction(flexButtonCallback);
+
+    brightnessValue.setXY(537, 76);
+    brightnessValue.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    brightnessValue.setLinespacing(0);
+    brightnessValue.setWildcard(TypedText(T_SINGLEUSEID4).getText());
+    brightnessValue.resizeToCurrentText();
+    brightnessValue.setTypedText(TypedText(T_SINGLEUSEID3));
 
     add(box1);
     add(image);
@@ -51,6 +58,7 @@ bootScreenViewBase::bootScreenViewBase() :
     add(incBtn);
     add(decBtn);
     add(homeBtn);
+    add(brightnessValue);
 }
 
 void bootScreenViewBase::setupScreen()
@@ -77,8 +85,8 @@ void bootScreenViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButto
     else if (&src == &homeBtn)
     {
         //home
-        //When homeBtn clicked change screen to Screen2
-        //Go to Screen2 with screen transition towards East
-        application().gotoScreen2ScreenSlideTransitionEast();
+        //When homeBtn clicked change screen to settingsScreen
+        //Go to settingsScreen with screen transition towards East
+        application().gotosettingsScreenScreenSlideTransitionEast();
     }
 }

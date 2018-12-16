@@ -33,6 +33,8 @@ typedef struct {
 	float fIrrigationPresetPressureMMHG;
 	float fIrrigationPresetFlowLPM;
 
+	uint32_t u32BrightnessPercent;
+
 	uint32_t u32ButtonFlags;
 } WM_MAIN_GuiStatus;
 

@@ -53,14 +53,14 @@ void DEBUG_ResetCommunication(void) {
 }
 
 void DEBUG_SendTextHeader(void) {
-	DEBUG_SendTextFrame("\n");
+	DEBUG_SendTextFrame("");
 	DEBUG_SendTextFrame("----------------------------------");
 	DEBUG_SendTextFrame("  LCDPS Test, VER. %s", VER_PRODUCTVERSION_STR);
 	DEBUG_SendTextFrame("   %s, %s", __DATE__, __TIME__);
 	DEBUG_SendTextFrame("----------------------------------");
 	DEBUG_SendTextFrame("   SystemCoreClock: %d [Hz]", SystemCoreClock);
 	DEBUG_SendTextFrame("----------------------------------");
-	DEBUG_SendTextFrame("\n");
+	DEBUG_SendTextFrame("");
 }
 
 static void DEBUG_ParseFrame(eProtocolFrame_t *sFrame) {
