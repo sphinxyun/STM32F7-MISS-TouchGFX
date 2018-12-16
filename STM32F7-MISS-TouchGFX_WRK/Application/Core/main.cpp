@@ -28,14 +28,17 @@ using namespace touchgfx;
 
 #include "debug.h"
 
+#include "audio/audio_app.h"
 #include "settings/settings_app.h"
 #include "regulation/regulation.h"
 #include "state_machine/state_machine.h"
 
+uint8_t ucHeap[configTOTAL_HEAP_SIZE] __attribute__((section(".RamData2")));
+
 /**
  * Define the FreeRTOS task priorities and stack sizes
  */
-#define configGUI_TASK_PRIORITY                 ( tskIDLE_PRIORITY + 3 )
+#define configGUI_TASK_PRIORITY                 ( tskIDLE_PRIORITY + 1 )
 
 #define configGUI_TASK_STK_SIZE                 ( 1500 )
 
@@ -56,6 +59,8 @@ int main(void)
 
     DEBUG_Init();
     DEBUG_SendTextHeader();
+
+//    AUDIOPLAYER_Init(100);
 
     REGULATION_Init();
     WM_MAIN_Init();

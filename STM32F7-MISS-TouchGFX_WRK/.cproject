@@ -50,7 +50,7 @@
 							<tool id="com.atollic.truestudio.exe.debug.toolchain.gcc.928094479" name="C Compiler" superClass="com.atollic.truestudio.exe.debug.toolchain.gcc">
 								<option id="com.atollic.truestudio.gcc.optimization.prep_garbage.2117540328" name="Prepare dead code removal " superClass="com.atollic.truestudio.gcc.optimization.prep_garbage" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.atollic.truestudio.gcc.optimization.prep_data.225377706" name="Prepare dead data removal" superClass="com.atollic.truestudio.gcc.optimization.prep_data" useByScannerDiscovery="false" value="false" valueType="boolean"/>
-								<option id="com.atollic.truestudio.exe.debug.toolchain.gcc.optimization.level.1373205054" name="Optimization Level" superClass="com.atollic.truestudio.exe.debug.toolchain.gcc.optimization.level" useByScannerDiscovery="false" value="com.atollic.truestudio.gcc.optimization.level.0s" valueType="enumerated"/>
+								<option id="com.atollic.truestudio.exe.debug.toolchain.gcc.optimization.level.1373205054" name="Optimization Level" superClass="com.atollic.truestudio.exe.debug.toolchain.gcc.optimization.level" useByScannerDiscovery="false" value="com.atollic.truestudio.gcc.optimization.level.0g" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.exe.debug.toolchain.gcc.debug.info.642485878" name="Debug Level" superClass="com.atollic.truestudio.exe.debug.toolchain.gcc.debug.info" useByScannerDiscovery="false" value="com.atollic.truestudio.gcc.debug.info.3" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.gcc.directories.select.404778837" name="Include path" superClass="com.atollic.truestudio.gcc.directories.select" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Drivers/CMSIS/Include}&quot;"/>
@@ -72,6 +72,7 @@
 								</option>
 								<option id="com.atollic.truestudio.gcc.symbols.defined.382120242" name="Defined symbols" superClass="com.atollic.truestudio.gcc.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ST"/>
+									<listOptionValue builtIn="false" value="USE_STM32746G_DISCOVERY"/>
 									<listOptionValue builtIn="false" value="USE_FULL_LL_DRIVER"/>
 									<listOptionValue builtIn="false" value="STM32F746xx"/>
 									<listOptionValue builtIn="false" value="USE_BPP=16"/>
@@ -105,7 +106,7 @@
 								<option id="com.atollic.truestudio.gpp.optimization.prep_data.48334156" name="Prepare dead data removal" superClass="com.atollic.truestudio.gpp.optimization.prep_data" useByScannerDiscovery="false" value="false" valueType="boolean"/>
 								<option id="com.atollic.truestudio.gpp.optimization.fno_exceptions.75617276" name="Disable exception handling" superClass="com.atollic.truestudio.gpp.optimization.fno_exceptions" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.atollic.truestudio.gpp.optimization.fno_rtti.858286336" name="Disable RTTI" superClass="com.atollic.truestudio.gpp.optimization.fno_rtti" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="com.atollic.truestudio.exe.debug.toolchain.gpp.optimization.level.1491556622" name="Optimization Level" superClass="com.atollic.truestudio.exe.debug.toolchain.gpp.optimization.level" useByScannerDiscovery="false" value="com.atollic.truestudio.gpp.optimization.level.0s" valueType="enumerated"/>
+								<option id="com.atollic.truestudio.exe.debug.toolchain.gpp.optimization.level.1491556622" name="Optimization Level" superClass="com.atollic.truestudio.exe.debug.toolchain.gpp.optimization.level" useByScannerDiscovery="false" value="com.atollic.truestudio.gpp.optimization.level.0g" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.exe.debug.toolchain.gpp.debug.info.1899018332" name="Debug Level" superClass="com.atollic.truestudio.exe.debug.toolchain.gpp.debug.info" useByScannerDiscovery="false" value="com.atollic.truestudio.gpp.debug.info.3" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.gpp.directories.select.923899524" name="Include path" superClass="com.atollic.truestudio.gpp.directories.select" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Application/Gui/gui/include}&quot;"/>
@@ -127,6 +128,7 @@
 								</option>
 								<option id="com.atollic.truestudio.gpp.symbols.defined.1809958185" name="Defined symbols" superClass="com.atollic.truestudio.gpp.symbols.defined" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ST"/>
+									<listOptionValue builtIn="false" value="USE_STM32746G_DISCOVERY"/>
 									<listOptionValue builtIn="false" value="USE_FULL_LL_DRIVER"/>
 									<listOptionValue builtIn="false" value="STM32F746xx"/>
 									<listOptionValue builtIn="false" value="USE_BPP=16"/>
@@ -143,11 +145,9 @@
 								<option id="com.atollic.truestudio.ldcc.optimization.do_garbage.1226702361" name="Dead code removal" superClass="com.atollic.truestudio.ldcc.optimization.do_garbage" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.atollic.truestudio.ldcc.libraries.list.138696330" name="Libraries" superClass="com.atollic.truestudio.ldcc.libraries.list" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value=":libtouchgfx-float-abi-hard.a"/>
-									<listOptionValue builtIn="false" value=":libPDMFilter_CM7_GCC_wc32.a"/>
 								</option>
 								<option id="com.atollic.truestudio.ldcc.libraries.searchpath.396015909" name="Library search path" superClass="com.atollic.truestudio.ldcc.libraries.searchpath" useByScannerDiscovery="false" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Application/Gui/touchgfx/lib/core/cortex_m7/gcc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Middlewares/STM32_Audio/Addons/PDM/Lib}&quot;"/>
 								</option>
 								<option id="com.atollic.truestudio.common_options.target.mcpu.1994594909" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" useByScannerDiscovery="false" value="STM32F746NG" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.instr_set.666943018" name="Instruction set" superClass="com.atollic.truestudio.common_options.target.instr_set" useByScannerDiscovery="false" value="com.atollic.truestudio.common_options.target.instr_set.thumb2" valueType="enumerated"/>
@@ -163,7 +163,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Application/Gui/touchgfx/os/OSWrappers_cmsis.cpp|Application/Gui/touchgfx/framework|Application/Gui/touchgfx/framework/include/platform/hal|Application/Gui/simulator|Utilities/Fonts/font8.c|Utilities/Fonts/font24.c|Utilities/Fonts/font20.c|Utilities/Fonts/font16.c|Utilities/Fonts/font12.c|Middlewares/TouchGFX/installer|Middlewares/TouchGFX/doc|Middlewares/TouchGFX/app|Middlewares/TouchGFX/touchgfx/lib|Middlewares/FreeRTOS/Source/portable/Common/mpu_wrappers.c|Drivers/CMSIS/Lib|Drivers/CMSIS/DSP_Lib|Drivers/CMSIS/Documentation|Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_timebase_tim_template.c|Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_timebase_rtc_wakeup_template.c|Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_timebase_rtc_alarm_template.c|Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_msp_template.c|Middlewares/TouchGFX__/touchgfx/framework|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM7_MPU|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM4F|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM4_MPU|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM3|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM0|Middlewares/TouchGFX/touchgfx/framework|Middlewares/TouchGFX/touchgfx/os/OSWrappers_cmsis.cpp|Middlewares/FreeRTOS/Source/portable/MemMang/heap_5.c|Middlewares/FreeRTOS/Source/portable/MemMang/heap_3.c|Middlewares/FreeRTOS/Source/portable/MemMang/heap_2.c|Middlewares/FreeRTOS/Source/portable/MemMang/heap_1.c|Application/User/Gui/assets|Application/User/Gui/generated/assets|Application/User/Core/system_stm32f7xx.c|Drivers/BSP/Components/ft5336.c|Drivers/BSP/stm32746g_discovery_ts.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="Application/Core/audio/audio_res.c|Application/Gui/touchgfx/os/OSWrappers_cmsis.cpp|Application/Gui/touchgfx/framework|Application/Gui/touchgfx/framework/include/platform/hal|Application/Gui/simulator|Utilities/Fonts/font8.c|Utilities/Fonts/font24.c|Utilities/Fonts/font20.c|Utilities/Fonts/font16.c|Utilities/Fonts/font12.c|Middlewares/TouchGFX/installer|Middlewares/TouchGFX/doc|Middlewares/TouchGFX/app|Middlewares/TouchGFX/touchgfx/lib|Middlewares/FreeRTOS/Source/portable/Common/mpu_wrappers.c|Drivers/CMSIS/Lib|Drivers/CMSIS/DSP_Lib|Drivers/CMSIS/Documentation|Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_timebase_tim_template.c|Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_timebase_rtc_wakeup_template.c|Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_timebase_rtc_alarm_template.c|Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_msp_template.c|Middlewares/TouchGFX__/touchgfx/framework|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM7_MPU|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM4F|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM4_MPU|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM3_MPU|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM3|Middlewares/FreeRTOS/Source/portable/GCC/ARM_CM0|Middlewares/TouchGFX/touchgfx/framework|Middlewares/TouchGFX/touchgfx/os/OSWrappers_cmsis.cpp|Middlewares/FreeRTOS/Source/portable/MemMang/heap_5.c|Middlewares/FreeRTOS/Source/portable/MemMang/heap_3.c|Middlewares/FreeRTOS/Source/portable/MemMang/heap_2.c|Middlewares/FreeRTOS/Source/portable/MemMang/heap_1.c|Application/User/Gui/assets|Application/User/Gui/generated/assets|Application/User/Core/system_stm32f7xx.c|Drivers/BSP/Components/ft5336.c|Drivers/BSP/stm32746g_discovery_ts.c" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

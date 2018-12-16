@@ -211,7 +211,7 @@ void DMA2_Stream7_IRQHandler(void) {
 void DEBUG_UART_SysTick(void) {
 	static uint16_t i16Cnt = 0;
 
-	if (++i16Cnt >= 10) {
+	if (++i16Cnt >= 1) {
 		i16Cnt = 0;
 
 		if (DEBUG_UART_TxFinishedFlag == SET) {
@@ -247,7 +247,7 @@ void DEBUG_UART_SysTick(void) {
 				LL_DMA_EnableStream(DMA2, LL_DMA_STREAM_7);
 
 				/* Enable global DMA stream interrupts */
-				NVIC_SetPriority(DMA2_Stream7_IRQn, 1);
+				NVIC_SetPriority(DMA2_Stream7_IRQn, 4);
 				NVIC_EnableIRQ(DMA2_Stream7_IRQn);
 			}
 		}

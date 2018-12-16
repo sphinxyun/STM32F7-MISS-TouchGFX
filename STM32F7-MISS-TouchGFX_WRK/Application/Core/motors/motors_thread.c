@@ -2,6 +2,11 @@
 
 #include "drivers/irrigation.h"
 
+/* Kernel includes. */
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
 TaskHandle_t MotorsThreadId = 0;
 
 QueueHandle_t xIrrigationMotorSpeedRPM = 0;

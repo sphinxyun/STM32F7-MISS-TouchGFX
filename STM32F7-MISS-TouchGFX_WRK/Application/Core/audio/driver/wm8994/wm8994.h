@@ -39,7 +39,7 @@
 #define __WM8994_H
 
 /* Includes ------------------------------------------------------------------*/
-#include "../Common/audio.h"
+#include "Components/Common/audio.h"
 
 /** @addtogroup BSP
   * @{

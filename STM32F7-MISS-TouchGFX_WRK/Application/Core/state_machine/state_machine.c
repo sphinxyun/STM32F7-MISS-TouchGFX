@@ -93,21 +93,15 @@ static void StateMachine_Thread(void * argument) {
 	xTimeBefore = xTaskGetTickCount();
 
 	for (;;) {
-		if (((xTaskGetTickCount() - xTimeBefore) > 500) && ((xTaskGetTickCount() - xTimeBefore) < 700)) {
-			DEBUG_SendTextFrame("state change -> LEVEL");
-			device_state = eLevel;
-			bUpdate = true;
-		} else {
-//			DEBUG_SendTextFrame("state change -> %d", xTaskGetTickCount() - xTimeBefore);
-		}
+		  DEBUG_UART_SysTick();
 
-//		osDelay(1000);
 
-//		if (module_prop[state].in_use == 0) {
-//			module_prop[state].in_use = 1;
-//			module_prop[state].module->startup(WM_GetDesktopWindowEx(0), 0, 0);
-//		} else if (module_prop[state].win_state == 1) {
-//			module_prop[state].module->startup(WM_GetDesktopWindowEx(0), 0, 0);
+//		if (((xTaskGetTickCount() - xTimeBefore) > 500) && ((xTaskGetTickCount() - xTimeBefore) < 700)) {
+//			DEBUG_SendTextFrame("state change -> LEVEL");
+//			device_state = eLevel;
+//			bUpdate = true;
+//		} else {
+////			DEBUG_SendTextFrame("state change -> %d", xTaskGetTickCount() - xTimeBefore);
 //		}
 
 		if (xQueueReceive(xGuiActions, &action, 25)) {
@@ -122,6 +116,12 @@ static void StateMachine_Thread(void * argument) {
 			} else if (action == WM_MAIN_STOP_ACTION) {
 				MOTOR_Stop();
 				DEBUG_SendTextFrame("WM_MAIN_STOP_ACTION");
+			} else if (action == WM_MAIN_INCREASE_BRIGHTNESS) {
+				SETTINGS_IncBrightness();
+				DEBUG_SendTextFrame("WM_MAIN_INCREASE_BRIGHTNESS");
+			} else if (action == WM_MAIN_DECREASE_BRIGHTNESS) {
+				SETTINGS_DecBrightness();
+				DEBUG_SendTextFrame("WM_MAIN_DECREASE_BRIGHTNESS");
 			} else if (action == WM_MAIN_INCREASE_IRRIGATION_PRESSURE) {
 				const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
 				if ((guiStatus.fIrrigationPresetPressureMMHG + set->u32IrrigationPressureIncValue) >= set->u32IrrigationPressureMaxValue) {
