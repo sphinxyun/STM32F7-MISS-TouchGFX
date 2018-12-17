@@ -38,6 +38,9 @@ public:
      */
     void tick();
 
+    void startRegulation();
+    void stopRegulation();
+
     void incBrightness();
     void decBrightness();
 

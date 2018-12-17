@@ -466,7 +466,7 @@ void hw_init()
     GPIO::init();
 
     /* Enable L1 Cache */
-    SCB_EnableDCache();
+//    SCB_EnableDCache();
     SCB_EnableICache();
 
     //Deactivate speculative/cache access to first FMC Bank to save FMC bandwidth

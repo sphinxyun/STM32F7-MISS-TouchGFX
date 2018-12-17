@@ -15,6 +15,10 @@ const uint16_t BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_OFF_ID = 5; // S
 const uint16_t BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_ON_ID = 6; // Size: 128x38 pixels
 const uint16_t BITMAP_MISS_LOGO_640PX_ID = 7; // Size: 640x202 pixels
 const uint16_t BITMAP_QUESTION_MARK_64PX_ID = 8; // Size: 45x64 pixels
+const uint16_t BITMAP_START_ID = 9; // Size: 48x48 pixels
+const uint16_t BITMAP_START_DISABLED_ID = 10; // Size: 48x48 pixels
+const uint16_t BITMAP_STOP_ID = 11; // Size: 96x96 pixels
+const uint16_t BITMAP_STOP_DISABLED_ID = 12; // Size: 96x96 pixels
 
 namespace BitmapDatabase
 {

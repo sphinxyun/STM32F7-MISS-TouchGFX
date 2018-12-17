@@ -25,6 +25,34 @@ void Model::tick()
 	if (xGuiStatus && xQueueReceive(xGuiStatus, &guiStatus, 0)  == pdTRUE) {
 //		DEBUG_SendTextFrame("  tick: xGuiStatus");
 		modelListener->brightnessValueUpdate(guiStatus.u32BrightnessPercent);
+
+		modelListener->actualPressureUpdate(guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
+		modelListener->actualFlowLPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualFlowLPM);
+		modelListener->actualFlowRPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
+	}
+}
+
+void Model::startRegulation() {
+	WM_MAIN_ActionsTypdef temp = WM_MAIN_START_ACTION;
+	if (xGuiActions) {
+		xQueueSend(xGuiActions, (void*)&temp, 0);
+	}
+
+	uint16_t u16Temp = 1;
+	if (xAudioEffectsQueue) {
+		xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
+	}
+}
+
+void Model::stopRegulation() {
+	WM_MAIN_ActionsTypdef temp = WM_MAIN_STOP_ACTION;
+	if (xGuiActions) {
+		xQueueSend(xGuiActions, (void*)&temp, 0);
+	}
+
+	uint16_t u16Temp = 1;
+	if (xAudioEffectsQueue) {
+		xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
 	}
 }
 
@@ -46,7 +74,7 @@ void Model::decBrightness() {
 		xQueueSend(xGuiActions, (void*)&temp, 0);
 	}
 
-	uint16_t u16Temp = 2;
+	uint16_t u16Temp = 1;
 	if (xAudioEffectsQueue) {
 		xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
 	}

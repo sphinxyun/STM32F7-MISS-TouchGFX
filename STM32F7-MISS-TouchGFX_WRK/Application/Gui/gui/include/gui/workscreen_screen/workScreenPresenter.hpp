@@ -27,6 +27,13 @@ public:
 
     virtual ~workScreenPresenter() {};
 
+    void actualPressureUpdate(float fVal);
+    void actualFlowLPMUpdate(float fVal);
+    void actualFlowRPMUpdate(float fVal);
+
+    void startRegulation();
+    void stopRegulation();
+
 private:
     workScreenPresenter();
 

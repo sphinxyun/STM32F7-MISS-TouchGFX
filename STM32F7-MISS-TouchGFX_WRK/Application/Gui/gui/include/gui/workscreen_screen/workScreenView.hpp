@@ -11,7 +11,14 @@ public:
     virtual ~workScreenView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    void actualPressureUpdate(float fVal);
+    void actualFlowLPMUpdate(float fVal);
+    void actualFlowRPMUpdate(float fVal);
+
 protected:
+    void startRegulation();
+    void stopRegulation();
 };
 
 #endif // WORKSCREEN_VIEW_HPP

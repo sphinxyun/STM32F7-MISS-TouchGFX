@@ -93,9 +93,13 @@ static void StateMachine_Thread(void * argument) {
 				DEBUG_SendTextFrame("WM_MAIN_MENU");
 				device_state = eMenu;
 			} else if (action == WM_MAIN_START_ACTION) {
+				REGULATION_Start();
+
 				DEBUG_SendTextFrame("WM_MAIN_START_ACTION");
 				MOTOR_Start();
 			} else if (action == WM_MAIN_STOP_ACTION) {
+				REGULATION_Stop();
+
 				MOTOR_Stop();
 				DEBUG_SendTextFrame("WM_MAIN_STOP_ACTION");
 			} else if (action == WM_MAIN_INCREASE_BRIGHTNESS) {

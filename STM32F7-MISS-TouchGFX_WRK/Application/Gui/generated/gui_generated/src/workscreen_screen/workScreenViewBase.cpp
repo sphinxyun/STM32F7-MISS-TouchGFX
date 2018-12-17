@@ -7,6 +7,7 @@
 #include <texts/TextKeysAndLanguages.hpp>
 
 workScreenViewBase::workScreenViewBase() :
+    buttonCallback(this, &workScreenViewBase::buttonCallbackHandler),
     flexButtonCallback(this, &workScreenViewBase::flexButtonCallbackHandler)
 {
     box1.setPosition(0, 0, 640, 480);
@@ -14,12 +15,12 @@ workScreenViewBase::workScreenViewBase() :
 
     homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID), Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID));
     homeBtn.setIconXY(0, 0);
-    homeBtn.setPosition(484, 419, 50, 50);
+    homeBtn.setPosition(19, 419, 50, 50);
     homeBtn.setAction(flexButtonCallback);
 
     settingsBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID), Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID));
     settingsBtn.setIconXY(0, 0);
-    settingsBtn.setPosition(569, 419, 50, 50);
+    settingsBtn.setPosition(83, 419, 50, 50);
     settingsBtn.setAction(flexButtonCallback);
 
     textArea1.setXY(15, 11);
@@ -27,15 +28,88 @@ workScreenViewBase::workScreenViewBase() :
     textArea1.setLinespacing(0);
     textArea1.setTypedText(TypedText(T_SINGLEUSEID8));
 
+    textArea1_1.setXY(44, 55);
+    textArea1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1_1.setLinespacing(0);
+    textArea1_1.setTypedText(TypedText(T_SINGLEUSEID9));
+
+    textArea1_1_1.setXY(275, 55);
+    textArea1_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1_1_1.setLinespacing(0);
+    textArea1_1_1.setTypedText(TypedText(T_SINGLEUSEID10));
+
+    textArea1_1_1_1.setXY(471, 55);
+    textArea1_1_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1_1_1_1.setLinespacing(0);
+    textArea1_1_1_1.setTypedText(TypedText(T_SINGLEUSEID11));
+
+    actualPressure.setXY(115, 118);
+    actualPressure.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
+    actualPressure.setLinespacing(0);
+    Unicode::snprintf(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%s", TypedText(T_SINGLEUSEID13).getText());
+    actualPressure.setWildcard(actualPressureBuffer);
+    actualPressure.resizeToCurrentText();
+    actualPressure.setTypedText(TypedText(T_SINGLEUSEID12));
+
+    actualFlowLPM.setXY(325, 118);
+    actualFlowLPM.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
+    actualFlowLPM.setLinespacing(0);
+    Unicode::snprintf(actualFlowLPMBuffer, ACTUALFLOWLPM_SIZE, "%s", TypedText(T_SINGLEUSEID15).getText());
+    actualFlowLPM.setWildcard(actualFlowLPMBuffer);
+    actualFlowLPM.resizeToCurrentText();
+    actualFlowLPM.setTypedText(TypedText(T_SINGLEUSEID14));
+
+    actualFlowRPM.setXY(511, 118);
+    actualFlowRPM.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
+    actualFlowRPM.setLinespacing(0);
+    Unicode::snprintf(actualFlowRPMBuffer, ACTUALFLOWRPM_SIZE, "%s", TypedText(T_SINGLEUSEID17).getText());
+    actualFlowRPM.setWildcard(actualFlowRPMBuffer);
+    actualFlowRPM.resizeToCurrentText();
+    actualFlowRPM.setTypedText(TypedText(T_SINGLEUSEID16));
+
+    stopBtn.setXY(529, 371);
+    stopBtn.setBitmaps(Bitmap(BITMAP_STOP_ID), Bitmap(BITMAP_STOP_DISABLED_ID));
+    stopBtn.setAction(buttonCallback);
+
+    startBtn.setXY(505, 347);
+    startBtn.setBitmaps(Bitmap(BITMAP_START_ID), Bitmap(BITMAP_START_DISABLED_ID));
+    startBtn.setAction(buttonCallback);
+
     add(box1);
     add(homeBtn);
     add(settingsBtn);
     add(textArea1);
+    add(textArea1_1);
+    add(textArea1_1_1);
+    add(textArea1_1_1_1);
+    add(actualPressure);
+    add(actualFlowLPM);
+    add(actualFlowRPM);
+    add(stopBtn);
+    add(startBtn);
 }
 
 void workScreenViewBase::setupScreen()
 {
 
+}
+
+void workScreenViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
+{
+    if (&src == &stopBtn)
+    {
+        //stopRegulation
+        //When stopBtn clicked call virtual function
+        //Call stopRegulation
+        stopRegulation();
+    }
+    else if (&src == &startBtn)
+    {
+        //startRegulation
+        //When startBtn clicked call virtual function
+        //Call startRegulation
+        startRegulation();
+    }
 }
 
 void workScreenViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src)

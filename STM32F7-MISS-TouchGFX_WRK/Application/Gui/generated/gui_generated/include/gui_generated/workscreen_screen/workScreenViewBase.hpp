@@ -10,6 +10,8 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/containers/buttons/Buttons.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
+#include <touchgfx/widgets/Button.hpp>
 
 class workScreenViewBase : public touchgfx::View<workScreenPresenter>
 {
@@ -18,6 +20,19 @@ public:
     virtual ~workScreenViewBase() {}
 
     virtual void setupScreen();
+
+    /*
+     * Custom Action Handlers
+     */
+    virtual void startRegulation()
+    {
+        // Override and implement this function in workScreenView
+    }
+
+    virtual void stopRegulation()
+    {
+        // Override and implement this function in workScreenView
+    }
 
 protected:
     FrontendApplication& application() {
@@ -31,17 +46,37 @@ protected:
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > homeBtn;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > settingsBtn;
     touchgfx::TextArea textArea1;
+    touchgfx::TextArea textArea1_1;
+    touchgfx::TextArea textArea1_1_1;
+    touchgfx::TextArea textArea1_1_1_1;
+    touchgfx::TextAreaWithOneWildcard actualPressure;
+    touchgfx::TextAreaWithOneWildcard actualFlowLPM;
+    touchgfx::TextAreaWithOneWildcard actualFlowRPM;
+    touchgfx::Button stopBtn;
+    touchgfx::Button startBtn;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t ACTUALPRESSURE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar actualPressureBuffer[ACTUALPRESSURE_SIZE];
+    static const uint16_t ACTUALFLOWLPM_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar actualFlowLPMBuffer[ACTUALFLOWLPM_SIZE];
+    static const uint16_t ACTUALFLOWRPM_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar actualFlowRPMBuffer[ACTUALFLOWRPM_SIZE];
 
 private:
 
     /*
      * Callback Handler Declarations
      */
+    void buttonCallbackHandler(const touchgfx::AbstractButton& src);
     void flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src);
 
     /*
      * Callback Declarations
      */
+    touchgfx::Callback<workScreenViewBase, const touchgfx::AbstractButton&> buttonCallback;
     touchgfx::Callback<workScreenViewBase, const touchgfx::AbstractButtonContainer&> flexButtonCallback;
 
 };

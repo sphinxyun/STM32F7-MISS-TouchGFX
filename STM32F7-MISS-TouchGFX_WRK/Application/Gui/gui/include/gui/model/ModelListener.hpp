@@ -28,6 +28,10 @@ public:
         model = m;
     }
 
+    virtual void actualPressureUpdate(float fVal) {}
+    virtual void actualFlowLPMUpdate(float fVal) {}
+    virtual void actualFlowRPMUpdate(float fVal) {}
+
     virtual void brightnessValueUpdate(uint32_t u32Val) {}
 
 protected:

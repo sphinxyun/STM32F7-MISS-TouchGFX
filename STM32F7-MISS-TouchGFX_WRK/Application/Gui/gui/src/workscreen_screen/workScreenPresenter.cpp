@@ -15,3 +15,25 @@ void workScreenPresenter::deactivate()
 {
 
 }
+
+void workScreenPresenter::actualPressureUpdate(float fVal) {
+	view.actualPressureUpdate(fVal);
+}
+
+void workScreenPresenter::actualFlowLPMUpdate(float fVal) {
+	view.actualFlowLPMUpdate(fVal);
+}
+
+void workScreenPresenter::actualFlowRPMUpdate(float fVal) {
+	view.actualFlowRPMUpdate(fVal);
+}
+
+void workScreenPresenter::startRegulation()
+{
+	model->startRegulation();
+}
+
+void workScreenPresenter::stopRegulation()
+{
+	model->stopRegulation();
+}
