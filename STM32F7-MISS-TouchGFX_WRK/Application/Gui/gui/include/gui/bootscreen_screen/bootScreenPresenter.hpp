@@ -27,12 +27,6 @@ public:
 
     virtual ~bootScreenPresenter() {};
 
-    //from View
-    void incBrightness(void);
-    void decBrightness(void);
-
-    void brightnessValueUpdate(uint32_t u32Val);
-
 private:
     bootScreenPresenter();
 

@@ -11,6 +11,8 @@
 #include <gui/bootscreen_screen/bootScreenPresenter.hpp>
 #include <gui/settingsscreen_screen/settingsScreenView.hpp>
 #include <gui/settingsscreen_screen/settingsScreenPresenter.hpp>
+#include <gui/workscreen_screen/workScreenView.hpp>
+#include <gui/workscreen_screen/workScreenPresenter.hpp>
 
 using namespace touchgfx;
 
@@ -63,5 +65,30 @@ void FrontendApplicationBase::gotosettingsScreenScreenSlideTransitionEast()
 void FrontendApplicationBase::gotosettingsScreenScreenSlideTransitionEastImpl()
 {
     makeTransition<settingsScreenView, settingsScreenPresenter, touchgfx::SlideTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+// workScreen
+
+void FrontendApplicationBase::gotoworkScreenScreenSlideTransitionWest()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoworkScreenScreenSlideTransitionWestImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoworkScreenScreenSlideTransitionWestImpl()
+{
+    makeTransition<workScreenView, workScreenPresenter, touchgfx::SlideTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+
+void FrontendApplicationBase::gotoworkScreenScreenSlideTransitionEast()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoworkScreenScreenSlideTransitionEastImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoworkScreenScreenSlideTransitionEastImpl()
+{
+    makeTransition<workScreenView, workScreenPresenter, touchgfx::SlideTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 

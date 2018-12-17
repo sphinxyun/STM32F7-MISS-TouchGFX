@@ -15,3 +15,15 @@ void settingsScreenPresenter::deactivate()
 {
 
 }
+
+void settingsScreenPresenter::incBrightness(void) {
+	model->incBrightness();
+}
+
+void settingsScreenPresenter::decBrightness(void) {
+	model->decBrightness();
+}
+
+void settingsScreenPresenter::brightnessValueUpdate(uint32_t u32Val) {
+	view.brightnessValueUpdate(u32Val);
+};

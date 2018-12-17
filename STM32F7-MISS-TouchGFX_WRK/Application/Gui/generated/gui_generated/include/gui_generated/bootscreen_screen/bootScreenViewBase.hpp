@@ -11,7 +11,6 @@
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/buttons/Buttons.hpp>
-#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class bootScreenViewBase : public touchgfx::View<bootScreenPresenter>
 {
@@ -20,19 +19,6 @@ public:
     virtual ~bootScreenViewBase() {}
 
     virtual void setupScreen();
-
-    /*
-     * Custom Action Handlers
-     */
-    virtual void incBrightness()
-    {
-        // Override and implement this function in bootScreenView
-    }
-
-    virtual void decBrightness()
-    {
-        // Override and implement this function in bootScreenView
-    }
 
 protected:
     FrontendApplication& application() {
@@ -46,10 +32,8 @@ protected:
     touchgfx::Image image;
     touchgfx::TextArea textArea1;
     touchgfx::TextArea textArea2;
-    touchgfx::IconButtonStyle< touchgfx::RepeatButtonTrigger > incBtn;
-    touchgfx::IconButtonStyle< touchgfx::RepeatButtonTrigger > decBtn;
-    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > homeBtn;
-    touchgfx::TextAreaWithOneWildcard brightnessValue;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > settingsBtn;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > workBtn;
 
 private:
 

@@ -11,6 +11,8 @@
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/ToggleButton.hpp>
 #include <touchgfx/containers/buttons/Buttons.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
+#include <touchgfx/widgets/TextArea.hpp>
 
 class settingsScreenViewBase : public touchgfx::View<settingsScreenPresenter>
 {
@@ -19,6 +21,19 @@ public:
     virtual ~settingsScreenViewBase() {}
 
     virtual void setupScreen();
+
+    /*
+     * Custom Action Handlers
+     */
+    virtual void incBrightness()
+    {
+        // Override and implement this function in settingsScreenView
+    }
+
+    virtual void decBrightness()
+    {
+        // Override and implement this function in settingsScreenView
+    }
 
 protected:
     FrontendApplication& application() {
@@ -31,7 +46,12 @@ protected:
     touchgfx::Box box1;
     touchgfx::Image image;
     touchgfx::ToggleButton toggleButton1;
-    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > homeBtn;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > homeBtn;
+    touchgfx::IconButtonStyle< touchgfx::RepeatButtonTrigger > incBtn;
+    touchgfx::IconButtonStyle< touchgfx::RepeatButtonTrigger > decBtn;
+    touchgfx::TextAreaWithOneWildcard brightnessValue;
+    touchgfx::TextArea textArea1;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > workBtn;
 
 private:
 

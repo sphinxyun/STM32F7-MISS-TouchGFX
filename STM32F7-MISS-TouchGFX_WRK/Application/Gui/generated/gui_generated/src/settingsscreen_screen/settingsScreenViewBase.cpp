@@ -4,6 +4,7 @@
 #include <gui_generated/settingsscreen_screen/settingsScreenViewBase.hpp>
 #include <touchgfx/Color.hpp>
 #include "BitmapDatabase.hpp"
+#include <texts/TextKeysAndLanguages.hpp>
 
 settingsScreenViewBase::settingsScreenViewBase() :
     buttonCallback(this, &settingsScreenViewBase::buttonCallbackHandler),
@@ -15,18 +16,54 @@ settingsScreenViewBase::settingsScreenViewBase() :
     image.setXY(566, 22);
     image.setBitmap(Bitmap(BITMAP_QUESTION_MARK_64PX_ID));
 
-    toggleButton1.setXY(86, 75);
+    toggleButton1.setXY(480, 405);
     toggleButton1.setBitmaps(Bitmap(BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_OFF_ID), Bitmap(BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_ON_ID));
 
-    homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID), Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID));
+    homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID), Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID));
     homeBtn.setIconXY(0, 0);
     homeBtn.setPosition(13, 418, 50, 50);
     homeBtn.setAction(flexButtonCallback);
+
+    incBtn.setDelay(30);
+    incBtn.setInterval(15);
+    incBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID));
+    incBtn.setIconXY(0, 0);
+    incBtn.setPosition(474, 159, 48, 48);
+    incBtn.setAction(flexButtonCallback);
+
+    decBtn.setDelay(30);
+    decBtn.setInterval(15);
+    decBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID));
+    decBtn.setIconXY(0, 0);
+    decBtn.setPosition(474, 254, 48, 48);
+    decBtn.setAction(flexButtonCallback);
+
+    brightnessValue.setXY(480, 213);
+    brightnessValue.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    brightnessValue.setLinespacing(0);
+    brightnessValue.setWildcard(TypedText(T_SINGLEUSEID6).getText());
+    brightnessValue.resizeToCurrentText();
+    brightnessValue.setTypedText(TypedText(T_SINGLEUSEID5));
+
+    textArea1.setXY(13, 12);
+    textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1.setLinespacing(0);
+    textArea1.setTypedText(TypedText(T_SINGLEUSEID7));
+
+    workBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID), Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID));
+    workBtn.setIconXY(0, 0);
+    workBtn.setPosition(95, 418, 50, 50);
+    workBtn.setAction(flexButtonCallback);
 
     add(box1);
     add(image);
     add(toggleButton1);
     add(homeBtn);
+    add(incBtn);
+    add(decBtn);
+    add(brightnessValue);
+    add(textArea1);
+    add(workBtn);
 }
 
 void settingsScreenViewBase::setupScreen()
@@ -50,5 +87,26 @@ void settingsScreenViewBase::flexButtonCallbackHandler(const touchgfx::AbstractB
         //When homeBtn clicked change screen to bootScreen
         //Go to bootScreen with screen transition towards West
         application().gotobootScreenScreenSlideTransitionWest();
+    }
+    else if (&src == &incBtn)
+    {
+        //incBrght
+        //When incBtn clicked call virtual function
+        //Call incBrightness
+        incBrightness();
+    }
+    else if (&src == &decBtn)
+    {
+        //decBrght
+        //When decBtn clicked call virtual function
+        //Call decBrightness
+        decBrightness();
+    }
+    else if (&src == &workBtn)
+    {
+        //Interaction1
+        //When workBtn clicked change screen to workScreen
+        //Go to workScreen with screen transition towards East
+        application().gotoworkScreenScreenSlideTransitionEast();
     }
 }

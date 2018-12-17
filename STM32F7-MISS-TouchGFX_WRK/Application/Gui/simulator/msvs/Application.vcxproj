@@ -25,6 +25,9 @@
     <ClCompile Include="..\..\gui\src\settingsscreen_screen\settingsScreenPresenter.cpp"/>
     <ClCompile Include="..\..\gui\src\settingsscreen_screen\settingsScreenView.cpp"/>
     <ClCompile Include="..\..\generated\gui_generated\src\settingsscreen_screen\settingsScreenViewBase.cpp"/>
+    <ClCompile Include="..\..\gui\src\workscreen_screen\workScreenPresenter.cpp"/>
+    <ClCompile Include="..\..\gui\src\workscreen_screen\workScreenView.cpp"/>
+    <ClCompile Include="..\..\generated\gui_generated\src\workscreen_screen\workScreenViewBase.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\assets\texts\texts.xlsx"/>
@@ -177,6 +180,9 @@
     <ClInclude Include="..\..\gui\include\gui\settingsscreen_screen\settingsScreenPresenter.hpp"/>
     <ClInclude Include="..\..\gui\include\gui\settingsscreen_screen\settingsScreenView.hpp"/>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\settingsscreen_screen\settingsScreenViewBase.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\workscreen_screen\workScreenPresenter.hpp"/>
+    <ClInclude Include="..\..\gui\include\gui\workscreen_screen\workScreenView.hpp"/>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\workscreen_screen\workScreenViewBase.hpp"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\touchgfx.rc"/>

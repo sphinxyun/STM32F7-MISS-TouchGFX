@@ -10,6 +10,10 @@
 #include <touchgfx/transitions/NoTransition.hpp>
 #include <touchgfx/transitions/SlideTransition.hpp>
 #include <touchgfx/transitions/SlideTransition.hpp>
+#include <touchgfx/transitions/SlideTransition.hpp>
+#include <touchgfx/transitions/SlideTransition.hpp>
+#include <touchgfx/transitions/SlideTransition.hpp>
+#include <touchgfx/transitions/SlideTransition.hpp>
 
 #include <gui/common/FrontendApplication.hpp>
 #include <gui/model/Model.hpp>
@@ -18,6 +22,8 @@
 #include <gui/bootscreen_screen/bootScreenPresenter.hpp>
 #include <gui/settingsscreen_screen/settingsScreenView.hpp>
 #include <gui/settingsscreen_screen/settingsScreenPresenter.hpp>
+#include <gui/workscreen_screen/workScreenView.hpp>
+#include <gui/workscreen_screen/workScreenPresenter.hpp>
 
 
 /**
@@ -42,7 +48,8 @@ public:
      */
     typedef meta::TypeList< bootScreenView,
             meta::TypeList< settingsScreenView,
-            meta::Nil >
+            meta::TypeList< workScreenView,
+            meta::Nil > >
             > GeneratedViewTypes;
 
     /**
@@ -56,7 +63,8 @@ public:
      */
     typedef meta::TypeList< bootScreenPresenter,
             meta::TypeList< settingsScreenPresenter,
-            meta::Nil >
+            meta::TypeList< workScreenPresenter,
+            meta::Nil > >
             > GeneratedPresenterTypes;
 
     /**

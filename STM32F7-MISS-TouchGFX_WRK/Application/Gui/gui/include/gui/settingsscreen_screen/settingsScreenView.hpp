@@ -11,7 +11,14 @@ public:
     virtual ~settingsScreenView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    void incBrightness();
+    void decBrightness();
+    void brightnessValueUpdate(uint32_t u32Val);
+
 protected:
+    Unicode::UnicodeChar txtBuffer[10];
+
 };
 
 #endif // SETTINGSSCREEN_VIEW_HPP

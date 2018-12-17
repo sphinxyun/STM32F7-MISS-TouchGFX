@@ -7,12 +7,14 @@
 #include <touchgfx/Bitmap.hpp>
 
 const uint16_t BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID = 0; // Size: 46x26 pixels
-const uint16_t BITMAP_BLUE_ICONS_SETTINGS_48_ID = 1; // Size: 46x46 pixels
-const uint16_t BITMAP_BLUE_ICONS_UP_ARROW_48_ID = 2; // Size: 46x26 pixels
-const uint16_t BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_OFF_ID = 3; // Size: 128x38 pixels
-const uint16_t BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_ON_ID = 4; // Size: 128x38 pixels
-const uint16_t BITMAP_MISS_LOGO_640PX_ID = 5; // Size: 640x202 pixels
-const uint16_t BITMAP_QUESTION_MARK_64PX_ID = 6; // Size: 45x64 pixels
+const uint16_t BITMAP_BLUE_ICONS_HOME_48_ID = 1; // Size: 46x44 pixels
+const uint16_t BITMAP_BLUE_ICONS_SETTINGS_48_ID = 2; // Size: 46x46 pixels
+const uint16_t BITMAP_BLUE_ICONS_TOOLS_48_ID = 3; // Size: 48x46 pixels
+const uint16_t BITMAP_BLUE_ICONS_UP_ARROW_48_ID = 4; // Size: 46x26 pixels
+const uint16_t BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_OFF_ID = 5; // Size: 128x38 pixels
+const uint16_t BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_ON_ID = 6; // Size: 128x38 pixels
+const uint16_t BITMAP_MISS_LOGO_640PX_ID = 7; // Size: 640x202 pixels
+const uint16_t BITMAP_QUESTION_MARK_64PX_ID = 8; // Size: 45x64 pixels
 
 namespace BitmapDatabase
 {

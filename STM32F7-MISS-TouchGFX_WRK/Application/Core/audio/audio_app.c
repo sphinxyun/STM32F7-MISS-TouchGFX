@@ -4,8 +4,6 @@
 
 #include "audio_res.c"
 
-
-
 /* Kernel includes. */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -58,33 +56,15 @@ AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Init(uint8_t volume) {
 	/* Register audio BSP drivers callbacks */
 	AUDIO_IF_RegisterCallbacks(AUDIO_TransferComplete_CallBack, AUDIO_HalfTransfer_CallBack, AUDIO_Error_CallBack);
 
-	/* Create LL Audio Queue */
-//	osMessageQDef(AUDIO_SaiLowLevelMessageQueue, 1, uint16_t);
-//	SaiLowLevelEvents = osMessageCreate(osMessageQ(AUDIO_SaiLowLevelMessageQueue), NULL);
-
 	xSaiLowLevelEvents = xQueueCreate( 1, sizeof( uint16_t ) );
 
-	/* Create LL Audio task */
-////	osThreadDef(osAudio_LL_Thread, Audio_LL_Thread, osPriorityRealtime, 0, 512);
-////	LLAudioThreadId = osThreadCreate(osThread(osAudio_LL_Thread), NULL);
-//
     xTaskCreate(Audio_LL_Thread, "AudioLLTask",
                 512,
                 NULL,
 				tskIDLE_PRIORITY + 5,
                 &LLAudioThreadId);
 
-//	DEBUG_SendTextFrame("  LLAudioThreadId: %x", LLAudioThreadId);
-
-	/* Create HL Audio Queue */
-//	osMessageQDef(AUDIO_EffectsQueue, 4, uint16_t);
-//	AudioEffectsQueue = osMessageCreate(osMessageQ(AUDIO_EffectsQueue), NULL);
-
 	xAudioEffectsQueue = xQueueCreate( 4, sizeof( uint16_t ) );
-
-	/* Create HL Audio task */
-//	osThreadDef(osAudio_HL_Thread, Audio_HL_Thread, osPriorityAboveNormal, 0, 256);
-//	HLAudioThreadId = osThreadCreate(osThread(osAudio_HL_Thread), NULL);
 
     xTaskCreate(Audio_HL_Thread, "AudioHLTask",
                 256,
@@ -157,8 +137,6 @@ AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Play(uint8_t u8SoundEffect) {
 	}
 
 	return AUDIOPLAYER_ERROR_IO;
-
-//	return AUDIOPLAYER_ERROR_NONE;
 }
 
 AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Process(void) {
@@ -238,7 +216,7 @@ AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Mute(uint8_t state) {
 static void AUDIO_TransferComplete_CallBack(void) {
 	if (haudio.out.state == AUDIOPLAYER_PLAY) {
 		BSP_AUDIO_OUT_ChangeBuffer((uint16_t*) &haudio.buff[0], AUDIO_OUT_BUFFER_SIZE / 2);
-//		osMessagePut(SaiLowLevelEvents, PLAY_BUFFER_OFFSET_FULL, 0);
+
 		uint16_t u16Temp = PLAY_BUFFER_OFFSET_FULL;
 		xQueueSendFromISR( xSaiLowLevelEvents, ( void * ) &u16Temp, ( TickType_t ) 0 );
 	}
@@ -247,7 +225,7 @@ static void AUDIO_TransferComplete_CallBack(void) {
 static void AUDIO_HalfTransfer_CallBack(void) {
 	if (haudio.out.state == AUDIOPLAYER_PLAY) {
 		BSP_AUDIO_OUT_ChangeBuffer((uint16_t*) &haudio.buff[AUDIO_OUT_BUFFER_SIZE / 2], AUDIO_OUT_BUFFER_SIZE / 2);
-//		osMessagePut(SaiLowLevelEvents, PLAY_BUFFER_OFFSET_HALF, 0);
+
 		uint16_t u16Temp = PLAY_BUFFER_OFFSET_HALF;
 		xQueueSendFromISR( xSaiLowLevelEvents, ( void * ) &u16Temp, ( TickType_t ) 0 );
 	}

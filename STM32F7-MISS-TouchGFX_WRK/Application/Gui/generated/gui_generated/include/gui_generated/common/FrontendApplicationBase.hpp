@@ -24,6 +24,12 @@ public:
     // settingsScreen
     void gotosettingsScreenScreenSlideTransitionEast();
 
+
+    // workScreen
+    void gotoworkScreenScreenSlideTransitionWest();
+
+    void gotoworkScreenScreenSlideTransitionEast();
+
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
@@ -37,6 +43,12 @@ protected:
 
     // settingsScreen
     void gotosettingsScreenScreenSlideTransitionEastImpl();
+
+
+    // workScreen
+    void gotoworkScreenScreenSlideTransitionWestImpl();
+
+    void gotoworkScreenScreenSlideTransitionEastImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP
