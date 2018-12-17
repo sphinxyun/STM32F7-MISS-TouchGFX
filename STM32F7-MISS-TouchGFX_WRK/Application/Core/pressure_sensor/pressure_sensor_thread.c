@@ -232,7 +232,7 @@ PRESSURE_SENSOR_ErrorTypdef PRESSURE_SENSOR_Init(void) {
     xTaskCreate(PressureAnalysis_Thread, "PressureTask",
                 1024,
                 NULL,
-				tskIDLE_PRIORITY + 3,
+				tskIDLE_PRIORITY + 1,
                 &PressureSensorHandlerThreadId);
 
 	PRESSURE_SENSOR_Stop();

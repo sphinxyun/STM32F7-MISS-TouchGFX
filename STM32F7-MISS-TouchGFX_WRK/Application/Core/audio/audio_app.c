@@ -47,35 +47,33 @@ AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Init(uint8_t volume) {
 	DEBUG_SendTextFrame("AUDIOPLAYER_Init, volume: %d", volume);
 
 	/* Try to Init Audio interface in different configurations in case of failure */
-	//BSP_AUDIO_OUT_Init(OUTPUT_DEVICE_BOTH, volume, I2S_AUDIOFREQ_16K);
-	//BSP_AUDIO_OUT_SetAudioFrameSlot(CODEC_AUDIOFRAME_SLOT_02);
+	BSP_AUDIO_OUT_Init(OUTPUT_DEVICE_BOTH, volume, I2S_AUDIOFREQ_16K);
+	BSP_AUDIO_OUT_SetAudioFrameSlot(CODEC_AUDIOFRAME_SLOT_02);
 
 	/* Initialize internal audio structure */
-//	haudio.out.state = AUDIOPLAYER_STOP;
-//	haudio.out.mute = MUTE_OFF;
-//	haudio.out.volume = volume;
+	haudio.out.state = AUDIOPLAYER_STOP;
+	haudio.out.mute = MUTE_OFF;
+	haudio.out.volume = volume;
 
 	/* Register audio BSP drivers callbacks */
-//	AUDIO_IF_RegisterCallbacks(AUDIO_TransferComplete_CallBack, AUDIO_HalfTransfer_CallBack, AUDIO_Error_CallBack);
+	AUDIO_IF_RegisterCallbacks(AUDIO_TransferComplete_CallBack, AUDIO_HalfTransfer_CallBack, AUDIO_Error_CallBack);
 
 	/* Create LL Audio Queue */
 //	osMessageQDef(AUDIO_SaiLowLevelMessageQueue, 1, uint16_t);
 //	SaiLowLevelEvents = osMessageCreate(osMessageQ(AUDIO_SaiLowLevelMessageQueue), NULL);
 
-//	xSaiLowLevelEvents = xQueueCreate( 1, sizeof( uint16_t ) );
-//
-//
-//	/* Create LL Audio task */
+	xSaiLowLevelEvents = xQueueCreate( 1, sizeof( uint16_t ) );
+
+	/* Create LL Audio task */
 ////	osThreadDef(osAudio_LL_Thread, Audio_LL_Thread, osPriorityRealtime, 0, 512);
 ////	LLAudioThreadId = osThreadCreate(osThread(osAudio_LL_Thread), NULL);
 //
-//    xTaskCreate(Audio_LL_Thread, "AudioLLTask",
-//                512,
-//                NULL,
-//				tskIDLE_PRIORITY + 5,
-//                &LLAudioThreadId);
-//
-//
+    xTaskCreate(Audio_LL_Thread, "AudioLLTask",
+                512,
+                NULL,
+				tskIDLE_PRIORITY + 5,
+                &LLAudioThreadId);
+
 //	DEBUG_SendTextFrame("  LLAudioThreadId: %x", LLAudioThreadId);
 
 	/* Create HL Audio Queue */
@@ -91,12 +89,12 @@ AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Init(uint8_t volume) {
     xTaskCreate(Audio_HL_Thread, "AudioHLTask",
                 256,
                 NULL,
-				tskIDLE_PRIORITY + 4,
+				tskIDLE_PRIORITY + 3,
                 &HLAudioThreadId);
 
 	DEBUG_SendTextFrame("  HLAudioThreadId: %x", HLAudioThreadId);
 
-//	AUDIOPLAYER_Stop();
+	AUDIOPLAYER_Stop();
 
 	return AUDIOPLAYER_ERROR_NONE;
 }
@@ -110,12 +108,12 @@ uint32_t AUDIOPLAYER_GetVolume(void) {
 }
 
 AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_SetVolume(uint32_t volume) {
-//	if (BSP_AUDIO_OUT_SetVolume(volume) == AUDIO_OK) {
-//		haudio.out.volume = volume;
+	if (BSP_AUDIO_OUT_SetVolume(volume) == AUDIO_OK) {
+		haudio.out.volume = volume;
 		return AUDIOPLAYER_ERROR_NONE;
-//	} else {
-//		return AUDIOPLAYER_ERROR_HW;
-//	}
+	} else {
+		return AUDIOPLAYER_ERROR_HW;
+	}
 }
 
 void read_raw_data(uint8_t *pu8AudioBuffer, uint8_t u8SoundEffect, uint32_t u32SamplesToBeRead, uint32_t *pu32SamplesRead) {
@@ -150,9 +148,11 @@ AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Play(uint8_t u8SoundEffect) {
 	if (numOfReadBytes != 0) {
 		CurrentSoundEffect = u8SoundEffect;
 
-		vTaskResume(LLAudioThreadId);
+		if (LLAudioThreadId != 0) {
+			vTaskResume(LLAudioThreadId);
+		}
 
-		//BSP_AUDIO_OUT_Play((uint16_t*) &haudio.buff[0], numOfReadBytes);
+		BSP_AUDIO_OUT_Play((uint16_t*) &haudio.buff[0], numOfReadBytes);
 		return AUDIOPLAYER_ERROR_NONE;
 	}
 
@@ -194,8 +194,8 @@ AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_NotifyEndOfFile(void) {
 AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_DeInit(void) {
 	haudio.out.state = AUDIOPLAYER_STOP;
 
-	//BSP_AUDIO_OUT_Stop(CODEC_PDWN_HW);
-	//BSP_AUDIO_OUT_DeInit();
+	BSP_AUDIO_OUT_Stop(CODEC_PDWN_HW);
+	BSP_AUDIO_OUT_DeInit();
 
 	if (xAudioEffectsQueue != 0) {
 		vQueueDelete(xAudioEffectsQueue);
@@ -220,7 +220,7 @@ AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_DeInit(void) {
 
 AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Stop(void) {
 	haudio.out.state = AUDIOPLAYER_STOP;
-	//BSP_AUDIO_OUT_Stop(CODEC_PDWN_SW);
+	BSP_AUDIO_OUT_Stop(CODEC_PDWN_SW);
 
 	if (LLAudioThreadId != 0) {
 		vTaskSuspend(LLAudioThreadId);
@@ -230,26 +230,26 @@ AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Stop(void) {
 }
 
 AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Mute(uint8_t state) {
-	//BSP_AUDIO_OUT_SetMute(state);
+	BSP_AUDIO_OUT_SetMute(state);
 
 	return AUDIOPLAYER_ERROR_NONE;
 }
 
 static void AUDIO_TransferComplete_CallBack(void) {
 	if (haudio.out.state == AUDIOPLAYER_PLAY) {
-		//BSP_AUDIO_OUT_ChangeBuffer((uint16_t*) &haudio.buff[0], AUDIO_OUT_BUFFER_SIZE / 2);
+		BSP_AUDIO_OUT_ChangeBuffer((uint16_t*) &haudio.buff[0], AUDIO_OUT_BUFFER_SIZE / 2);
 //		osMessagePut(SaiLowLevelEvents, PLAY_BUFFER_OFFSET_FULL, 0);
 		uint16_t u16Temp = PLAY_BUFFER_OFFSET_FULL;
-		xQueueSend( xSaiLowLevelEvents, ( void * ) &u16Temp, ( TickType_t ) 0 );
+		xQueueSendFromISR( xSaiLowLevelEvents, ( void * ) &u16Temp, ( TickType_t ) 0 );
 	}
 }
 
 static void AUDIO_HalfTransfer_CallBack(void) {
 	if (haudio.out.state == AUDIOPLAYER_PLAY) {
-		//BSP_AUDIO_OUT_ChangeBuffer((uint16_t*) &haudio.buff[AUDIO_OUT_BUFFER_SIZE / 2], AUDIO_OUT_BUFFER_SIZE / 2);
+		BSP_AUDIO_OUT_ChangeBuffer((uint16_t*) &haudio.buff[AUDIO_OUT_BUFFER_SIZE / 2], AUDIO_OUT_BUFFER_SIZE / 2);
 //		osMessagePut(SaiLowLevelEvents, PLAY_BUFFER_OFFSET_HALF, 0);
 		uint16_t u16Temp = PLAY_BUFFER_OFFSET_HALF;
-		xQueueSend( xSaiLowLevelEvents, ( void * ) &u16Temp, ( TickType_t ) 0 );
+		xQueueSendFromISR( xSaiLowLevelEvents, ( void * ) &u16Temp, ( TickType_t ) 0 );
 	}
 }
 
@@ -296,26 +296,24 @@ static void Audio_HL_Thread(void * argument) {
 	uint16_t u16Temp = 0;
 
 	for (;;) {
-		osDelay(1000);
-
-//		if (xQueueReceive(xAudioEffectsQueue, &u16Temp, 100)) {
+		if (xQueueReceive(xAudioEffectsQueue, &u16Temp, 100)) {
 //			DEBUG_SendTextFrame("Audio_HL_Thread - SOUND: %x, %d", xAudioEffectsQueue, u16Temp);
-//
-////			switch (u16Temp) {
-////			case 1:
-////				AUDIOPLAYER_Play(0);
-////				u16Temp = 99;
-////				break;
-////
-////			case 2:
-////				AUDIOPLAYER_Play(1);
-////				break;
-////			}
-//		} else {
-			DEBUG_SendTextFrame("Audio_HL_Thread - NO SOUND");
+
+			switch (u16Temp) {
+			case 1:
+				AUDIOPLAYER_Play(0);
+				break;
+
+			case 2:
+				AUDIOPLAYER_Play(1);
+				break;
+			}
+		}
+//			else {
+//			DEBUG_SendTextFrame("Audio_HL_Thread - NO SOUND");
 //		}
 
-//		AUDIOPLAYER_Process();
+		AUDIOPLAYER_Process();
 	}
 }
 

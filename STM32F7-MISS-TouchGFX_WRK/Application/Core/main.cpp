@@ -33,34 +33,34 @@ using namespace touchgfx;
 #include "regulation/regulation.h"
 #include "state_machine/state_machine.h"
 
-uint8_t ucHeap[configTOTAL_HEAP_SIZE] __attribute__((section(".RamData2")));
+extern "C" {
+	uint8_t ucHeap[configTOTAL_HEAP_SIZE] __attribute__((section(".RamData2")));
+}
 
 /**
  * Define the FreeRTOS task priorities and stack sizes
  */
-#define configGUI_TASK_PRIORITY                 ( tskIDLE_PRIORITY + 1 )
+#define configGUI_TASK_PRIORITY                 ( tskIDLE_PRIORITY + 3 )
 
 #define configGUI_TASK_STK_SIZE                 ( 1500 )
 
 #define CANVAS_BUFFER_SIZE (5500)
 
-static void GUITask(void* params)
-{
+static void GUITask(void* params) {
     touchgfx::HAL::getInstance()->taskEntry();
 }
 
-
-int main(void)
-{
+int main(void) {
     hw_init();
-    touchgfx_init();
-
-    SETTINGS_Init();
 
     DEBUG_Init();
     DEBUG_SendTextHeader();
 
-//    AUDIOPLAYER_Init(100);
+    touchgfx_init();
+
+    SETTINGS_Init();
+
+    AUDIOPLAYER_Init(100);
 
     REGULATION_Init();
     WM_MAIN_Init();
@@ -77,6 +77,5 @@ int main(void)
     vTaskStartScheduler();
 
     for (;;);
-
 }
 

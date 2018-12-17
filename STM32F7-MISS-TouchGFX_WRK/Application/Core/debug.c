@@ -397,7 +397,7 @@ void DEBUG_SendTextFrame(const char* str, ...) {
 
 	uint16_t u16LengthInBytes = idx;
 
-	uint8_t u8Frame[265];
+	uint8_t u8Frame[768];
 	u8Frame[0] = START1;
 	u8Frame[1] = START2;
 

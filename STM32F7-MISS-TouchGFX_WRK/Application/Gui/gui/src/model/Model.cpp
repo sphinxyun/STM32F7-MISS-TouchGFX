@@ -23,7 +23,7 @@ void Model::tick()
 	WM_MAIN_GuiStatus guiStatus;
 
 	if (xGuiStatus && xQueueReceive(xGuiStatus, &guiStatus, 0)  == pdTRUE) {
-		DEBUG_SendTextFrame("  tick: xGuiStatus");
+//		DEBUG_SendTextFrame("  tick: xGuiStatus");
 		modelListener->brightnessValueUpdate(guiStatus.u32BrightnessPercent);
 	}
 }
@@ -34,15 +34,10 @@ void Model::incBrightness() {
 		xQueueSend(xGuiActions, (void*)&temp, 0);
 	}
 
-//	if (xAudioEffectsQueue) {
-//		uint16_t u16Temp = 0;
-//		BaseType_t temp = xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
-//		DEBUG_SendTextFrame("  xAudioEffectsQueue: %x, %x", xAudioEffectsQueue, temp);
-//	} else {
-//		DEBUG_SendTextFrame("  xAudioEffectsQueue: NULL");
-//	}
-
-//	SETTINGS_IncBrightness();
+	uint16_t u16Temp = 1;
+	if (xAudioEffectsQueue) {
+		xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
+	}
 }
 
 void Model::decBrightness() {
@@ -51,13 +46,8 @@ void Model::decBrightness() {
 		xQueueSend(xGuiActions, (void*)&temp, 0);
 	}
 
-//	if (xAudioEffectsQueue) {
-//		uint16_t u16Temp = 1;
-//		BaseType_t temp = xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
-//		DEBUG_SendTextFrame("  xAudioEffectsQueue: %x, %x", xAudioEffectsQueue, temp);
-//	} else {
-//		DEBUG_SendTextFrame("  xAudioEffectsQueue: NULL");
-//	}
-
-//	SETTINGS_DecBrightness();
+	uint16_t u16Temp = 2;
+	if (xAudioEffectsQueue) {
+		xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
+	}
 }
