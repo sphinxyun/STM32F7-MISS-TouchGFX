@@ -11,9 +11,11 @@
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/ToggleButton.hpp>
 #include <touchgfx/containers/buttons/Buttons.hpp>
-#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/containers/Container.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
+#include <touchgfx/containers/Slider.hpp>
 class settingsScreenViewBase : public touchgfx::View<settingsScreenPresenter>
 {
 public:
@@ -47,11 +49,15 @@ protected:
     touchgfx::Image image;
     touchgfx::ToggleButton toggleButton1;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > homeBtn;
-    touchgfx::IconButtonStyle< touchgfx::RepeatButtonTrigger > incBtn;
-    touchgfx::IconButtonStyle< touchgfx::RepeatButtonTrigger > decBtn;
-    touchgfx::TextAreaWithOneWildcard brightnessValue;
     touchgfx::TextArea textArea1;
+    touchgfx::Container container1;
+    touchgfx::TextArea textArea2;
+    touchgfx::TextButtonStyle< touchgfx::RepeatButtonTrigger > incBtn;
+    touchgfx::TextAreaWithOneWildcard brightnessValue;
+    touchgfx::TextButtonStyle< touchgfx::RepeatButtonTrigger > decBtn;
+
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > workBtn;
+    touchgfx::Slider slider2;
 
 private:
 

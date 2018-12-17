@@ -70,7 +70,8 @@ build/MINGW32_NT-6.2/gui/src/settingsscreen_screen/settingsScreenPresenter.o: \
  touchgfx//framework/include/touchgfx/widgets/TiledImage.hpp \
  touchgfx//framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.hpp \
  touchgfx//framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
- touchgfx//framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp
+ touchgfx//framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp \
+ touchgfx//framework/include/touchgfx/containers/Slider.hpp
 
 gui/include/gui/settingsscreen_screen/settingsScreenView.hpp:
 
@@ -213,3 +214,5 @@ touchgfx//framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.
 touchgfx//framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
 
 touchgfx//framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp:
+
+touchgfx//framework/include/touchgfx/containers/Slider.hpp:

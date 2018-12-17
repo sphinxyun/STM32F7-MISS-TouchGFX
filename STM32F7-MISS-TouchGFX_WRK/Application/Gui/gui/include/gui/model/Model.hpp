@@ -41,6 +41,11 @@ public:
     void startRegulation();
     void stopRegulation();
 
+    void incPressureBtn() ;
+    void decPressureBtn();
+    void incFlowBtn();
+    void decFlowBtn();
+
     void incBrightness();
     void decBrightness();
 
@@ -50,6 +55,9 @@ protected:
      */
     ModelListener* modelListener;
 
+private:
+    void pushActionQueue(uint16_t u16ActionCode);
+    void pushAudioQueue(uint16_t u16SoundCode);
 };
 
 #endif /* MODEL_HPP */

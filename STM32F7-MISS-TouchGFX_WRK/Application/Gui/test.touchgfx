@@ -182,9 +182,9 @@
             },
             "Alpha": 255,
             "Name": "box1",
-            "X": 0,
+            "X": -1,
             "Y": 0,
-            "Width": 640,
+            "Width": 641,
             "Height": 480,
             "Type": "Box",
             "Visible": true,
@@ -215,8 +215,8 @@
             "Alpha": 255,
             "Style": "Style4",
             "Name": "toggleButton1",
-            "X": 480,
-            "Y": 405,
+            "X": 494,
+            "Y": 209,
             "Width": 128,
             "Height": 38,
             "Type": "ToggleButton",
@@ -254,92 +254,6 @@
             "Moveable": false
           },
           {
-            "Alpha": 255,
-            "ButtonTrigger": {
-              "Type": "RepeatButtonTrigger",
-              "Delay": 500,
-              "Interval": 250
-            },
-            "ButtonStyles": [
-              {
-                "Type": "IconButtonStyle",
-                "X": 0,
-                "Y": 0,
-                "Style": "Icon68",
-                "IconReleased": "__designer\\blue_icons_up_arrow_48.png",
-                "IconPressed": "__designer\\blue_icons_up_arrow_48.png"
-              }
-            ],
-            "Name": "incBtn",
-            "X": 474,
-            "Y": 159,
-            "Width": 48,
-            "Height": 48,
-            "Type": "FlexButton",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "Alpha": 255,
-            "ButtonTrigger": {
-              "Type": "RepeatButtonTrigger",
-              "Delay": 500,
-              "Interval": 250
-            },
-            "ButtonStyles": [
-              {
-                "Type": "IconButtonStyle",
-                "X": 0,
-                "Y": 0,
-                "Style": "Icon14",
-                "IconReleased": "__designer\\blue_icons_down_arrow_48.png",
-                "IconPressed": "__designer\\blue_icons_down_arrow_48.png"
-              }
-            ],
-            "Name": "decBtn",
-            "X": 474,
-            "Y": 254,
-            "Width": 48,
-            "Height": 48,
-            "Type": "FlexButton",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "TextId": "SingleUseId5",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 0,
-              "Green": 0,
-              "Blue": 0
-            },
-            "Alpha": 255,
-            "AutoSize": true,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "TextId": "SingleUseId6",
-              "UseBuffer": false,
-              "BufferSize": 0
-            },
-            "Name": "brightnessValue",
-            "X": 480,
-            "Y": 213,
-            "Width": 37,
-            "Height": 20,
-            "Type": "TextArea",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
             "TextId": "SingleUseId7",
             "TextRotation": "0",
             "Color": {
@@ -356,6 +270,148 @@
             "Width": 144,
             "Height": 20,
             "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Components": [
+              {
+                "TextId": "SingleUseId18",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 0,
+                  "Green": 0,
+                  "Blue": 0
+                },
+                "Alpha": 255,
+                "AutoSize": true,
+                "LineSpacing": 0,
+                "Name": "textArea2",
+                "X": 17,
+                "Y": 10,
+                "Width": 167,
+                "Height": 32,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "Alpha": 255,
+                "ButtonTrigger": {
+                  "Type": "RepeatButtonTrigger",
+                  "Delay": 500,
+                  "Interval": 250
+                },
+                "ButtonStyles": [
+                  {
+                    "Type": "TextButtonStyle",
+                    "X": 0,
+                    "Y": 0,
+                    "TextId": "SingleUseId20",
+                    "TextRotation": "0",
+                    "ColorReleased": {
+                      "Red": 10,
+                      "Green": 10,
+                      "Blue": 10
+                    },
+                    "ColorPressed": {
+                      "Red": 10,
+                      "Green": 10,
+                      "Blue": 10
+                    }
+                  }
+                ],
+                "Name": "incBtn",
+                "X": 567,
+                "Y": 12,
+                "Width": 48,
+                "Height": 32,
+                "Type": "FlexButton",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "TextId": "SingleUseId5",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 0,
+                  "Green": 0,
+                  "Blue": 0
+                },
+                "Alpha": 255,
+                "AutoSize": false,
+                "LineSpacing": 0,
+                "Wildcard1": {
+                  "TextId": "SingleUseId6",
+                  "UseBuffer": false,
+                  "BufferSize": 0
+                },
+                "Name": "brightnessValue",
+                "X": 470,
+                "Y": 12,
+                "Width": 89,
+                "Height": 32,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "Alpha": 255,
+                "ButtonTrigger": {
+                  "Type": "RepeatButtonTrigger",
+                  "Delay": 500,
+                  "Interval": 250
+                },
+                "ButtonStyles": [
+                  {
+                    "Type": "TextButtonStyle",
+                    "X": 0,
+                    "Y": 0,
+                    "TextId": "SingleUseId19",
+                    "TextRotation": "0",
+                    "ColorReleased": {
+                      "Red": 10,
+                      "Green": 10,
+                      "Blue": 10
+                    },
+                    "ColorPressed": {
+                      "Red": 10,
+                      "Green": 10,
+                      "Blue": 10
+                    }
+                  }
+                ],
+                "Name": "decBtn",
+                "X": 410,
+                "Y": 12,
+                "Width": 48,
+                "Height": 32,
+                "Type": "FlexButton",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              }
+            ],
+            "Name": "container1",
+            "X": 7,
+            "Y": 106,
+            "Width": 627,
+            "Height": 54,
+            "Type": "Container",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -383,6 +439,31 @@
             "Width": 50,
             "Height": 50,
             "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "IsHorizontalSlider": true,
+            "BackgroundUnselected": "__designer\\blue_slider_horizontal_medium_slider2_round_back.png",
+            "BackgroundSelected": "__designer\\blue_slider_horizontal_medium_slider2_round_fill.png",
+            "Indicator": "__designer\\blue_slider_horizontal_medium_indicators_slider2_round_nob.png",
+            "BackgroundX": 2,
+            "BackgroundY": 6,
+            "IndicatorPos": 0,
+            "IndicatorMax": 284,
+            "IndicatorMin": 0,
+            "ValueMax": 100,
+            "ValueMin": 0,
+            "InitValue": 0,
+            "Name": "slider2",
+            "X": 284,
+            "Y": 168,
+            "Width": 338,
+            "Height": 34,
+            "Type": "Slider",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -624,7 +705,7 @@
               "Blue": 0
             },
             "Alpha": 255,
-            "AutoSize": true,
+            "AutoSize": false,
             "LineSpacing": 0,
             "Wildcard1": {
               "TextId": "SingleUseId13",
@@ -632,9 +713,9 @@
               "BufferSize": 10
             },
             "Name": "actualPressure",
-            "X": 115,
+            "X": 83,
             "Y": 118,
-            "Width": 18,
+            "Width": 74,
             "Height": 32,
             "Type": "TextArea",
             "Visible": true,
@@ -652,7 +733,7 @@
               "Blue": 0
             },
             "Alpha": 255,
-            "AutoSize": true,
+            "AutoSize": false,
             "LineSpacing": 0,
             "Wildcard1": {
               "TextId": "SingleUseId15",
@@ -660,9 +741,9 @@
               "BufferSize": 10
             },
             "Name": "actualFlowLPM",
-            "X": 325,
+            "X": 302,
             "Y": 118,
-            "Width": 18,
+            "Width": 65,
             "Height": 32,
             "Type": "TextArea",
             "Visible": true,
@@ -680,7 +761,7 @@
               "Blue": 0
             },
             "Alpha": 255,
-            "AutoSize": true,
+            "AutoSize": false,
             "LineSpacing": 0,
             "Wildcard1": {
               "TextId": "SingleUseId17",
@@ -688,9 +769,9 @@
               "BufferSize": 10
             },
             "Name": "actualFlowRPM",
-            "X": 511,
+            "X": 486,
             "Y": 118,
-            "Width": 18,
+            "Width": 74,
             "Height": 32,
             "Type": "TextArea",
             "Visible": true,
@@ -730,11 +811,272 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId21",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea1_1_2",
+            "X": 53,
+            "Y": 189,
+            "Width": 160,
+            "Height": 40,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId22",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea1_1_1_2",
+            "X": 275,
+            "Y": 189,
+            "Width": 118,
+            "Height": 40,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId23",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea1_1_1_1_1",
+            "X": 474,
+            "Y": 189,
+            "Width": 98,
+            "Height": 40,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId24",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 255,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId25",
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "presetlPressure",
+            "X": 83,
+            "Y": 253,
+            "Width": 74,
+            "Height": 32,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId26",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 255,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId27",
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "presetFlowLPM",
+            "X": 302,
+            "Y": 253,
+            "Width": 65,
+            "Height": 32,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId28",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 255,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId29",
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "presetFlowRPM",
+            "X": 486,
+            "Y": 253,
+            "Width": 74,
+            "Height": 32,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon14",
+                "IconReleased": "__designer\\blue_icons_down_arrow_48.png",
+                "IconPressed": "__designer\\blue_icons_down_arrow_48.png"
+              }
+            ],
+            "Name": "decPressure",
+            "X": 19,
+            "Y": 253,
+            "Width": 50,
+            "Height": 32,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon68",
+                "IconReleased": "__designer\\blue_icons_up_arrow_48.png",
+                "IconPressed": "__designer\\blue_icons_up_arrow_48.png"
+              }
+            ],
+            "Name": "incPressure",
+            "X": 170,
+            "Y": 253,
+            "Width": 50,
+            "Height": 32,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon14",
+                "IconReleased": "__designer\\blue_icons_down_arrow_48.png",
+                "IconPressed": "__designer\\blue_icons_down_arrow_48.png"
+              }
+            ],
+            "Name": "decFlow",
+            "X": 424,
+            "Y": 253,
+            "Width": 50,
+            "Height": 32,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "ClickButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon68",
+                "IconReleased": "__designer\\blue_icons_up_arrow_48.png",
+                "IconPressed": "__designer\\blue_icons_up_arrow_48.png"
+              }
+            ],
+            "Name": "incFlow",
+            "X": 572,
+            "Y": 253,
+            "Width": 50,
+            "Height": 32,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [
           {
-            "InteractionName": "Interaction1",
+            "InteractionName": "switchToSettingsScreen",
             "HasCompletedTrigger": false,
             "Trigger": {
               "TriggerComponent": "settingsBtn",
@@ -748,7 +1090,7 @@
             }
           },
           {
-            "InteractionName": "Interaction2",
+            "InteractionName": "switchToHomeScreen",
             "HasCompletedTrigger": false,
             "Trigger": {
               "TriggerComponent": "homeBtn",
@@ -782,6 +1124,54 @@
             },
             "Action": {
               "FunctionName": "stopRegulation",
+              "Type": "ActionCustom"
+            }
+          },
+          {
+            "InteractionName": "incPressure",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "incPressure",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "incPressureBtn",
+              "Type": "ActionCustom"
+            }
+          },
+          {
+            "InteractionName": "decPressure",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "decPressure",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "decPressureBtn",
+              "Type": "ActionCustom"
+            }
+          },
+          {
+            "InteractionName": "incFlow",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "incFlow",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "incFlowBtn",
+              "Type": "ActionCustom"
+            }
+          },
+          {
+            "InteractionName": "decFlow",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "decFlow",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "decFlowBtn",
               "Type": "ActionCustom"
             }
           }
@@ -851,6 +1241,54 @@
       },
       {
         "TextEntryId": "SingleUseId17",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId18",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId19",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId20",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId21",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId22",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId23",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId24",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId25",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId26",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId27",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId28",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId29",
         "IsResource": false
       }
     ],

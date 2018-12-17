@@ -25,10 +25,26 @@ void workScreenView::stopRegulation()
 	presenter->stopRegulation();
 }
 
+void workScreenView::incPressureBtn() {
+	presenter->incPressureBtn();
+}
+
+void workScreenView::decPressureBtn() {
+	presenter->decPressureBtn();
+}
+
+void workScreenView::incFlowBtn() {
+	presenter->incFlowBtn();
+}
+
+void workScreenView::decFlowBtn() {
+	presenter->decFlowBtn();
+}
+
 void workScreenView::actualPressureUpdate(float fVal) {
 	Unicode::snprintf(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%d", (int)fVal);
 	actualPressure.setWildcard(actualPressureBuffer);
-	actualPressure.resizeToCurrentText();
+//	actualPressure.resizeToCurrentText();
 
 	actualPressure.invalidate();
 }
@@ -36,7 +52,7 @@ void workScreenView::actualPressureUpdate(float fVal) {
 void workScreenView::actualFlowLPMUpdate(float fVal) {
 	Unicode::snprintf(actualFlowLPMBuffer, ACTUALFLOWLPM_SIZE, "%d", (int)fVal);
 	actualFlowLPM.setWildcard(actualFlowLPMBuffer);
-	actualFlowLPM.resizeToCurrentText();
+//	actualFlowLPM.resizeToCurrentText();
 
 	actualFlowLPM.invalidate();
 }
@@ -44,7 +60,7 @@ void workScreenView::actualFlowLPMUpdate(float fVal) {
 void workScreenView::actualFlowRPMUpdate(float fVal) {
 	Unicode::snprintf(actualFlowRPMBuffer, ACTUALFLOWRPM_SIZE, "%d", (int)fVal);
 	actualFlowRPM.setWildcard(actualFlowRPMBuffer);
-	actualFlowRPM.resizeToCurrentText();
+//	actualFlowRPM.resizeToCurrentText();
 
 	actualFlowRPM.invalidate();
 }

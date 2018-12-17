@@ -70,6 +70,7 @@ build/MINGW32_NT-6.2/generated/gui_generated/src/settingsscreen_screen/settingsS
  touchgfx//framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.hpp \
  touchgfx//framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp \
  touchgfx//framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp \
+ touchgfx//framework/include/touchgfx/containers/Slider.hpp \
  touchgfx//framework/include/touchgfx/Color.hpp \
  generated/images/include/BitmapDatabase.hpp \
  generated/texts/include/texts/TextKeysAndLanguages.hpp
@@ -213,6 +214,8 @@ touchgfx//framework/include/touchgfx/containers/buttons/WildcardTextButtonStyle.
 touchgfx//framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:
 
 touchgfx//framework/include/touchgfx/containers/buttons/TwoWildcardTextButtonStyle.hpp:
+
+touchgfx//framework/include/touchgfx/containers/Slider.hpp:
 
 touchgfx//framework/include/touchgfx/Color.hpp:
 

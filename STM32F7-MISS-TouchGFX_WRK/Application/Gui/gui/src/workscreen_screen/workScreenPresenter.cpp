@@ -37,3 +37,19 @@ void workScreenPresenter::stopRegulation()
 {
 	model->stopRegulation();
 }
+
+void workScreenPresenter::incPressureBtn() {
+	model->incPressureBtn();
+}
+
+void workScreenPresenter::decPressureBtn() {
+	model->decPressureBtn();
+}
+
+void workScreenPresenter::incFlowBtn() {
+	model->incFlowBtn();
+}
+
+void workScreenPresenter::decFlowBtn() {
+	model->decFlowBtn();
+}

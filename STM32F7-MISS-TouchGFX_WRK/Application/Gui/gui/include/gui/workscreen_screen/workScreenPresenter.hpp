@@ -34,6 +34,11 @@ public:
     void startRegulation();
     void stopRegulation();
 
+    void incPressureBtn();
+    void decPressureBtn();
+    void incFlowBtn();
+    void decFlowBtn();
+
 private:
     workScreenPresenter();
 

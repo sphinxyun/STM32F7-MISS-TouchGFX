@@ -1,12 +1,6 @@
 Converting images
-Compiling gui/src/settingsscreen_screen/settingsScreenPresenter.cpp
 Compiling gui/src/model/Model.cpp
-Compiling generated/gui_generated/src/workscreen_screen/workScreenViewBase.cpp
-Compiling generated/gui_generated/src/settingsscreen_screen/settingsScreenViewBase.cpp
-Compiling generated/gui_generated/src/common/FrontendApplicationBase.cpp
-Compiling generated/gui_generated/src/bootscreen_screen/bootScreenViewBase.cpp
-Compiling generated/fonts/src/Kerning_verdanab_26_4bpp.cpp
-Compiling generated/fonts/src/Kerning_verdanab_16_4bpp.cpp
+Compiling gui/src/settingsscreen_screen/settingsScreenPresenter.cpp
 gui/src/model/Model.cpp:4:35: fatal error: settings/settings_app.h: No such file or directory
  #include "settings/settings_app.h"
                                    ^

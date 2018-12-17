@@ -61,10 +61,10 @@
 #define configIDLE_SHOULD_YIELD					1
 #define configUSE_MUTEXES						1
 #define configQUEUE_REGISTRY_SIZE				8
-#define configCHECK_FOR_STACK_OVERFLOW	        0 //2
+#define configCHECK_FOR_STACK_OVERFLOW	        2
 #define configUSE_RECURSIVE_MUTEXES				1
-#define configUSE_MALLOC_FAILED_HOOK	        0 //1
-#define configUSE_APPLICATION_TASK_TAG	        0 //1
+#define configUSE_MALLOC_FAILED_HOOK	        1
+#define configUSE_APPLICATION_TASK_TAG	        1
 #define configUSE_COUNTING_SEMAPHORES	        1
 
 #define configUSE_TASK_NOTIFICATIONS 			1
@@ -131,8 +131,8 @@ standard names. */
 #define xPortPendSVHandler PendSV_Handler
 
 // To measure mcu load by measure time used in the dummy idle task
-#define traceTASK_SWITCHED_OUT() {} //xTaskCallApplicationTaskHook( pxCurrentTCB, (void*)1 )
-#define traceTASK_SWITCHED_IN() {} //xTaskCallApplicationTaskHook( pxCurrentTCB, (void*)0 )
+#define traceTASK_SWITCHED_OUT() {} xTaskCallApplicationTaskHook( pxCurrentTCB, (void*)1 )
+#define traceTASK_SWITCHED_IN() {} xTaskCallApplicationTaskHook( pxCurrentTCB, (void*)0 )
 
 #endif /* FREERTOS_CONFIG_H */
 

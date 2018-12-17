@@ -26,7 +26,7 @@ void settingsScreenView::decBrightness() {
 void settingsScreenView::brightnessValueUpdate(uint32_t u32Val) {
 	Unicode::snprintf(txtBuffer, 10, "%d", u32Val);
 	brightnessValue.setWildcard(txtBuffer);
-    brightnessValue.resizeToCurrentText();
+//    brightnessValue.resizeToCurrentText();
 
 	brightnessValue.invalidate();
 

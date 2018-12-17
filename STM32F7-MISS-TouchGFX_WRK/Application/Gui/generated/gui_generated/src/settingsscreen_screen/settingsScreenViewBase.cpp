@@ -10,13 +10,13 @@ settingsScreenViewBase::settingsScreenViewBase() :
     buttonCallback(this, &settingsScreenViewBase::buttonCallbackHandler),
     flexButtonCallback(this, &settingsScreenViewBase::flexButtonCallbackHandler)
 {
-    box1.setPosition(0, 0, 640, 480);
+    box1.setPosition(-1, 0, 641, 480);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
 
     image.setXY(566, 22);
     image.setBitmap(Bitmap(BITMAP_QUESTION_MARK_64PX_ID));
 
-    toggleButton1.setXY(480, 405);
+    toggleButton1.setXY(494, 209);
     toggleButton1.setBitmaps(Bitmap(BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_OFF_ID), Bitmap(BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_ON_ID));
 
     homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID), Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID));
@@ -24,46 +24,63 @@ settingsScreenViewBase::settingsScreenViewBase() :
     homeBtn.setPosition(13, 418, 50, 50);
     homeBtn.setAction(flexButtonCallback);
 
-    incBtn.setDelay(30);
-    incBtn.setInterval(15);
-    incBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID));
-    incBtn.setIconXY(0, 0);
-    incBtn.setPosition(474, 159, 48, 48);
-    incBtn.setAction(flexButtonCallback);
-
-    decBtn.setDelay(30);
-    decBtn.setInterval(15);
-    decBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID));
-    decBtn.setIconXY(0, 0);
-    decBtn.setPosition(474, 254, 48, 48);
-    decBtn.setAction(flexButtonCallback);
-
-    brightnessValue.setXY(480, 213);
-    brightnessValue.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-    brightnessValue.setLinespacing(0);
-    brightnessValue.setWildcard(TypedText(T_SINGLEUSEID6).getText());
-    brightnessValue.resizeToCurrentText();
-    brightnessValue.setTypedText(TypedText(T_SINGLEUSEID5));
-
     textArea1.setXY(13, 12);
     textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(TypedText(T_SINGLEUSEID7));
+
+    container1.setPosition(7, 106, 627, 54);
+
+    textArea2.setXY(17, 10);
+    textArea2.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea2.setLinespacing(0);
+    textArea2.setTypedText(TypedText(T_SINGLEUSEID18));
+    container1.add(textArea2);
+
+    incBtn.setDelay(30);
+    incBtn.setInterval(15);
+    incBtn.setText(TypedText(T_SINGLEUSEID20));
+    incBtn.setTextPosition(0, 0, 48, 32);
+    incBtn.setTextColors(touchgfx::Color::getColorFrom24BitRGB(10, 10, 10), touchgfx::Color::getColorFrom24BitRGB(10, 10, 10));
+    incBtn.setPosition(567, 12, 48, 32);
+    incBtn.setAction(flexButtonCallback);
+    container1.add(incBtn);
+
+    brightnessValue.setPosition(470, 12, 89, 32);
+    brightnessValue.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    brightnessValue.setLinespacing(0);
+    brightnessValue.setWildcard(TypedText(T_SINGLEUSEID6).getText());
+    brightnessValue.setTypedText(TypedText(T_SINGLEUSEID5));
+    container1.add(brightnessValue);
+
+    decBtn.setDelay(30);
+    decBtn.setInterval(15);
+    decBtn.setText(TypedText(T_SINGLEUSEID19));
+    decBtn.setTextPosition(0, 0, 48, 32);
+    decBtn.setTextColors(touchgfx::Color::getColorFrom24BitRGB(10, 10, 10), touchgfx::Color::getColorFrom24BitRGB(10, 10, 10));
+    decBtn.setPosition(410, 12, 48, 32);
+    decBtn.setAction(flexButtonCallback);
+    container1.add(decBtn);
 
     workBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID), Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID));
     workBtn.setIconXY(0, 0);
     workBtn.setPosition(95, 418, 50, 50);
     workBtn.setAction(flexButtonCallback);
 
+    slider2.setXY(284, 168);
+    slider2.setBitmaps(Bitmap(BITMAP_BLUE_SLIDER_HORIZONTAL_MEDIUM_SLIDER2_ROUND_BACK_ID), Bitmap(BITMAP_BLUE_SLIDER_HORIZONTAL_MEDIUM_SLIDER2_ROUND_FILL_ID), Bitmap(BITMAP_BLUE_SLIDER_HORIZONTAL_MEDIUM_INDICATORS_SLIDER2_ROUND_NOB_ID));
+    slider2.setupHorizontalSlider(2, 6, 0, 0, 284);
+    slider2.setValueRange(0, 100);
+    slider2.setValue(0);
+
     add(box1);
     add(image);
     add(toggleButton1);
     add(homeBtn);
-    add(incBtn);
-    add(decBtn);
-    add(brightnessValue);
     add(textArea1);
+    add(container1);
     add(workBtn);
+    add(slider2);
 }
 
 void settingsScreenViewBase::setupScreen()

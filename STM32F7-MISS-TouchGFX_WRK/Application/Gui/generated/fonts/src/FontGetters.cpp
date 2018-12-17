@@ -26,7 +26,7 @@ touchgfx::InternalFlashFont& getFont_verdanab_26_4bpp();
 
 touchgfx::InternalFlashFont& getFont_verdanab_26_4bpp()
 {
-    static touchgfx::InternalFlashFont verdanab_26_4bpp(glyphs_verdanab_26_4bpp, 15, 26, 5, 4, 0, 0, unicodes_verdanab_26_4bpp, kerning_verdanab_26_4bpp, 63, 0);
+    static touchgfx::InternalFlashFont verdanab_26_4bpp(glyphs_verdanab_26_4bpp, 27, 26, 5, 4, 0, 0, unicodes_verdanab_26_4bpp, kerning_verdanab_26_4bpp, 63, 0);
     return verdanab_26_4bpp;
 }
 

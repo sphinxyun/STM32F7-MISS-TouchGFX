@@ -34,6 +34,26 @@ public:
         // Override and implement this function in workScreenView
     }
 
+    virtual void incPressureBtn()
+    {
+        // Override and implement this function in workScreenView
+    }
+
+    virtual void decPressureBtn()
+    {
+        // Override and implement this function in workScreenView
+    }
+
+    virtual void incFlowBtn()
+    {
+        // Override and implement this function in workScreenView
+    }
+
+    virtual void decFlowBtn()
+    {
+        // Override and implement this function in workScreenView
+    }
+
 protected:
     FrontendApplication& application() {
         return *static_cast<FrontendApplication*>(Application::getInstance());
@@ -54,6 +74,16 @@ protected:
     touchgfx::TextAreaWithOneWildcard actualFlowRPM;
     touchgfx::Button stopBtn;
     touchgfx::Button startBtn;
+    touchgfx::TextArea textArea1_1_2;
+    touchgfx::TextArea textArea1_1_1_2;
+    touchgfx::TextArea textArea1_1_1_1_1;
+    touchgfx::TextAreaWithOneWildcard presetlPressure;
+    touchgfx::TextAreaWithOneWildcard presetFlowLPM;
+    touchgfx::TextAreaWithOneWildcard presetFlowRPM;
+    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > decPressure;
+    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > incPressure;
+    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > decFlow;
+    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > incFlow;
 
     /*
      * Wildcard Buffers
@@ -64,6 +94,12 @@ protected:
     touchgfx::Unicode::UnicodeChar actualFlowLPMBuffer[ACTUALFLOWLPM_SIZE];
     static const uint16_t ACTUALFLOWRPM_SIZE = 10;
     touchgfx::Unicode::UnicodeChar actualFlowRPMBuffer[ACTUALFLOWRPM_SIZE];
+    static const uint16_t PRESETLPRESSURE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar presetlPressureBuffer[PRESETLPRESSURE_SIZE];
+    static const uint16_t PRESETFLOWLPM_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar presetFlowLPMBuffer[PRESETFLOWLPM_SIZE];
+    static const uint16_t PRESETFLOWRPM_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar presetFlowRPMBuffer[PRESETFLOWRPM_SIZE];
 
 private:
 

@@ -10,6 +10,7 @@
 
 extern "C" {
 	extern QueueHandle_t xAudioEffectsQueue;
+
 	extern QueueHandle_t xGuiActions;
 	extern QueueHandle_t xGuiStatus;
 }
@@ -33,49 +34,53 @@ void Model::tick()
 }
 
 void Model::startRegulation() {
-	WM_MAIN_ActionsTypdef temp = WM_MAIN_START_ACTION;
-	if (xGuiActions) {
-		xQueueSend(xGuiActions, (void*)&temp, 0);
-	}
-
-	uint16_t u16Temp = 1;
-	if (xAudioEffectsQueue) {
-		xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
-	}
+	pushActionQueue((uint16_t)WM_MAIN_START_ACTION);
+	pushAudioQueue(1);
 }
 
 void Model::stopRegulation() {
-	WM_MAIN_ActionsTypdef temp = WM_MAIN_STOP_ACTION;
-	if (xGuiActions) {
-		xQueueSend(xGuiActions, (void*)&temp, 0);
-	}
+	pushActionQueue((uint16_t)WM_MAIN_STOP_ACTION);
+	pushAudioQueue(1);
+}
 
-	uint16_t u16Temp = 1;
-	if (xAudioEffectsQueue) {
-		xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
-	}
+void Model::incPressureBtn() {
+	pushActionQueue((uint16_t)WM_MAIN_INCREASE_IRRIGATION_PRESSURE);
+	pushAudioQueue(1);
+}
+
+void Model::decPressureBtn() {
+	pushActionQueue((uint16_t)WM_MAIN_DECREASE_IRRIGATION_PRESSURE);
+	pushAudioQueue(1);
+}
+
+void Model::incFlowBtn() {
+	pushActionQueue((uint16_t)WM_MAIN_INCREASE_IRRIGATION_FLOW);
+	pushAudioQueue(1);
+}
+
+void Model::decFlowBtn() {
+	pushActionQueue((uint16_t)WM_MAIN_DECREASE_IRRIGATION_FLOW);
+	pushAudioQueue(1);
 }
 
 void Model::incBrightness() {
-	WM_MAIN_ActionsTypdef temp = WM_MAIN_INCREASE_BRIGHTNESS;
-	if (xGuiActions) {
-		xQueueSend(xGuiActions, (void*)&temp, 0);
-	}
-
-	uint16_t u16Temp = 1;
-	if (xAudioEffectsQueue) {
-		xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
-	}
+	pushActionQueue((uint16_t)WM_MAIN_INCREASE_BRIGHTNESS);
+	pushAudioQueue(1);
 }
 
 void Model::decBrightness() {
-	WM_MAIN_ActionsTypdef temp = WM_MAIN_DECREASE_BRIGHTNESS;
-	if (xGuiActions) {
-		xQueueSend(xGuiActions, (void*)&temp, 0);
-	}
+	pushActionQueue((uint16_t)WM_MAIN_DECREASE_BRIGHTNESS);
+	pushAudioQueue(1);
+}
 
-	uint16_t u16Temp = 1;
+void Model::pushActionQueue(uint16_t u16ActionCode) {
+	if (xGuiActions) {
+		xQueueSend( xGuiActions, ( void * ) &u16ActionCode, ( TickType_t ) 0 );
+	}
+}
+
+void Model::pushAudioQueue(uint16_t u16SoundCode) {
 	if (xAudioEffectsQueue) {
-		xQueueSend( xAudioEffectsQueue, ( void * ) &u16Temp, ( TickType_t ) 0 );
+		xQueueSend( xAudioEffectsQueue, ( void * ) &u16SoundCode, ( TickType_t ) 0 );
 	}
 }

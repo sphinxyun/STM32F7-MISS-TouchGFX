@@ -19,6 +19,11 @@ public:
 protected:
     void startRegulation();
     void stopRegulation();
+
+    void incPressureBtn();
+    void decPressureBtn();
+    void incFlowBtn();
+    void decFlowBtn();
 };
 
 #endif // WORKSCREEN_VIEW_HPP

@@ -43,28 +43,25 @@ workScreenViewBase::workScreenViewBase() :
     textArea1_1_1_1.setLinespacing(0);
     textArea1_1_1_1.setTypedText(TypedText(T_SINGLEUSEID11));
 
-    actualPressure.setXY(115, 118);
+    actualPressure.setPosition(83, 118, 74, 32);
     actualPressure.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
     actualPressure.setLinespacing(0);
     Unicode::snprintf(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%s", TypedText(T_SINGLEUSEID13).getText());
     actualPressure.setWildcard(actualPressureBuffer);
-    actualPressure.resizeToCurrentText();
     actualPressure.setTypedText(TypedText(T_SINGLEUSEID12));
 
-    actualFlowLPM.setXY(325, 118);
+    actualFlowLPM.setPosition(302, 118, 65, 32);
     actualFlowLPM.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
     actualFlowLPM.setLinespacing(0);
     Unicode::snprintf(actualFlowLPMBuffer, ACTUALFLOWLPM_SIZE, "%s", TypedText(T_SINGLEUSEID15).getText());
     actualFlowLPM.setWildcard(actualFlowLPMBuffer);
-    actualFlowLPM.resizeToCurrentText();
     actualFlowLPM.setTypedText(TypedText(T_SINGLEUSEID14));
 
-    actualFlowRPM.setXY(511, 118);
+    actualFlowRPM.setPosition(486, 118, 74, 32);
     actualFlowRPM.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
     actualFlowRPM.setLinespacing(0);
     Unicode::snprintf(actualFlowRPMBuffer, ACTUALFLOWRPM_SIZE, "%s", TypedText(T_SINGLEUSEID17).getText());
     actualFlowRPM.setWildcard(actualFlowRPMBuffer);
-    actualFlowRPM.resizeToCurrentText();
     actualFlowRPM.setTypedText(TypedText(T_SINGLEUSEID16));
 
     stopBtn.setXY(529, 371);
@@ -74,6 +71,63 @@ workScreenViewBase::workScreenViewBase() :
     startBtn.setXY(505, 347);
     startBtn.setBitmaps(Bitmap(BITMAP_START_ID), Bitmap(BITMAP_START_DISABLED_ID));
     startBtn.setAction(buttonCallback);
+
+    textArea1_1_2.setXY(53, 189);
+    textArea1_1_2.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1_1_2.setLinespacing(0);
+    textArea1_1_2.setTypedText(TypedText(T_SINGLEUSEID21));
+
+    textArea1_1_1_2.setXY(275, 189);
+    textArea1_1_1_2.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1_1_1_2.setLinespacing(0);
+    textArea1_1_1_2.setTypedText(TypedText(T_SINGLEUSEID22));
+
+    textArea1_1_1_1_1.setXY(474, 189);
+    textArea1_1_1_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1_1_1_1_1.setLinespacing(0);
+    textArea1_1_1_1_1.setTypedText(TypedText(T_SINGLEUSEID23));
+
+    presetlPressure.setPosition(83, 253, 74, 32);
+    presetlPressure.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
+    presetlPressure.setLinespacing(0);
+    Unicode::snprintf(presetlPressureBuffer, PRESETLPRESSURE_SIZE, "%s", TypedText(T_SINGLEUSEID25).getText());
+    presetlPressure.setWildcard(presetlPressureBuffer);
+    presetlPressure.setTypedText(TypedText(T_SINGLEUSEID24));
+
+    presetFlowLPM.setXY(302, 253);
+    presetFlowLPM.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
+    presetFlowLPM.setLinespacing(0);
+    Unicode::snprintf(presetFlowLPMBuffer, PRESETFLOWLPM_SIZE, "%s", TypedText(T_SINGLEUSEID27).getText());
+    presetFlowLPM.setWildcard(presetFlowLPMBuffer);
+    presetFlowLPM.resizeToCurrentText();
+    presetFlowLPM.setTypedText(TypedText(T_SINGLEUSEID26));
+
+    presetFlowRPM.setPosition(486, 253, 74, 32);
+    presetFlowRPM.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
+    presetFlowRPM.setLinespacing(0);
+    Unicode::snprintf(presetFlowRPMBuffer, PRESETFLOWRPM_SIZE, "%s", TypedText(T_SINGLEUSEID29).getText());
+    presetFlowRPM.setWildcard(presetFlowRPMBuffer);
+    presetFlowRPM.setTypedText(TypedText(T_SINGLEUSEID28));
+
+    decPressure.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID));
+    decPressure.setIconXY(0, 0);
+    decPressure.setPosition(19, 253, 50, 32);
+    decPressure.setAction(flexButtonCallback);
+
+    incPressure.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID));
+    incPressure.setIconXY(0, 0);
+    incPressure.setPosition(170, 253, 50, 32);
+    incPressure.setAction(flexButtonCallback);
+
+    decFlow.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_DOWN_ARROW_48_ID));
+    decFlow.setIconXY(0, 0);
+    decFlow.setPosition(424, 253, 50, 32);
+    decFlow.setAction(flexButtonCallback);
+
+    incFlow.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID), Bitmap(BITMAP_BLUE_ICONS_UP_ARROW_48_ID));
+    incFlow.setIconXY(0, 0);
+    incFlow.setPosition(572, 253, 50, 32);
+    incFlow.setAction(flexButtonCallback);
 
     add(box1);
     add(homeBtn);
@@ -87,6 +141,16 @@ workScreenViewBase::workScreenViewBase() :
     add(actualFlowRPM);
     add(stopBtn);
     add(startBtn);
+    add(textArea1_1_2);
+    add(textArea1_1_1_2);
+    add(textArea1_1_1_1_1);
+    add(presetlPressure);
+    add(presetFlowLPM);
+    add(presetFlowRPM);
+    add(decPressure);
+    add(incPressure);
+    add(decFlow);
+    add(incFlow);
 }
 
 void workScreenViewBase::setupScreen()
@@ -116,16 +180,44 @@ void workScreenViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButto
 {
     if (&src == &homeBtn)
     {
-        //Interaction2
+        //switchToHomeScreen
         //When homeBtn clicked change screen to bootScreen
         //Go to bootScreen with screen transition towards West
         application().gotobootScreenScreenSlideTransitionWest();
     }
     else if (&src == &settingsBtn)
     {
-        //Interaction1
+        //switchToSettingsScreen
         //When settingsBtn clicked change screen to settingsScreen
         //Go to settingsScreen with screen transition towards East
         application().gotosettingsScreenScreenSlideTransitionEast();
+    }
+    else if (&src == &decPressure)
+    {
+        //decPressure
+        //When decPressure clicked call virtual function
+        //Call decPressureBtn
+        decPressureBtn();
+    }
+    else if (&src == &incPressure)
+    {
+        //incPressure
+        //When incPressure clicked call virtual function
+        //Call incPressureBtn
+        incPressureBtn();
+    }
+    else if (&src == &decFlow)
+    {
+        //decFlow
+        //When decFlow clicked call virtual function
+        //Call decFlowBtn
+        decFlowBtn();
+    }
+    else if (&src == &incFlow)
+    {
+        //incFlow
+        //When incFlow clicked call virtual function
+        //Call incFlowBtn
+        incFlowBtn();
     }
 }

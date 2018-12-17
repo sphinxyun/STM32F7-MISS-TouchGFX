@@ -99,6 +99,7 @@ build/MINGW32_NT-6.2/simulator/main.o: simulator/main.cpp \
  touchgfx//framework/include/touchgfx/widgets/ToggleButton.hpp \
  touchgfx//framework/include/touchgfx/widgets/Button.hpp \
  touchgfx//framework/include/touchgfx/widgets/AbstractButton.hpp \
+ touchgfx//framework/include/touchgfx/containers/Slider.hpp \
  gui/include/gui/workscreen_screen/workScreenView.hpp \
  generated/gui_generated/include/gui_generated/workscreen_screen/workScreenViewBase.hpp \
  gui/include/gui/workscreen_screen/workScreenPresenter.hpp \
@@ -307,6 +308,8 @@ touchgfx//framework/include/touchgfx/widgets/ToggleButton.hpp:
 touchgfx//framework/include/touchgfx/widgets/Button.hpp:
 
 touchgfx//framework/include/touchgfx/widgets/AbstractButton.hpp:
+
+touchgfx//framework/include/touchgfx/containers/Slider.hpp:
 
 gui/include/gui/workscreen_screen/workScreenView.hpp:
 
