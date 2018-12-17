@@ -1339,9 +1339,9 @@
       "AvailableResolutions": [],
       "PhysicalButtons": [],
       "GenerateAssetsCommand": "make -f simulator/gcc/Makefile assets -j8",
-      "PostGenerateCommand": "touchgfx update_project --project-file=simulator/msvs/Application.vcxproj",
-      "CompileSimulatorCommand": "make -f simulator/gcc/Makefile -j8",
-      "RunSimulatorCommand": "build\\bin\\simulator.exe",
+      "PostGenerateCommand": "",
+      "CompileSimulatorCommand": "",
+      "RunSimulatorCommand": "",
       "CompileTargetCommand": "",
       "FlashTargetCommand": ""
     }
