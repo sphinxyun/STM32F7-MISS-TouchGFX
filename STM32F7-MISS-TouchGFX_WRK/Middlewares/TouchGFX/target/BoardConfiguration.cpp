@@ -394,11 +394,40 @@ namespace touchgfx
 {
 void hw_init()
 {
-    HAL_Init();
+/* Configure Instruction cache through ART accelerator */
+#if (ART_ACCLERATOR_ENABLE != 0)
+	__HAL_FLASH_ART_ENABLE();
+#endif /* ART_ACCLERATOR_ENABLE */
+
+/* Configure Flash prefetch */
+#if (PREFETCH_ENABLE != 0U)
+	__HAL_FLASH_PREFETCH_BUFFER_ENABLE();
+#endif /* PREFETCH_ENABLE */
+
+	/* Set Interrupt Group Priority */
+	HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
     __HAL_RCC_CRC_CLK_ENABLE();
 
     SystemClock_Config();
+
+    __HAL_RCC_SYSCFG_CLK_ENABLE();
+	__HAL_RCC_PWR_CLK_ENABLE();
+
+	/* MemoryManagement_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(MemoryManagement_IRQn, 0, 0);
+	/* BusFault_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(BusFault_IRQn, 0, 0);
+	/* UsageFault_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(UsageFault_IRQn, 0, 0);
+	/* SVCall_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(SVCall_IRQn, 0, 0);
+	/* DebugMonitor_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(DebugMonitor_IRQn, 0, 0);
+	/* PendSV_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(PendSV_IRQn, 0, 0);
+	/* SysTick_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 
     /* Initialize the QSPI */
     BSP_QSPI_Init();
@@ -607,4 +636,11 @@ static void SystemClock_Config(void)
             ;
         }
     }
+
+    //Configure the Systick interrupt time
+	HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq() / 1000);
+	//Configure the Systick
+	HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+	//SysTick_IRQn interrupt configuration
+	HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }

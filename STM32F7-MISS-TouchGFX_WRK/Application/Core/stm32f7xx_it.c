@@ -6,9 +6,11 @@
 
 #include "debug_uart.h"
 
-#include <stdbool.h>
+#include "FreeRTOS.h"
+#include "task.h"
+extern void xPortSysTickHandler(void);
 
-#include <cmsis_os.h>
+#include <stdbool.h>
 
 extern SAI_HandleTypeDef             haudio_out_sai;
 extern SAI_HandleTypeDef             haudio_in_sai;
@@ -27,8 +29,8 @@ static volatile int overrunCnt;
   * @param  None
   * @retval None
   */
-void NMI_Handler(void)
-{
+void NMI_Handler(void) {
+
 }
 
 /**
@@ -36,9 +38,8 @@ void NMI_Handler(void)
   * @param  None
   * @retval None
   */
-void prvGetRegistersFromStack( uint32_t *pulFaultStackAddress )
-{
-/* These are volatile to try and prevent the compiler/linker optimising them
+void prvGetRegistersFromStack( uint32_t *pulFaultStackAddress ) {
+/* These are volatile to try and prevent the compiler/linker optimizing them
 away as the variables never actually get used.  If the debugger won't show the
 values of the variables, make them global my moving their declaration outside
 of this function. */
@@ -76,23 +77,21 @@ volatile uint32_t psr;/* Program status register. */
 
 void HardFault_Handler(void) __attribute__( ( naked ) );
 
-void HardFault_Handler(void)
-{
-	__asm volatile
-	    (
-	        " tst lr, #4                                                \n"
-	        " ite eq                                                    \n"
-	        " mrseq r0, msp                                             \n"
-	        " mrsne r0, psp                                             \n"
-	        " ldr r1, [r0, #24]                                         \n"
-	        " ldr r2, handler2_address_const                            \n"
-	        " bx r2                                                     \n"
-	        " handler2_address_const: .word prvGetRegistersFromStack    \n"
-	    );
+void HardFault_Handler(void) {
+	__asm volatile (
+		" tst lr, #4                                                \n"
+		" ite eq                                                    \n"
+		" mrseq r0, msp                                             \n"
+		" mrsne r0, psp                                             \n"
+		" ldr r1, [r0, #24]                                         \n"
+		" ldr r2, handler2_address_const                            \n"
+		" bx r2                                                     \n"
+		" handler2_address_const: .word prvGetRegistersFromStack    \n"
+	);
 
   /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
+  while (1) {
+
   }
 }
 
@@ -101,11 +100,10 @@ void HardFault_Handler(void)
   * @param  None
   * @retval None
   */
-void MemManage_Handler(void)
-{
+void MemManage_Handler(void) {
   /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
+  while (1) {
+
   }
 }
 
@@ -114,11 +112,10 @@ void MemManage_Handler(void)
   * @param  None
   * @retval None
   */
-void BusFault_Handler(void)
-{
+void BusFault_Handler(void) {
   /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
+  while (1) {
+
   }
 }
 
@@ -127,11 +124,10 @@ void BusFault_Handler(void)
   * @param  None
   * @retval None
   */
-void UsageFault_Handler(void)
-{
+void UsageFault_Handler(void) {
   /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
+  while (1) {
+
   }
 }
 
@@ -140,8 +136,8 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
-void DebugMon_Handler(void)
-{
+void DebugMon_Handler(void) {
+
 }
 
 /**
@@ -149,10 +145,14 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void SysTick_Handler(void)
-{
-	HAL_SYSTICK_IRQHandler();
-	osSystickHandler();
+void SysTick_Handler(void) {
+	HAL_IncTick();
+
+	if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+		xPortSysTickHandler();
+	}
+
+	//osSystickHandler();
 }
 
 /**
@@ -160,9 +160,8 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
-void DMA2D_IRQHandler(void)
-{
-  HAL_DMA2D_IRQHandler(&hdma2d);
+void DMA2D_IRQHandler(void) {
+	HAL_DMA2D_IRQHandler(&hdma2d);
 }
 
 /**
@@ -170,9 +169,8 @@ void DMA2D_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void LTDC_IRQHandler(void)
-{
-  HAL_LTDC_IRQHandler(&hltdc);
+void LTDC_IRQHandler(void) {
+	HAL_LTDC_IRQHandler(&hltdc);
 }
 
 /**
@@ -180,24 +178,12 @@ void LTDC_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void LTDC_ER_IRQHandler(void)
-{
-  if (LTDC->ISR & 2)
-  {
-    LTDC->ICR = 2;
-    overrunCnt++;
-  }
+void LTDC_ER_IRQHandler(void) {
+	if (LTDC->ISR & 2) {
+		LTDC->ICR = 2;
+		overrunCnt++;
+	}
 }
-
-///**
-//  * @brief  This function handles External lines 9_5 interrupt request.
-//  * @param  None
-//  * @retval None
-//  */
-//void EXTI9_5_IRQHandler(void)
-//{
-//	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8);
-//}
 
 /**
   * @brief  This function handles DMA2 Stream 5 interrupt request.
