@@ -11,6 +11,7 @@
 #include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/buttons/Buttons.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class bootScreenViewBase : public touchgfx::View<bootScreenPresenter>
 {
@@ -34,6 +35,13 @@ protected:
     touchgfx::TextArea textArea2;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > settingsBtn;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > workBtn;
+    touchgfx::TextAreaWithOneWildcard mcuLoad;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t MCULOAD_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar mcuLoadBuffer[MCULOAD_SIZE];
 
 private:
 

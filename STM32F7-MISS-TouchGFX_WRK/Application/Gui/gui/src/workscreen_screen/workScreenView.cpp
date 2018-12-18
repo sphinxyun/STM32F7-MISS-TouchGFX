@@ -41,10 +41,16 @@ void workScreenView::decFlowBtn() {
 	presenter->decFlowBtn();
 }
 
+void workScreenView::mcuLoadUpdated(uint8_t mcuLoadValue) {
+	Unicode::snprintf(mcuLoadBuffer, MCULOAD_SIZE, "%d", mcuLoadValue);
+	mcuLoad.setWildcard(mcuLoadBuffer);
+
+	mcuLoad.invalidate();
+}
+
 void workScreenView::actualPressureUpdate(float fVal) {
 	Unicode::snprintf(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%d", (int)fVal);
 	actualPressure.setWildcard(actualPressureBuffer);
-//	actualPressure.resizeToCurrentText();
 
 	actualPressure.invalidate();
 }
@@ -52,7 +58,6 @@ void workScreenView::actualPressureUpdate(float fVal) {
 void workScreenView::actualFlowLPMUpdate(float fVal) {
 	Unicode::snprintfFloats(actualFlowLPMBuffer, ACTUALFLOWLPM_SIZE, "%3.2f", &fVal);
 	actualFlowLPM.setWildcard(actualFlowLPMBuffer);
-//	actualFlowLPM.resizeToCurrentText();
 
 	actualFlowLPM.invalidate();
 }
@@ -60,7 +65,6 @@ void workScreenView::actualFlowLPMUpdate(float fVal) {
 void workScreenView::actualFlowRPMUpdate(float fVal) {
 	Unicode::snprintf(actualFlowRPMBuffer, ACTUALFLOWRPM_SIZE, "%d", (int)fVal);
 	actualFlowRPM.setWildcard(actualFlowRPMBuffer);
-//	actualFlowRPM.resizeToCurrentText();
 
 	actualFlowRPM.invalidate();
 }

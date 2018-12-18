@@ -23,7 +23,7 @@ workScreenViewBase::workScreenViewBase() :
     settingsBtn.setPosition(83, 419, 50, 50);
     settingsBtn.setAction(flexButtonCallback);
 
-    textArea1.setXY(15, 11);
+    textArea1.setXY(15, 15);
     textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(TypedText(T_SINGLEUSEID8));
@@ -46,7 +46,7 @@ workScreenViewBase::workScreenViewBase() :
     actualPressure.setPosition(83, 118, 74, 32);
     actualPressure.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
     actualPressure.setLinespacing(0);
-    Unicode::snprintf(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%s", TypedText(T_SINGLEUSEID13).getText());
+    Unicode::snprintf(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%s", TypedText(T_SINGLEUSEID34).getText());
     actualPressure.setWildcard(actualPressureBuffer);
     actualPressure.setTypedText(TypedText(T_SINGLEUSEID12));
 
@@ -129,6 +129,13 @@ workScreenViewBase::workScreenViewBase() :
     incFlow.setPosition(572, 253, 50, 32);
     incFlow.setAction(flexButtonCallback);
 
+    mcuLoad.setPosition(485, 0, 155, 20);
+    mcuLoad.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    mcuLoad.setLinespacing(0);
+    mcuLoadBuffer[0] = 0;
+    mcuLoad.setWildcard(mcuLoadBuffer);
+    mcuLoad.setTypedText(TypedText(T_DEMO_VIEW_MCU_LOAD_VALUE));
+
     add(box1);
     add(homeBtn);
     add(settingsBtn);
@@ -151,6 +158,7 @@ workScreenViewBase::workScreenViewBase() :
     add(incPressure);
     add(decFlow);
     add(incFlow);
+    add(mcuLoad);
 }
 
 void workScreenViewBase::setupScreen()

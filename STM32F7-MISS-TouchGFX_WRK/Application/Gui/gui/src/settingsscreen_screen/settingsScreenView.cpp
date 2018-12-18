@@ -26,8 +26,13 @@ void settingsScreenView::decBrightness() {
 void settingsScreenView::brightnessValueUpdate(uint32_t u32Val) {
 	Unicode::snprintf(txtBuffer, 10, "%d", u32Val);
 	brightnessValue.setWildcard(txtBuffer);
-//    brightnessValue.resizeToCurrentText();
 
 	brightnessValue.invalidate();
+}
 
+void settingsScreenView::mcuLoadUpdated(uint8_t mcuLoadValue) {
+	Unicode::snprintf(mcuLoadBuffer, MCULOAD_SIZE, "%d", mcuLoadValue);
+	mcuLoad.setWildcard(mcuLoadBuffer);
+
+	mcuLoad.invalidate();
 }

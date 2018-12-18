@@ -33,6 +33,7 @@ public:
 
     void brightnessValueUpdate(uint32_t u32Val);
 
+    void mcuLoadUpdated(uint8_t mcuLoad);
 
 private:
     settingsScreenPresenter();

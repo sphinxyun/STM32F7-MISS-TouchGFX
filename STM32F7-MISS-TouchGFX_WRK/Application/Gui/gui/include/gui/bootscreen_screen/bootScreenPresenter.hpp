@@ -27,6 +27,8 @@ public:
 
     virtual ~bootScreenPresenter() {};
 
+    void mcuLoadUpdated(uint8_t mcuLoad);
+
 private:
     bootScreenPresenter();
 

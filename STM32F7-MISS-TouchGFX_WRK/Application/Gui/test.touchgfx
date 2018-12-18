@@ -136,6 +136,33 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId30",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "mcuLoad",
+            "X": 485,
+            "Y": 0,
+            "Width": 155,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [
@@ -187,21 +214,6 @@
             "Width": 641,
             "Height": 480,
             "Type": "Box",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "RelativeFilename": "question_mark_64px.png",
-            "Alpha": 255,
-            "Name": "image",
-            "X": 566,
-            "Y": 22,
-            "Width": 45,
-            "Height": 64,
-            "Type": "Image",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -265,8 +277,8 @@
             "AutoSize": true,
             "LineSpacing": 0,
             "Name": "textArea1",
-            "X": 13,
-            "Y": 12,
+            "X": 15,
+            "Y": 15,
             "Width": 144,
             "Height": 20,
             "Type": "TextArea",
@@ -469,6 +481,33 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId31",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "mcuLoad",
+            "X": 485,
+            "Y": 0,
+            "Width": 155,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [
@@ -617,7 +656,7 @@
             "LineSpacing": 0,
             "Name": "textArea1",
             "X": 15,
-            "Y": 11,
+            "Y": 15,
             "Width": 109,
             "Height": 20,
             "Type": "TextArea",
@@ -708,7 +747,7 @@
             "AutoSize": false,
             "LineSpacing": 0,
             "Wildcard1": {
-              "TextId": "SingleUseId13",
+              "TextId": "SingleUseId34",
               "UseBuffer": true,
               "BufferSize": 10
             },
@@ -1072,6 +1111,33 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "TextId": "DEMO_VIEW_MCU_LOAD_VALUE",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "mcuLoad",
+            "X": 485,
+            "Y": 0,
+            "Width": 155,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [
@@ -1224,10 +1290,6 @@
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId13",
-        "IsResource": false
-      },
-      {
         "TextEntryId": "SingleUseId14",
         "IsResource": false
       },
@@ -1290,6 +1352,22 @@
       {
         "TextEntryId": "SingleUseId29",
         "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId30",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId31",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId34",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "DEMO_VIEW_MCU_LOAD_VALUE",
+        "IsResource": true
       }
     ],
     "Name": "test",

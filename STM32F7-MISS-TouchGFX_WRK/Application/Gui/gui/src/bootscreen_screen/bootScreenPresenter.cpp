@@ -16,4 +16,8 @@ void bootScreenPresenter::deactivate()
 
 }
 
+void bootScreenPresenter::mcuLoadUpdated(uint8_t mcuLoad) {
+	view.mcuLoadUpdated(mcuLoad);
+}
+
 

@@ -35,12 +35,20 @@ bootScreenViewBase::bootScreenViewBase() :
     workBtn.setPosition(335, 429, 50, 50);
     workBtn.setAction(flexButtonCallback);
 
+    mcuLoad.setPosition(485, 0, 155, 20);
+    mcuLoad.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    mcuLoad.setLinespacing(0);
+    mcuLoadBuffer[0] = 0;
+    mcuLoad.setWildcard(mcuLoadBuffer);
+    mcuLoad.setTypedText(TypedText(T_SINGLEUSEID30));
+
     add(box1);
     add(image);
     add(textArea1);
     add(textArea2);
     add(settingsBtn);
     add(workBtn);
+    add(mcuLoad);
 }
 
 void bootScreenViewBase::setupScreen()

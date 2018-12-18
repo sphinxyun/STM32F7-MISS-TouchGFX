@@ -4,6 +4,9 @@
 #include <gui_generated/workscreen_screen/workScreenViewBase.hpp>
 #include <gui/workscreen_screen/workScreenPresenter.hpp>
 
+#include <gui/common/CommonView.hpp>
+
+
 class workScreenView : public workScreenViewBase
 {
 public:
@@ -15,6 +18,7 @@ public:
     void actualPressureUpdate(float fVal);
     void actualFlowLPMUpdate(float fVal);
     void actualFlowRPMUpdate(float fVal);
+    void mcuLoadUpdated(uint8_t mcuLoad);
 
 protected:
     void startRegulation();
@@ -24,6 +28,8 @@ protected:
     void decPressureBtn();
     void incFlowBtn();
     void decFlowBtn();
+
+
 };
 
 #endif // WORKSCREEN_VIEW_HPP

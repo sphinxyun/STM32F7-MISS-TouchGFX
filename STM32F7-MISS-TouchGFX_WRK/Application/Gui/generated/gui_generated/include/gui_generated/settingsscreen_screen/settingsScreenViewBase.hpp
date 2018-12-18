@@ -8,7 +8,6 @@
 #include <mvp/View.hpp>
 #include <gui/settingsscreen_screen/settingsScreenPresenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/widgets/ToggleButton.hpp>
 #include <touchgfx/containers/buttons/Buttons.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
@@ -46,7 +45,6 @@ protected:
      * Member Declarations
      */
     touchgfx::Box box1;
-    touchgfx::Image image;
     touchgfx::ToggleButton toggleButton1;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > homeBtn;
     touchgfx::TextArea textArea1;
@@ -58,6 +56,13 @@ protected:
 
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > workBtn;
     touchgfx::Slider slider2;
+    touchgfx::TextAreaWithOneWildcard mcuLoad;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t MCULOAD_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar mcuLoadBuffer[MCULOAD_SIZE];
 
 private:
 

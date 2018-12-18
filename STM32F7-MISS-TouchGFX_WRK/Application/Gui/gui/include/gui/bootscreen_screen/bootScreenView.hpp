@@ -11,6 +11,8 @@ public:
     virtual ~bootScreenView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    void mcuLoadUpdated(uint8_t mcuLoad);
 };
 
 #endif // BOOTSCREEN_VIEW_HPP

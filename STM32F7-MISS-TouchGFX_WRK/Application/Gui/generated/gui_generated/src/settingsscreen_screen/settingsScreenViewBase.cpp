@@ -13,9 +13,6 @@ settingsScreenViewBase::settingsScreenViewBase() :
     box1.setPosition(-1, 0, 641, 480);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
 
-    image.setXY(566, 22);
-    image.setBitmap(Bitmap(BITMAP_QUESTION_MARK_64PX_ID));
-
     toggleButton1.setXY(494, 209);
     toggleButton1.setBitmaps(Bitmap(BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_OFF_ID), Bitmap(BITMAP_BLUE_TOGGLEBARS_TOGGLE_ROUND_LARGE_BUTTON_ON_ID));
 
@@ -24,7 +21,7 @@ settingsScreenViewBase::settingsScreenViewBase() :
     homeBtn.setPosition(13, 418, 50, 50);
     homeBtn.setAction(flexButtonCallback);
 
-    textArea1.setXY(13, 12);
+    textArea1.setXY(15, 15);
     textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(TypedText(T_SINGLEUSEID7));
@@ -73,14 +70,21 @@ settingsScreenViewBase::settingsScreenViewBase() :
     slider2.setValueRange(0, 100);
     slider2.setValue(0);
 
+    mcuLoad.setPosition(485, 0, 155, 20);
+    mcuLoad.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    mcuLoad.setLinespacing(0);
+    mcuLoadBuffer[0] = 0;
+    mcuLoad.setWildcard(mcuLoadBuffer);
+    mcuLoad.setTypedText(TypedText(T_SINGLEUSEID31));
+
     add(box1);
-    add(image);
     add(toggleButton1);
     add(homeBtn);
     add(textArea1);
     add(container1);
     add(workBtn);
     add(slider2);
+    add(mcuLoad);
 }
 
 void settingsScreenViewBase::setupScreen()

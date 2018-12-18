@@ -15,6 +15,7 @@ public:
     void incBrightness();
     void decBrightness();
     void brightnessValueUpdate(uint32_t u32Val);
+    void mcuLoadUpdated(uint8_t mcuLoad);
 
 protected:
     Unicode::UnicodeChar txtBuffer[10];

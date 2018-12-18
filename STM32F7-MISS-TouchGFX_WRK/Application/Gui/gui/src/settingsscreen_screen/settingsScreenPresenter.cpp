@@ -27,3 +27,7 @@ void settingsScreenPresenter::decBrightness(void) {
 void settingsScreenPresenter::brightnessValueUpdate(uint32_t u32Val) {
 	view.brightnessValueUpdate(u32Val);
 };
+
+void settingsScreenPresenter::mcuLoadUpdated(uint8_t mcuLoad) {
+	view.mcuLoadUpdated(mcuLoad);
+}

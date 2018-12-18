@@ -1,8 +1,8 @@
 #include <gui/workscreen_screen/workScreenView.hpp>
 #include <gui/workscreen_screen/workScreenPresenter.hpp>
 
-workScreenPresenter::workScreenPresenter(workScreenView& v)
-    : view(v)
+workScreenPresenter::workScreenPresenter(workScreenView& v) :
+	view(v)
 {
 }
 
@@ -52,4 +52,8 @@ void workScreenPresenter::incFlowBtn() {
 
 void workScreenPresenter::decFlowBtn() {
 	model->decFlowBtn();
+}
+
+void workScreenPresenter::mcuLoadUpdated(uint8_t mcuLoad) {
+	view.mcuLoadUpdated(mcuLoad);
 }

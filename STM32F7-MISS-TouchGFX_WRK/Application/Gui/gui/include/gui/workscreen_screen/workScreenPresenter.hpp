@@ -2,7 +2,7 @@
 #define WORKSCREEN_PRESENTER_HPP
 
 #include <gui/model/ModelListener.hpp>
-#include <mvp/Presenter.hpp>
+#include <gui/common/CommonPresenter.hpp>
 
 using namespace touchgfx;
 
@@ -38,6 +38,8 @@ public:
     void decPressureBtn();
     void incFlowBtn();
     void decFlowBtn();
+
+    void mcuLoadUpdated(uint8_t mcuLoad);
 
 private:
     workScreenPresenter();

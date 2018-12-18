@@ -84,6 +84,7 @@ protected:
     touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > incPressure;
     touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > decFlow;
     touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > incFlow;
+    touchgfx::TextAreaWithOneWildcard mcuLoad;
 
     /*
      * Wildcard Buffers
@@ -100,6 +101,8 @@ protected:
     touchgfx::Unicode::UnicodeChar presetFlowLPMBuffer[PRESETFLOWLPM_SIZE];
     static const uint16_t PRESETFLOWRPM_SIZE = 10;
     touchgfx::Unicode::UnicodeChar presetFlowRPMBuffer[PRESETFLOWRPM_SIZE];
+    static const uint16_t MCULOAD_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar mcuLoadBuffer[MCULOAD_SIZE];
 
 private:
 

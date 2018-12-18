@@ -1,6 +1,8 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 
+#include <touchgfx/hal/HAL.hpp>
+
 #include "settings/settings_app.h"
 #include "state_machine/state_machine.h"
 
@@ -15,7 +17,11 @@ extern "C" {
 	extern QueueHandle_t xGuiStatus;
 }
 
-Model::Model() : modelListener(0)
+static uint8_t mcuLoadLast = 0;
+
+Model::Model() :
+	modelListener(0),
+	mcuLoadActive(true)
 {
 }
 
@@ -30,6 +36,14 @@ void Model::tick()
 		modelListener->actualPressureUpdate(guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
 		modelListener->actualFlowLPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualFlowLPM);
 		modelListener->actualFlowRPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
+	}
+
+//	static int milliseconds = 123456;
+	uint8_t mcuLoadPct = touchgfx::HAL::getInstance()->getMCULoadPct();
+	if (mcuLoadLast != /*mcu_load_pct*/ mcuLoadPct)
+	{
+		mcuLoadLast = mcuLoadPct;
+		modelListener->mcuLoadUpdated(mcuLoadLast);
 	}
 }
 

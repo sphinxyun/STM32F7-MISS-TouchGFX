@@ -34,6 +34,8 @@ public:
 
     virtual void brightnessValueUpdate(uint32_t u32Val) {}
 
+    virtual void mcuLoadUpdated(uint8_t mcuLoad) {}
+
 protected:
     Model* model;
 };

@@ -54,6 +54,7 @@ protected:
      * Pointer to the currently active presenter.
      */
     ModelListener* modelListener;
+    bool mcuLoadActive;
 
 private:
     void pushActionQueue(uint16_t u16ActionCode);
