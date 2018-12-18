@@ -35,7 +35,7 @@ uint16_t u16SpeedIdx = 0;
 
 volatile static int32_t i32Speed = 0;
 
-void TIM2_IRQHandler(void) {
+void TIM3_IRQHandler(void) {
 	HAL_TIM_IRQHandler(&SPEED_TimerHandle);
 
 	BaseType_t xHigherPriorityTaskWoken;
@@ -104,7 +104,7 @@ void Configure_ENCODER(void) {
 }
 
 void StartSpeedMonitoring(void) {
-	__HAL_RCC_TIM2_CLK_ENABLE();
+	__HAL_RCC_TIM3_CLK_ENABLE();
 
 	TIM5->CNT = 0;
 	i32SpeedSum = 0;
@@ -113,11 +113,11 @@ void StartSpeedMonitoring(void) {
 	u16SpeedIdx = 0;
 
 	/*
-	 TIM2 input clock (TIM2CLK) is same as 2x APB1 clock (PCLK1), because:
+	 TIM3 input clock (TIM3CLK) is same as 2x APB1 clock (PCLK1), because:
 	  - APB1 Prescaler is set to 4 (check SystemClock_Config),
 	  - additional x2 multiplier on APB1 Timer Clocks
 
-	 TIM12CLK = 216 MHz (HCLK) / 4 * 2 = 216 MHz (HCLK) / 2 = 108 MHz
+	 TIM3CLK = 216 MHz (HCLK) / 4 * 2 = 216 MHz (HCLK) / 2 = 108 MHz
 
 	 Max. motor RPMs @ 32V (no load) equal to 1170 RPM (~1200 RPM)
 	 1200 RPM / 60 s = 20 RPS (revolutions pre second) - timer must be called at least that often
@@ -127,7 +127,7 @@ void StartSpeedMonitoring(void) {
 	 We configure measurement period to be 20 Hz
 	 108 MHz / 54000 = 2000 counts - prescaller equal to 54000 is needed
 	 */
-	SPEED_TimerHandle.Instance = TIM2;
+	SPEED_TimerHandle.Instance = TIM3;
 	SPEED_TimerHandle.Init.Period = 100 - 1;
 	SPEED_TimerHandle.Init.Prescaler = 54000;
 	SPEED_TimerHandle.Init.ClockDivision = 0;
@@ -150,10 +150,10 @@ void StartSpeedMonitoring(void) {
 
 	/*##-2- Configure the NVIC for TIMx ########################################*/
 	/* Set the TIMx priority */
-	HAL_NVIC_SetPriority(TIM2_IRQn, 4, 0);
+	HAL_NVIC_SetPriority(TIM3_IRQn, 4, 0);
 
 	/* Enable the TIMx global Interrupt */
-	HAL_NVIC_EnableIRQ(TIM2_IRQn);
+	HAL_NVIC_EnableIRQ(TIM3_IRQn);
 }
 
 void Configure_PWM(void) {

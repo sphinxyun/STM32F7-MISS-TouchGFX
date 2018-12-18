@@ -50,7 +50,7 @@ void STM32F7Instrumentation::init()
     else
         uwTimclock = 2 * HAL_RCC_GetPCLK1Freq();
 
-    m_sysclkRatio = HAL_RCC_GetHCLKFreq() / uwTimclock;
+    m_sysclkRatio = HAL_RCC_GetHCLKFreq() / uwTimclock; // * 4;
 
     HAL_TIM_Base_Init(&tim);
     HAL_TIM_Base_Start(&tim);
