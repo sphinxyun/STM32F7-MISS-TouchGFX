@@ -1,1 +1,11 @@
 Converting images
+Generating generated/fonts/UnicodeListverdanab_16_4.txt
+Generating generated/fonts/UnicodeListverdanab_26_4.txt
+Generating generated/fonts/src/ApplicationFontProvider.cpp
+Generating generated/fonts/include/fonts/ApplicationFontProvider.hpp
+Generating generated/texts/include/texts/TextKeysAndLanguages.hpp
+Generating generated/texts/src/Texts.cpp
+Generating generated/texts/src/LanguageGb.cpp
+Generating generated/texts/include/texts/TypedTextDatabase.hpp
+Generating generated/texts/src/TypedTextDatabase.cpp
+Remapped 10 strings (50 bytes saved)

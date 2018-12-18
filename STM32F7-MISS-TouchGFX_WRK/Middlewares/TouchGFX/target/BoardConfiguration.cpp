@@ -63,7 +63,7 @@
 extern "C"
 {
 #include "stm32746g_discovery_sdram.h"
-#include "stm32746g_discovery_lcd.h"
+//#include "stm32746g_discovery_lcd.h"
 #include "stm32746g_discovery_qspi.h"
 
 #include "stm32f7xx_hal_dma.h"
@@ -106,7 +106,7 @@ static void LCD_MspInit()
     __HAL_RCC_GPIOI_CLK_ENABLE();
     __HAL_RCC_GPIOJ_CLK_ENABLE();
     __HAL_RCC_GPIOK_CLK_ENABLE();
-    LCD_DISP_GPIO_CLK_ENABLE();
+//    __HAL_RCC_GPIOI_CLK_ENABLE();
 //    LCD_BL_CTRL_GPIO_CLK_ENABLE();
 
     /*** LTDC Pins configuration ***/
@@ -148,9 +148,9 @@ static void LCD_MspInit()
     HAL_GPIO_Init(GPIOK, &gpio_init_structure);
 
     /* LCD_DISP GPIO configuration */
-    gpio_init_structure.Pin       = LCD_DISP_PIN;     /* LCD_DISP pin has to be manually controlled */
+    gpio_init_structure.Pin       = GPIO_PIN_12;     /* LCD_DISP pin has to be manually controlled */
     gpio_init_structure.Mode      = GPIO_MODE_OUTPUT_PP;
-    HAL_GPIO_Init(LCD_DISP_GPIO_PORT, &gpio_init_structure);
+    HAL_GPIO_Init(GPIOI, &gpio_init_structure);
 
 //    /* LCD_BL_CTRL GPIO configuration */
 //    gpio_init_structure.Pin       = LCD_BL_CTRL_PIN;  /* LCD_BL_CTRL pin has to be manually controlled */
@@ -297,7 +297,7 @@ static uint8_t LCD_Init(void)
     HAL_LTDC_Init(&hltdc);
 
     /* Assert display enable LCD_DISP pin */
-    HAL_GPIO_WritePin(LCD_DISP_GPIO_PORT, LCD_DISP_PIN, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOI, GPIO_PIN_12, GPIO_PIN_SET);
 
     /* Assert backlight LCD_BL_CTRL pin */
 //    HAL_GPIO_WritePin(LCD_BL_CTRL_GPIO_PORT, LCD_BL_CTRL_PIN, GPIO_PIN_SET);
@@ -371,7 +371,7 @@ static uint8_t LCD_Init(void)
 //	HAL_GPIO_WritePin(GPIOI, GPIO_PIN_12, GPIO_PIN_SET); /* Assert LCD_DISP pin */
 
     /* Assert LCD_DISP and LCD_BL_CTRL pins */
-    HAL_GPIO_WritePin(LCD_DISP_GPIO_PORT, LCD_DISP_PIN, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOI, GPIO_PIN_12, GPIO_PIN_SET);
 //    HAL_GPIO_WritePin(LCD_BL_CTRL_GPIO_PORT, LCD_BL_CTRL_PIN, GPIO_PIN_SET);
 
     return 0;

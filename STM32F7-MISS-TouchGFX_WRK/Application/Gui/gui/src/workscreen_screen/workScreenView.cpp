@@ -50,7 +50,7 @@ void workScreenView::actualPressureUpdate(float fVal) {
 }
 
 void workScreenView::actualFlowLPMUpdate(float fVal) {
-	Unicode::snprintf(actualFlowLPMBuffer, ACTUALFLOWLPM_SIZE, "%d", (int)fVal);
+	Unicode::snprintfFloats(actualFlowLPMBuffer, ACTUALFLOWLPM_SIZE, "%3.2f", &fVal);
 	actualFlowLPM.setWildcard(actualFlowLPMBuffer);
 //	actualFlowLPM.resizeToCurrentText();
 

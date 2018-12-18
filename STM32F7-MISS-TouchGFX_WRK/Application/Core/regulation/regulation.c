@@ -64,6 +64,23 @@ REGULATION_ErrorTypdef REGULATION_Stop(void) {
 	return REGULATION_ERROR_NONE;
 }
 
+static inline float FCE_fIrrGetFlowCoeff(float fRPMSpeed) {
+	//we believe, that flow coefficient will be same in both directions of the irrigation roller wheel
+	fRPMSpeed = ABS(fRPMSpeed);
+	//compute...
+	float fFlowCoeff;
+	if (fRPMSpeed <= 275.0)
+		fFlowCoeff = (-0.0036 * fRPMSpeed + 4.8936) / 1000.0;
+	else
+		fFlowCoeff = (-0.0036 * 275.0 + 4.8936) / 1000.0;
+
+	//sanity check...
+	if ((fFlowCoeff < 0) || (fFlowCoeff > 0.006))
+		fFlowCoeff = 0.00410;
+	//return
+	return fFlowCoeff;
+}
+
 static void Regulation_Thread(void * argument) {
 	REGULATION_RegulatorStatus_t status;
 	bool bUpdate = false;
@@ -84,6 +101,7 @@ static void Regulation_Thread(void * argument) {
 		}
 
 		if (bUpdate) {
+			status.fIrrigationActualFlowLPM = FCE_fIrrGetFlowCoeff(status.fIrrigationActualSpeedRPM) * status.fIrrigationActualSpeedRPM;
 			xQueueSend( xRegulationStatus, ( void * ) &status, ( TickType_t ) 0 );
 		}
 
