@@ -8,7 +8,7 @@ workScreenPresenter::workScreenPresenter(workScreenView& v) :
 
 void workScreenPresenter::activate()
 {
-
+	view.mcuLoadUpdated(model->getMcuLoad());
 }
 
 void workScreenPresenter::deactivate()

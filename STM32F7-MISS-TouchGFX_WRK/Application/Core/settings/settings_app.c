@@ -52,7 +52,7 @@ SETTINGS_ErrorTypdef SETTINGS_IncBrightness(void) {
 	} else
 		DeviceSettings.b.brightness += 5;
 
-	SetBacklight(DeviceSettings.b.brightness);
+	TOUCHGFT_SetBacklight(DeviceSettings.b.brightness);
 
 	if (bOnLimit || (DeviceSettings.b.brightness >= 100))
 		return SETTINGS_VALUE_AT_LIMIT;
@@ -76,7 +76,7 @@ SETTINGS_ErrorTypdef SETTINGS_DecBrightness(void) {
 	} else
 		DeviceSettings.b.brightness -= 5;
 
-	SetBacklight(DeviceSettings.b.brightness);
+	TOUCHGFT_SetBacklight(DeviceSettings.b.brightness);
 
 	if (bOnLimit | (DeviceSettings.b.brightness <= 20))
 		return SETTINGS_VALUE_AT_LIMIT;

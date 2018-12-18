@@ -69,7 +69,7 @@ AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Init(uint8_t volume) {
     xTaskCreate(Audio_HL_Thread, "AudioHLTask",
                 256,
                 NULL,
-				tskIDLE_PRIORITY + 3,
+				tskIDLE_PRIORITY + 2,
                 &HLAudioThreadId);
 
 	DEBUG_SendTextFrame("  HLAudioThreadId: %x", HLAudioThreadId);

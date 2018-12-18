@@ -57,6 +57,7 @@ protected:
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > workBtn;
     touchgfx::Slider slider2;
     touchgfx::TextAreaWithOneWildcard mcuLoad;
+    touchgfx::TextArea textArea3;
 
     /*
      * Wildcard Buffers

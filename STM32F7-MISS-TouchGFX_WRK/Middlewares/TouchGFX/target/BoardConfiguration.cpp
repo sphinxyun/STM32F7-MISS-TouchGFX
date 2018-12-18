@@ -344,7 +344,7 @@ static uint8_t LCD_Init(void)
 	}
 
 	sConfigOC.OCMode = TIM_OCMODE_PWM1;
-	sConfigOC.Pulse = 1000;		//switch off backlight - 0% backlight brightness
+	sConfigOC.Pulse = 0;		//switch off backlight - 0% backlight brightness
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_LOW;
 	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
 
@@ -377,23 +377,18 @@ static uint8_t LCD_Init(void)
     return 0;
 }
 
-extern "C" bool SetBacklight(uint32_t backlight) {
-	uint32_t pulse_width = backlight * 0.01 * 5400;
+void TOUCHGFT_SetBacklight(uint8_t brightnessPrecentage) {
+	uint32_t pulse_width = brightnessPrecentage * 0.01 * 5400;
 
 //	DEBUG_SendTextFrame("SetBacklight: %d%% (%d jedn.)", backlight, pulse_width);
 
 	__HAL_TIM_SET_COMPARE(&htim13, TIM_CHANNEL_1, pulse_width);
-
-	if ((backlight <= 0) || (backlight >= 100))
-		return false;
-
-	return true;
 }
 
 namespace touchgfx
 {
-void hw_init()
-{
+
+void HARDWARE_Init(void) {
 /* Configure Instruction cache through ART accelerator */
 #if (ART_ACCLERATOR_ENABLE != 0)
 	__HAL_FLASH_ART_ENABLE();
@@ -514,8 +509,7 @@ static LCD24bpp display;
 #error Unknown USE_BPP
 #endif
 
-void touchgfx_init()
-{
+void TOUCHGFX_Init(void) {
     uint16_t dispWidth = RK043FN48H_WIDTH;
     uint16_t dispHeight = RK043FN48H_HEIGHT;
 #if !defined(USE_BPP) || USE_BPP==16

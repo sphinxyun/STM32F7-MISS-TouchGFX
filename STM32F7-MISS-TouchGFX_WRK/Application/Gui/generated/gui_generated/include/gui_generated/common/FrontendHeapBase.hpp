@@ -20,6 +20,8 @@
 
 #include <gui/bootscreen_screen/bootScreenView.hpp>
 #include <gui/bootscreen_screen/bootScreenPresenter.hpp>
+#include <gui/autotestscreen_screen/autotestScreenView.hpp>
+#include <gui/autotestscreen_screen/autotestScreenPresenter.hpp>
 #include <gui/settingsscreen_screen/settingsScreenView.hpp>
 #include <gui/settingsscreen_screen/settingsScreenPresenter.hpp>
 #include <gui/workscreen_screen/workScreenView.hpp>
@@ -47,9 +49,10 @@ public:
      * @note All view types used in the application MUST be added to this list!
      */
     typedef meta::TypeList< bootScreenView,
+            meta::TypeList< autotestScreenView,
             meta::TypeList< settingsScreenView,
             meta::TypeList< workScreenView,
-            meta::Nil > >
+            meta::Nil > > >
             > GeneratedViewTypes;
 
     /**
@@ -62,9 +65,10 @@ public:
      * @note All presenter types used in the application MUST be added to this list!
      */
     typedef meta::TypeList< bootScreenPresenter,
+            meta::TypeList< autotestScreenPresenter,
             meta::TypeList< settingsScreenPresenter,
             meta::TypeList< workScreenPresenter,
-            meta::Nil > >
+            meta::Nil > > >
             > GeneratedPresenterTypes;
 
     /**

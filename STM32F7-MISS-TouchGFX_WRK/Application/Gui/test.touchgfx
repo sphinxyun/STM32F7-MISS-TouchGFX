@@ -94,8 +94,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon58",
-                "IconReleased": "__designer\\blue_icons_settings_48.png",
-                "IconPressed": "__designer\\blue_icons_settings_48.png"
+                "IconReleased": "__designer\\dark_icons_settings_48.png",
+                "IconPressed": "__designer\\dark_icons_settings_48.png"
               }
             ],
             "Name": "settingsBtn",
@@ -121,8 +121,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon64",
-                "IconReleased": "__designer\\blue_icons_tools_48.png",
-                "IconPressed": "__designer\\blue_icons_tools_48.png"
+                "IconReleased": "__designer\\dark_icons_tools_48.png",
+                "IconPressed": "__designer\\dark_icons_tools_48.png"
               }
             ],
             "Name": "workBtn",
@@ -153,9 +153,32 @@
               "BufferSize": 10
             },
             "Name": "mcuLoad",
-            "X": 485,
+            "X": 586,
             "Y": 0,
-            "Width": 155,
+            "Width": 54,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId36",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea3",
+            "X": 486,
+            "Y": 0,
+            "Width": 100,
             "Height": 20,
             "Type": "TextArea",
             "Visible": true,
@@ -209,6 +232,83 @@
             },
             "Alpha": 255,
             "Name": "box1",
+            "X": 0,
+            "Y": 0,
+            "Width": 640,
+            "Height": 480,
+            "Type": "Box",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId41",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "mcuLoad",
+            "X": 586,
+            "Y": 0,
+            "Width": 54,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId42",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea3",
+            "X": 486,
+            "Y": 0,
+            "Width": 100,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [],
+        "Name": "autotestScreen",
+        "OverrideDefaultBufferSize": false,
+        "CanvasBufferSize": 0
+      },
+      {
+        "Components": [
+          {
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 255,
+            "Name": "box1",
             "X": -1,
             "Y": 0,
             "Width": 641,
@@ -222,8 +322,8 @@
           },
           {
             "InitialStatePressed": false,
-            "Pressed": "__designer\\blue_togglebars_toggle_round_large_button_on.png",
-            "Released": "__designer\\blue_togglebars_toggle_round_large_button_off.png",
+            "Pressed": "__designer\\dark_togglebars_toggle_round_large_button_on.png",
+            "Released": "__designer\\dark_togglebars_toggle_round_large_button_off.png",
             "Alpha": 255,
             "Style": "Style4",
             "Name": "toggleButton1",
@@ -249,8 +349,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon28",
-                "IconReleased": "__designer\\blue_icons_home_48.png",
-                "IconPressed": "__designer\\blue_icons_home_48.png"
+                "IconReleased": "__designer\\dark_icons_home_48.png",
+                "IconPressed": "__designer\\dark_icons_home_48.png"
               }
             ],
             "Name": "homeBtn",
@@ -441,8 +541,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon64",
-                "IconReleased": "__designer\\blue_icons_tools_48.png",
-                "IconPressed": "__designer\\blue_icons_tools_48.png"
+                "IconReleased": "__designer\\dark_icons_tools_48.png",
+                "IconPressed": "__designer\\dark_icons_tools_48.png"
               }
             ],
             "Name": "workBtn",
@@ -483,7 +583,7 @@
             "Moveable": false
           },
           {
-            "TextId": "SingleUseId31",
+            "TextId": "SingleUseId37",
             "TextRotation": "0",
             "Color": {
               "Red": 0,
@@ -498,9 +598,32 @@
               "BufferSize": 10
             },
             "Name": "mcuLoad",
-            "X": 485,
+            "X": 586,
             "Y": 0,
-            "Width": 155,
+            "Width": 54,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId38",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea3",
+            "X": 486,
+            "Y": 0,
+            "Width": 100,
             "Height": 20,
             "Type": "TextArea",
             "Visible": true,
@@ -600,8 +723,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon28",
-                "IconReleased": "__designer\\blue_icons_home_48.png",
-                "IconPressed": "__designer\\blue_icons_home_48.png"
+                "IconReleased": "__designer\\dark_icons_home_48.png",
+                "IconPressed": "__designer\\dark_icons_home_48.png"
               }
             ],
             "Name": "homeBtn",
@@ -627,8 +750,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon58",
-                "IconReleased": "__designer\\blue_icons_settings_48.png",
-                "IconPressed": "__designer\\blue_icons_settings_48.png"
+                "IconReleased": "__designer\\dark_icons_settings_48.png",
+                "IconPressed": "__designer\\dark_icons_settings_48.png"
               }
             ],
             "Name": "settingsBtn",
@@ -1015,8 +1138,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon14",
-                "IconReleased": "__designer\\blue_icons_down_arrow_48.png",
-                "IconPressed": "__designer\\blue_icons_down_arrow_48.png"
+                "IconReleased": "__designer\\dark_icons_down_arrow_48.png",
+                "IconPressed": "__designer\\dark_icons_down_arrow_48.png"
               }
             ],
             "Name": "decPressure",
@@ -1042,8 +1165,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon68",
-                "IconReleased": "__designer\\blue_icons_up_arrow_48.png",
-                "IconPressed": "__designer\\blue_icons_up_arrow_48.png"
+                "IconReleased": "__designer\\dark_icons_up_arrow_48.png",
+                "IconPressed": "__designer\\dark_icons_up_arrow_48.png"
               }
             ],
             "Name": "incPressure",
@@ -1069,8 +1192,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon14",
-                "IconReleased": "__designer\\blue_icons_down_arrow_48.png",
-                "IconPressed": "__designer\\blue_icons_down_arrow_48.png"
+                "IconReleased": "__designer\\dark_icons_down_arrow_48.png",
+                "IconPressed": "__designer\\dark_icons_down_arrow_48.png"
               }
             ],
             "Name": "decFlow",
@@ -1096,8 +1219,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon68",
-                "IconReleased": "__designer\\blue_icons_up_arrow_48.png",
-                "IconPressed": "__designer\\blue_icons_up_arrow_48.png"
+                "IconReleased": "__designer\\dark_icons_up_arrow_48.png",
+                "IconPressed": "__designer\\dark_icons_up_arrow_48.png"
               }
             ],
             "Name": "incFlow",
@@ -1113,7 +1236,7 @@
             "Moveable": false
           },
           {
-            "TextId": "DEMO_VIEW_MCU_LOAD_VALUE",
+            "TextId": "SingleUseId39",
             "TextRotation": "0",
             "Color": {
               "Red": 0,
@@ -1128,9 +1251,32 @@
               "BufferSize": 10
             },
             "Name": "mcuLoad",
-            "X": 485,
+            "X": 586,
             "Y": 0,
-            "Width": 155,
+            "Width": 54,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId40",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea3",
+            "X": 486,
+            "Y": 0,
+            "Width": 100,
             "Height": 20,
             "Type": "TextArea",
             "Visible": true,
@@ -1358,16 +1504,40 @@
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId31",
-        "IsResource": false
-      },
-      {
         "TextEntryId": "SingleUseId34",
         "IsResource": false
       },
       {
         "TextEntryId": "DEMO_VIEW_MCU_LOAD_VALUE",
         "IsResource": true
+      },
+      {
+        "TextEntryId": "SingleUseId36",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId37",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId38",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId39",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId40",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId41",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId42",
+        "IsResource": false
       }
     ],
     "Name": "test",
@@ -1378,7 +1548,7 @@
     "SelectedColorDepth": 16,
     "StartupScreenName": "bootScreen",
     "SelectedStartupLanguage": "GB",
-    "Skin": "Blue",
+    "Skin": "Dark",
     "TouchGfxPath": "touchgfx",
     "UIPath": ".",
     "ApplicationTemplate": {

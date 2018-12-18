@@ -85,6 +85,7 @@ protected:
     touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > decFlow;
     touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > incFlow;
     touchgfx::TextAreaWithOneWildcard mcuLoad;
+    touchgfx::TextArea textArea3;
 
     /*
      * Wildcard Buffers

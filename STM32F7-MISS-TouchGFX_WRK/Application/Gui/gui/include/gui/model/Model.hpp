@@ -38,6 +38,9 @@ public:
      */
     void tick();
 
+    uint8_t getBrightnessSetting(void) { return m_brightness; }
+    uint8_t getMcuLoad(void) { return m_mcuLoad; }
+
     void startRegulation();
     void stopRegulation();
 
@@ -59,6 +62,10 @@ protected:
 private:
     void pushActionQueue(uint16_t u16ActionCode);
     void pushAudioQueue(uint16_t u16SoundCode);
+
+private:
+    uint8_t m_brightness;
+    uint8_t m_mcuLoad;
 };
 
 #endif /* MODEL_HPP */

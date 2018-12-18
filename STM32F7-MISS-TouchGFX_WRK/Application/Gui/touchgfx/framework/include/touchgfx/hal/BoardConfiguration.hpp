@@ -26,7 +26,7 @@ namespace touchgfx
  *        Function to perform generic hardware initialization of the board. This function
  *        prototype is only provided as a convention.
  */
-void hw_init();
+void HARDWARE_Init(void);
 
 /**
  * @fn void touchgfx_init();
@@ -36,7 +36,11 @@ void hw_init();
  *        Function to perform touchgfx initialization. This function prototype is only provided
  *        as a convention.
  */
-void touchgfx_init();
+void TOUCHGFX_Init(void);
+
 } // namespace touchgfx
 
+extern "C" {
+void TOUCHGFT_SetBacklight(uint8_t brightnessPrecentage);
+}
 #endif // BOARDCONFIGURATION_HPP

@@ -17,8 +17,6 @@ extern "C" {
 	extern QueueHandle_t xGuiStatus;
 }
 
-static uint8_t mcuLoadLast = 0;
-
 Model::Model() :
 	modelListener(0),
 	mcuLoadActive(true)
@@ -31,6 +29,8 @@ void Model::tick()
 
 	if (xGuiStatus && xQueueReceive(xGuiStatus, &guiStatus, 0)  == pdTRUE) {
 //		DEBUG_SendTextFrame("  tick: xGuiStatus");
+		m_brightness = guiStatus.u32BrightnessPercent;
+
 		modelListener->brightnessValueUpdate(guiStatus.u32BrightnessPercent);
 
 		modelListener->actualPressureUpdate(guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
@@ -40,10 +40,10 @@ void Model::tick()
 
 //	static int milliseconds = 123456;
 	uint8_t mcuLoadPct = touchgfx::HAL::getInstance()->getMCULoadPct();
-	if (mcuLoadLast != /*mcu_load_pct*/ mcuLoadPct)
+	if (m_mcuLoad != mcuLoadPct)
 	{
-		mcuLoadLast = mcuLoadPct;
-		modelListener->mcuLoadUpdated(mcuLoadLast);
+		m_mcuLoad = mcuLoadPct;
+		modelListener->mcuLoadUpdated(m_mcuLoad);
 	}
 }
 

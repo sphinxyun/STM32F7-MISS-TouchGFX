@@ -129,12 +129,17 @@ workScreenViewBase::workScreenViewBase() :
     incFlow.setPosition(572, 253, 50, 32);
     incFlow.setAction(flexButtonCallback);
 
-    mcuLoad.setPosition(485, 0, 155, 20);
+    mcuLoad.setPosition(586, 0, 54, 20);
     mcuLoad.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     mcuLoad.setLinespacing(0);
     mcuLoadBuffer[0] = 0;
     mcuLoad.setWildcard(mcuLoadBuffer);
-    mcuLoad.setTypedText(TypedText(T_DEMO_VIEW_MCU_LOAD_VALUE));
+    mcuLoad.setTypedText(TypedText(T_SINGLEUSEID39));
+
+    textArea3.setXY(486, 0);
+    textArea3.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea3.setLinespacing(0);
+    textArea3.setTypedText(TypedText(T_SINGLEUSEID40));
 
     add(box1);
     add(homeBtn);
@@ -159,6 +164,7 @@ workScreenViewBase::workScreenViewBase() :
     add(decFlow);
     add(incFlow);
     add(mcuLoad);
+    add(textArea3);
 }
 
 void workScreenViewBase::setupScreen()

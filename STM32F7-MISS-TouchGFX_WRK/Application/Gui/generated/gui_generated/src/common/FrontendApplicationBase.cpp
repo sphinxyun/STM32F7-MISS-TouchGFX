@@ -9,6 +9,8 @@
 #include <touchgfx/Texts.hpp>
 #include <gui/bootscreen_screen/bootScreenView.hpp>
 #include <gui/bootscreen_screen/bootScreenPresenter.hpp>
+#include <gui/autotestscreen_screen/autotestScreenView.hpp>
+#include <gui/autotestscreen_screen/autotestScreenPresenter.hpp>
 #include <gui/settingsscreen_screen/settingsScreenView.hpp>
 #include <gui/settingsscreen_screen/settingsScreenPresenter.hpp>
 #include <gui/workscreen_screen/workScreenView.hpp>

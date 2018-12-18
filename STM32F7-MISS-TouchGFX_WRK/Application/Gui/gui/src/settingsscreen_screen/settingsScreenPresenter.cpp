@@ -8,7 +8,8 @@ settingsScreenPresenter::settingsScreenPresenter(settingsScreenView& v)
 
 void settingsScreenPresenter::activate()
 {
-
+	view.mcuLoadUpdated(model->getMcuLoad());
+	view.brightnessValueUpdate(model->getBrightnessSetting());
 }
 
 void settingsScreenPresenter::deactivate()

@@ -36,6 +36,7 @@ protected:
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > settingsBtn;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > workBtn;
     touchgfx::TextAreaWithOneWildcard mcuLoad;
+    touchgfx::TextArea textArea3;
 
     /*
      * Wildcard Buffers

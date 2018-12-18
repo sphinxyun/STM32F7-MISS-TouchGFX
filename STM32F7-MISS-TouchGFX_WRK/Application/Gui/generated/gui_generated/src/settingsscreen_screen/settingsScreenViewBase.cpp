@@ -70,12 +70,17 @@ settingsScreenViewBase::settingsScreenViewBase() :
     slider2.setValueRange(0, 100);
     slider2.setValue(0);
 
-    mcuLoad.setPosition(485, 0, 155, 20);
+    mcuLoad.setPosition(586, 0, 54, 20);
     mcuLoad.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     mcuLoad.setLinespacing(0);
     mcuLoadBuffer[0] = 0;
     mcuLoad.setWildcard(mcuLoadBuffer);
-    mcuLoad.setTypedText(TypedText(T_SINGLEUSEID31));
+    mcuLoad.setTypedText(TypedText(T_SINGLEUSEID37));
+
+    textArea3.setXY(486, 0);
+    textArea3.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea3.setLinespacing(0);
+    textArea3.setTypedText(TypedText(T_SINGLEUSEID38));
 
     add(box1);
     add(toggleButton1);
@@ -85,6 +90,7 @@ settingsScreenViewBase::settingsScreenViewBase() :
     add(workBtn);
     add(slider2);
     add(mcuLoad);
+    add(textArea3);
 }
 
 void settingsScreenViewBase::setupScreen()

@@ -8,7 +8,7 @@ bootScreenPresenter::bootScreenPresenter(bootScreenView& v)
 
 void bootScreenPresenter::activate()
 {
-
+	view.mcuLoadUpdated(model->getMcuLoad());
 }
 
 void bootScreenPresenter::deactivate()
