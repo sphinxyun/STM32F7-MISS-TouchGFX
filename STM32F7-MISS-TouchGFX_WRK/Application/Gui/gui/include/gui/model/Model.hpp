@@ -3,6 +3,8 @@
 
 #include <touchgfx/Utils.hpp>
 
+#include "state_machine/state_machine.h"
+
 class ModelListener;
 class FrontendHeap;
 
@@ -41,6 +43,7 @@ public:
 
     uint8_t getBrightnessSetting(void) { return m_brightness; }
     uint8_t getMcuLoad(void) { return m_mcuLoad; }
+    WM_MAIN_GuiStatus getGuiStatus(void) { return m_guiStatus; }
 
     void startRegulation();
     void stopRegulation();
@@ -73,6 +76,8 @@ private:
 
     uint8_t m_brightness;
     uint8_t m_mcuLoad;
+
+    WM_MAIN_GuiStatus m_guiStatus;
 
 
 };

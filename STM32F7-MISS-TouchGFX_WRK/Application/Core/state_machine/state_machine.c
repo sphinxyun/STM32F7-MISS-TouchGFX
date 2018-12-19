@@ -52,7 +52,7 @@ WM_MAIN_ErrorTypdef WM_MAIN_Stop(void) {
 
 bool CheckHPresetPressure(void) {
 	const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
-	if ((guiStatus.fIrrigationPresetPressureMMHG + set->u32IrrigationPressureIncValue) > set->u32IrrigationPressureMaxValue)
+	if ((guiStatus.u8IrrigationPresetPressureMMHG + set->u32IrrigationPressureIncValue) > set->u32IrrigationPressureMaxValue)
 		return true;
 	else
 		return false;
@@ -60,7 +60,7 @@ bool CheckHPresetPressure(void) {
 
 bool CheckLPresetPressure(void) {
 	const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
-	if ((guiStatus.fIrrigationPresetPressureMMHG - set->u32IrrigationPressureIncValue) < set->u32IrrigationPressureMinValue)
+	if ((guiStatus.u8IrrigationPresetPressureMMHG - set->u32IrrigationPressureIncValue) < set->u32IrrigationPressureMinValue)
 		return true;
 	else
 		return false;
@@ -77,11 +77,11 @@ static void StateMachine_Thread(void * argument) {
 
 	const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
 
-	guiStatus.fIrrigationPresetPressureMMHG = set->u32IrrigationPressure;
+	guiStatus.u8IrrigationPresetPressureMMHG = set->u32IrrigationPressure;
 	guiStatus.fIrrigationPresetFlowLPM = set->fIrrigationFlow;
 
-	TickType_t xTimeBefore;
-	xTimeBefore = xTaskGetTickCount();
+//	TickType_t xTimeBefore;
+//	xTimeBefore = xTaskGetTickCount();
 
 	for (;;) {
 		DEBUG_UART_SysTick();
@@ -110,21 +110,21 @@ static void StateMachine_Thread(void * argument) {
 				DEBUG_SendTextFrame("WM_MAIN_DECREASE_BRIGHTNESS");
 			} else if (action == WM_MAIN_INCREASE_IRRIGATION_PRESSURE) {
 				const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
-				if ((guiStatus.fIrrigationPresetPressureMMHG + set->u32IrrigationPressureIncValue) >= set->u32IrrigationPressureMaxValue) {
-					guiStatus.fIrrigationPresetPressureMMHG = set->u32IrrigationPressureMaxValue;
+				if ((guiStatus.u8IrrigationPresetPressureMMHG + set->u32IrrigationPressureIncValue) >= set->u32IrrigationPressureMaxValue) {
+					guiStatus.u8IrrigationPresetPressureMMHG = set->u32IrrigationPressureMaxValue;
 				} else
-					guiStatus.fIrrigationPresetPressureMMHG += set->u32IrrigationPressureIncValue;
+					guiStatus.u8IrrigationPresetPressureMMHG += set->u32IrrigationPressureIncValue;
 
-				DEBUG_SendTextFrame("WM_MAIN_INCREASE_IRRIGATION_PRESSURE: %f, %x", guiStatus.fIrrigationPresetPressureMMHG, u32BtnFlags);
+				DEBUG_SendTextFrame("WM_MAIN_INCREASE_IRRIGATION_PRESSURE: %d, %x", guiStatus.u8IrrigationPresetPressureMMHG, u32BtnFlags);
 
 			} else if (action == WM_MAIN_DECREASE_IRRIGATION_PRESSURE) {
 				const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
-				if ((guiStatus.fIrrigationPresetPressureMMHG - set->u32IrrigationPressureIncValue) <= set->u32IrrigationPressureMinValue) {
-					guiStatus.fIrrigationPresetPressureMMHG = set->u32IrrigationPressureMinValue;
+				if ((guiStatus.u8IrrigationPresetPressureMMHG - set->u32IrrigationPressureIncValue) <= set->u32IrrigationPressureMinValue) {
+					guiStatus.u8IrrigationPresetPressureMMHG = set->u32IrrigationPressureMinValue;
 				} else
-					guiStatus.fIrrigationPresetPressureMMHG -= set->u32IrrigationPressureIncValue;
+					guiStatus.u8IrrigationPresetPressureMMHG -= set->u32IrrigationPressureIncValue;
 
-				DEBUG_SendTextFrame("WM_MAIN_DECREASE_IRRIGATION_PRESSURE: %f, %x", guiStatus.fIrrigationPresetPressureMMHG, u32BtnFlags);
+				DEBUG_SendTextFrame("WM_MAIN_DECREASE_IRRIGATION_PRESSURE: %d, %x", guiStatus.u8IrrigationPresetPressureMMHG, u32BtnFlags);
 			}
 
 			if (CheckHPresetPressure())

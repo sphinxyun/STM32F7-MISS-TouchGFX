@@ -16,7 +16,7 @@ void FrontendApplication::handleClickEvent(const ClickEvent& evt)
 {
     MVPApplication::handleClickEvent(evt);
 
-    pushAudioQueue(1);
+//    pushAudioQueue(1);
 
     // A click event has been registered so reset last click time
 //    resetScreenSaver();

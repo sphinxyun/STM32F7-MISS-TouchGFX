@@ -31,6 +31,10 @@ public:
 	void actualFlowLPMUpdate(float fVal);
 	void actualFlowRPMUpdate(float fVal);
 
+    void presetPressureMMHGUpdate(uint8_t u8Val);
+	void presetFlowLPMUpdate(float fVal);
+	void presetFlowRPMUpdate(uint16_t u16Val);
+
 	void startRegulation();
 	void stopRegulation();
 

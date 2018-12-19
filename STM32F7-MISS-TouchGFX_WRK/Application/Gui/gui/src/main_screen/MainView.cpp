@@ -48,8 +48,9 @@ void MainView::mcuLoadUpdated(uint8_t mcuLoadValue) {
 	mcuLoad.invalidate();
 }
 
-void MainView::actualPressureUpdate(float fVal) {
+void MainView::actualPressureMMHGUpdate(float fVal) {
 	Unicode::snprintf(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%d", (int)fVal);
+//	Unicode::snprintfFloats(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%4.2f", &fVal);
 	actualPressure.setWildcard(actualPressureBuffer);
 
 	actualPressure.invalidate();
@@ -64,7 +65,29 @@ void MainView::actualFlowLPMUpdate(float fVal) {
 
 void MainView::actualFlowRPMUpdate(float fVal) {
 	Unicode::snprintf(actualFlowRPMBuffer, ACTUALFLOWRPM_SIZE, "%d", (int)fVal);
+//	Unicode::snprintfFloats(actualFlowRPMBuffer, ACTUALFLOWRPM_SIZE, "%4.2f", &fVal);
 	actualFlowRPM.setWildcard(actualFlowRPMBuffer);
 
 	actualFlowRPM.invalidate();
+}
+
+void MainView::presetPressureMMHGUpdate(uint8_t fVal) {
+	Unicode::snprintf(presetlPressureBuffer, PRESETLPRESSURE_SIZE, "%d", (int)fVal);
+	presetlPressure.setWildcard(presetlPressureBuffer);
+
+	presetlPressure.invalidate();
+}
+
+void MainView::presetFlowLPMUpdate(float fVal) {
+	Unicode::snprintfFloats(presetFlowLPMBuffer, PRESETFLOWLPM_SIZE, "%3.2f", &fVal);
+	presetFlowLPM.setWildcard(presetFlowLPMBuffer);
+
+	presetFlowLPM.invalidate();
+}
+
+void MainView::presetFlowRPMUpdate(uint16_t fVal) {
+	Unicode::snprintf(presetFlowRPMBuffer, PRESETFLOWRPM_SIZE, "%d", (int)fVal);
+	presetFlowRPM.setWildcard(presetFlowRPMBuffer);
+
+	presetFlowRPM.invalidate();
 }

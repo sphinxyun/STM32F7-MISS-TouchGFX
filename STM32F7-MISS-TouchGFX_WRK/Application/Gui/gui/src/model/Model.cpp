@@ -6,7 +6,7 @@
 #include <touchgfx/hal/HAL.hpp>
 
 #include "settings/settings_app.h"
-#include "state_machine/state_machine.h"
+
 
 #include "debug.h"
 #include "FreeRTOS.h"
@@ -20,33 +20,31 @@ extern "C" {
 }
 
 Model::Model(FrontendHeap *app) :
-	m_app(app),
 	modelListener(0),
-	mcuLoadActive(true)
+	mcuLoadActive(true),
+	m_app(app)
 {
 }
 
 void Model::tick()
 {
-	WM_MAIN_GuiStatus guiStatus;
-
-	if (xGuiStatus && xQueueReceive(xGuiStatus, &guiStatus, 0)  == pdTRUE) {
+	if (xGuiStatus && xQueueReceive(xGuiStatus, &m_guiStatus, 0)  == pdTRUE) {
 //		DEBUG_SendTextFrame("  tick: xGuiStatus");
-		m_brightness = guiStatus.u32BrightnessPercent;
+		m_brightness = m_guiStatus.u32BrightnessPercent;
 
 		if (m_brightness == 50) {
 //			m_app->app.gotoworkScreenScreenSlideTransitionWest();
 		}
 
-		modelListener->brightnessValueUpdate(guiStatus.u32BrightnessPercent);
+		modelListener->brightnessValueUpdate(m_guiStatus.u32BrightnessPercent);
 
-		modelListener->actualPressureMMHGUpdate(guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
-		modelListener->actualFlowLPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualFlowLPM);
-		modelListener->actualFlowRPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
+		modelListener->actualPressureMMHGUpdate(m_guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
+		modelListener->actualFlowLPMUpdate(m_guiStatus.sIrrigationActual.fIrrigationActualFlowLPM);
+		modelListener->actualFlowRPMUpdate(m_guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
 
-		modelListener->presetPressureMMHGUpdate(guiStatus.u8IrrigationPresetPressureMMHG);
-		modelListener->presetFlowLPMUpdate(guiStatus.fIrrigationPresetFlowLPM);
-		modelListener->presetFlowRPMUpdate(guiStatus.u16IrrigationPresetFlowRPM)
+		modelListener->presetPressureMMHGUpdate(m_guiStatus.u8IrrigationPresetPressureMMHG);
+		modelListener->presetFlowLPMUpdate(m_guiStatus.fIrrigationPresetFlowLPM);
+		modelListener->presetFlowRPMUpdate(m_guiStatus.u16IrrigationPresetFlowRPM);
 	}
 
 	uint8_t mcuLoadPct = touchgfx::HAL::getInstance()->getMCULoadPct();
