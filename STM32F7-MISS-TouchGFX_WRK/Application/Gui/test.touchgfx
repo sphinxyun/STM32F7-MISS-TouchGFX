@@ -99,10 +99,10 @@
               }
             ],
             "Name": "settingsBtn",
-            "X": 404,
-            "Y": 429,
-            "Width": 50,
-            "Height": 50,
+            "X": 200,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
             "Type": "FlexButton",
             "Visible": true,
             "Draggable": false,
@@ -126,10 +126,10 @@
               }
             ],
             "Name": "workBtn",
-            "X": 335,
-            "Y": 429,
-            "Width": 50,
-            "Height": 50,
+            "X": 136,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
             "Type": "FlexButton",
             "Visible": true,
             "Draggable": false,
@@ -186,6 +186,60 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon2",
+                "IconReleased": "__designer\\blue_icons_add_new_48.png",
+                "IconPressed": "__designer\\blue_icons_add_new_48.png"
+              }
+            ],
+            "Name": "diagBtn",
+            "X": 8,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon70",
+                "IconReleased": "__designer\\blue_icons_user_48.png",
+                "IconPressed": "__designer\\blue_icons_user_48.png"
+              }
+            ],
+            "Name": "levelBtn",
+            "X": 72,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [
@@ -212,8 +266,36 @@
             },
             "Action": {
               "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "West",
+              "ScreenTransitionDirection": "North",
               "ActionComponent": "Main",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "diagnostics",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "diagBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "North",
+              "ActionComponent": "Diagnostics",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "level",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "levelBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionCover",
+              "ScreenTransitionDirection": "North",
+              "ActionComponent": "Level",
               "Type": "ActionGotoScreen"
             }
           }
@@ -307,7 +389,7 @@
             "Name": "textArea1",
             "X": 11,
             "Y": 20,
-            "Width": 83,
+            "Width": 111,
             "Height": 20,
             "Type": "TextArea",
             "Visible": true,
@@ -332,10 +414,91 @@
               }
             ],
             "Name": "workBtn",
-            "X": 11,
-            "Y": 417,
-            "Width": 50,
-            "Height": 50,
+            "X": 136,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon28",
+                "IconReleased": "__designer\\blue_icons_home_48.png",
+                "IconPressed": "__designer\\blue_icons_home_48.png"
+              }
+            ],
+            "Name": "homeBtn",
+            "X": 8,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon58",
+                "IconReleased": "__designer\\blue_icons_settings_48.png",
+                "IconPressed": "__designer\\blue_icons_settings_48.png"
+              }
+            ],
+            "Name": "settingsBtn",
+            "X": 200,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon70",
+                "IconReleased": "__designer\\blue_icons_user_48.png",
+                "IconPressed": "__designer\\blue_icons_user_48.png"
+              }
+            ],
+            "Name": "levelBtn",
+            "X": 72,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
             "Type": "FlexButton",
             "Visible": true,
             "Draggable": false,
@@ -346,7 +509,7 @@
         ],
         "Interactions": [
           {
-            "InteractionName": "workMode",
+            "InteractionName": "work",
             "HasCompletedTrigger": false,
             "Trigger": {
               "TriggerComponent": "workBtn",
@@ -358,9 +521,316 @@
               "ActionComponent": "Main",
               "Type": "ActionGotoScreen"
             }
+          },
+          {
+            "InteractionName": "level",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "levelBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "North",
+              "ActionComponent": "Level",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "home",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "homeBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "North",
+              "ActionComponent": "Level",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "settings",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "settingsBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "North",
+              "ActionComponent": "Settings",
+              "Type": "ActionGotoScreen"
+            }
           }
         ],
         "Name": "Diagnostics",
+        "OverrideDefaultBufferSize": false,
+        "CanvasBufferSize": 0
+      },
+      {
+        "Components": [
+          {
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 255,
+            "Name": "box1",
+            "X": 0,
+            "Y": 0,
+            "Width": 640,
+            "Height": 480,
+            "Type": "Box",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId44",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "mcuLoad",
+            "X": 586,
+            "Y": 0,
+            "Width": 54,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId45",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea3",
+            "X": 486,
+            "Y": 0,
+            "Width": 100,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId46",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea1",
+            "X": 23,
+            "Y": 20,
+            "Width": 54,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon58",
+                "IconReleased": "__designer\\blue_icons_settings_48.png",
+                "IconPressed": "__designer\\blue_icons_settings_48.png"
+              }
+            ],
+            "Name": "settingsBtn",
+            "X": 200,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon64",
+                "IconReleased": "__designer\\blue_icons_tools_48.png",
+                "IconPressed": "__designer\\blue_icons_tools_48.png"
+              }
+            ],
+            "Name": "workBtn",
+            "X": 136,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon2",
+                "IconReleased": "__designer\\blue_icons_add_new_48.png",
+                "IconPressed": "__designer\\blue_icons_add_new_48.png"
+              }
+            ],
+            "Name": "diagBtn",
+            "X": 72,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon28",
+                "IconReleased": "__designer\\blue_icons_home_48.png",
+                "IconPressed": "__designer\\blue_icons_home_48.png"
+              }
+            ],
+            "Name": "homeBtn",
+            "X": 8,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "home",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "homeBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "North",
+              "ActionComponent": "Boot",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "diagnostics",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "diagBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "North",
+              "ActionComponent": "Diagnostics",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "work",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "workBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "North",
+              "ActionComponent": "Main",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "settings",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "settingsBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "North",
+              "ActionComponent": "Settings",
+              "Type": "ActionGotoScreen"
+            }
+          }
+        ],
+        "Name": "Level",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0
       },
@@ -401,10 +871,10 @@
               }
             ],
             "Name": "homeBtn",
-            "X": 19,
-            "Y": 419,
-            "Width": 50,
-            "Height": 50,
+            "X": 8,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
             "Type": "FlexButton",
             "Visible": true,
             "Draggable": false,
@@ -428,10 +898,10 @@
               }
             ],
             "Name": "settingsBtn",
-            "X": 83,
-            "Y": 419,
-            "Width": 50,
-            "Height": 50,
+            "X": 200,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
             "Type": "FlexButton",
             "Visible": true,
             "Draggable": false,
@@ -957,11 +1427,65 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon2",
+                "IconReleased": "__designer\\blue_icons_add_new_48.png",
+                "IconPressed": "__designer\\blue_icons_add_new_48.png"
+              }
+            ],
+            "Name": "diagBtn",
+            "X": 72,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon70",
+                "IconReleased": "__designer\\blue_icons_user_48.png",
+                "IconPressed": "__designer\\blue_icons_user_48.png"
+              }
+            ],
+            "Name": "levelBtn",
+            "X": 136,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [
           {
-            "InteractionName": "switchToSettingsScreen",
+            "InteractionName": "settings",
             "HasCompletedTrigger": false,
             "Trigger": {
               "TriggerComponent": "settingsBtn",
@@ -975,7 +1499,7 @@
             }
           },
           {
-            "InteractionName": "switchToHomeScreen",
+            "InteractionName": "home",
             "HasCompletedTrigger": false,
             "Trigger": {
               "TriggerComponent": "homeBtn",
@@ -1059,6 +1583,34 @@
               "FunctionName": "decFlowBtn",
               "Type": "ActionCustom"
             }
+          },
+          {
+            "InteractionName": "level",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "levelBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "South",
+              "ActionComponent": "Level",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "diagnostics",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "diagBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "South",
+              "ActionComponent": "Diagnostics",
+              "Type": "ActionGotoScreen"
+            }
           }
         ],
         "Name": "Main",
@@ -1120,10 +1672,10 @@
               }
             ],
             "Name": "homeBtn",
-            "X": 13,
-            "Y": 418,
-            "Width": 50,
-            "Height": 50,
+            "X": 8,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
             "Type": "FlexButton",
             "Visible": true,
             "Draggable": false,
@@ -1312,10 +1864,10 @@
               }
             ],
             "Name": "workBtn",
-            "X": 95,
-            "Y": 418,
-            "Width": 50,
-            "Height": 50,
+            "X": 200,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
             "Type": "FlexButton",
             "Visible": true,
             "Draggable": false,
@@ -1397,11 +1949,65 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon2",
+                "IconReleased": "__designer\\blue_icons_add_new_48.png",
+                "IconPressed": "__designer\\blue_icons_add_new_48.png"
+              }
+            ],
+            "Name": "diagBtn",
+            "X": 72,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon70",
+                "IconReleased": "__designer\\blue_icons_user_48.png",
+                "IconPressed": "__designer\\blue_icons_user_48.png"
+              }
+            ],
+            "Name": "levelBtn",
+            "X": 136,
+            "Y": 424,
+            "Width": 48,
+            "Height": 48,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [
           {
-            "InteractionName": "bootScreen",
+            "InteractionName": "home",
             "HasCompletedTrigger": false,
             "Trigger": {
               "TriggerComponent": "homeBtn",
@@ -1439,7 +2045,7 @@
             }
           },
           {
-            "InteractionName": "Interaction1",
+            "InteractionName": "work",
             "HasCompletedTrigger": false,
             "Trigger": {
               "TriggerComponent": "workBtn",
@@ -1449,6 +2055,34 @@
               "ScreenTransitionType": "ScreenTransitionSlide",
               "ScreenTransitionDirection": "East",
               "ActionComponent": "Main",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "level",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "levelBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "South",
+              "ActionComponent": "Level",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "diagnostics",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "diagBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "South",
+              "ActionComponent": "Diagnostics",
               "Type": "ActionGotoScreen"
             }
           }
@@ -1606,6 +2240,18 @@
       },
       {
         "TextEntryId": "SingleUseId43",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId44",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId45",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId46",
         "IsResource": false
       }
     ],

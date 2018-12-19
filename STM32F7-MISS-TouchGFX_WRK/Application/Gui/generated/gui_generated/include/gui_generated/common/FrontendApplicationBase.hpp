@@ -18,11 +18,27 @@ public:
     // Boot
     void gotoBootScreenNoTransition();
 
+    void gotoBootScreenSlideTransitionNorth();
+
     void gotoBootScreenSlideTransitionWest();
 
 
+    // Diagnostics
+    void gotoDiagnosticsScreenSlideTransitionNorth();
+
+    void gotoDiagnosticsScreenSlideTransitionSouth();
+
+
+    // Level
+    void gotoLevelScreenCoverTransitionNorth();
+
+    void gotoLevelScreenSlideTransitionNorth();
+
+    void gotoLevelScreenSlideTransitionSouth();
+
+
     // Main
-    void gotoMainScreenSlideTransitionWest();
+    void gotoMainScreenSlideTransitionNorth();
 
     void gotoMainScreenSlideTransitionSouth();
 
@@ -32,6 +48,8 @@ public:
     // Settings
     void gotoSettingsScreenSlideTransitionEast();
 
+    void gotoSettingsScreenSlideTransitionNorth();
+
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
@@ -40,11 +58,27 @@ protected:
     // Boot
     void gotoBootScreenNoTransitionImpl();
 
+    void gotoBootScreenSlideTransitionNorthImpl();
+
     void gotoBootScreenSlideTransitionWestImpl();
 
 
+    // Diagnostics
+    void gotoDiagnosticsScreenSlideTransitionNorthImpl();
+
+    void gotoDiagnosticsScreenSlideTransitionSouthImpl();
+
+
+    // Level
+    void gotoLevelScreenCoverTransitionNorthImpl();
+
+    void gotoLevelScreenSlideTransitionNorthImpl();
+
+    void gotoLevelScreenSlideTransitionSouthImpl();
+
+
     // Main
-    void gotoMainScreenSlideTransitionWestImpl();
+    void gotoMainScreenSlideTransitionNorthImpl();
 
     void gotoMainScreenSlideTransitionSouthImpl();
 
@@ -53,6 +87,8 @@ protected:
 
     // Settings
     void gotoSettingsScreenSlideTransitionEastImpl();
+
+    void gotoSettingsScreenSlideTransitionNorthImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP

@@ -27,7 +27,7 @@ public:
 
     virtual ~MainPresenter() {};
 
-    void actualPressureUpdate(float fVal);
+    void actualPressureMMHGUpdate(float fVal);
 	void actualFlowLPMUpdate(float fVal);
 	void actualFlowRPMUpdate(float fVal);
 

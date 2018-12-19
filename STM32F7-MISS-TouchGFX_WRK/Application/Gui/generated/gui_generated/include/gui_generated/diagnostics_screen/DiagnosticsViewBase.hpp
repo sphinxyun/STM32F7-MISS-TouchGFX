@@ -33,6 +33,9 @@ protected:
     touchgfx::TextArea textArea3;
     touchgfx::TextArea textArea1;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > workBtn;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > homeBtn;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > settingsBtn;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > levelBtn;
 
     /*
      * Wildcard Buffers

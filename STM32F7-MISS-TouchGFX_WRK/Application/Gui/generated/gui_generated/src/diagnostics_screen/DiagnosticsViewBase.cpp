@@ -31,14 +31,32 @@ DiagnosticsViewBase::DiagnosticsViewBase() :
 
     workBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID), Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID));
     workBtn.setIconXY(0, 0);
-    workBtn.setPosition(11, 417, 50, 50);
+    workBtn.setPosition(136, 424, 48, 48);
     workBtn.setAction(flexButtonCallback);
+
+    homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID), Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID));
+    homeBtn.setIconXY(0, 0);
+    homeBtn.setPosition(8, 424, 48, 48);
+    homeBtn.setAction(flexButtonCallback);
+
+    settingsBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID), Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID));
+    settingsBtn.setIconXY(0, 0);
+    settingsBtn.setPosition(200, 424, 48, 48);
+    settingsBtn.setAction(flexButtonCallback);
+
+    levelBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_USER_48_ID), Bitmap(BITMAP_BLUE_ICONS_USER_48_ID));
+    levelBtn.setIconXY(0, 0);
+    levelBtn.setPosition(72, 424, 48, 48);
+    levelBtn.setAction(flexButtonCallback);
 
     add(box1);
     add(mcuLoad);
     add(textArea3);
     add(textArea1);
     add(workBtn);
+    add(homeBtn);
+    add(settingsBtn);
+    add(levelBtn);
 }
 
 void DiagnosticsViewBase::setupScreen()
@@ -50,9 +68,30 @@ void DiagnosticsViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButt
 {
     if (&src == &workBtn)
     {
-        //workMode
+        //work
         //When workBtn clicked change screen to Main
         //Go to Main with screen transition towards South
         application().gotoMainScreenSlideTransitionSouth();
+    }
+    else if (&src == &homeBtn)
+    {
+        //home
+        //When homeBtn clicked change screen to Level
+        //Go to Level with screen transition towards North
+        application().gotoLevelScreenSlideTransitionNorth();
+    }
+    else if (&src == &settingsBtn)
+    {
+        //settings
+        //When settingsBtn clicked change screen to Settings
+        //Go to Settings with screen transition towards North
+        application().gotoSettingsScreenSlideTransitionNorth();
+    }
+    else if (&src == &levelBtn)
+    {
+        //level
+        //When levelBtn clicked change screen to Level
+        //Go to Level with screen transition towards North
+        application().gotoLevelScreenSlideTransitionNorth();
     }
 }

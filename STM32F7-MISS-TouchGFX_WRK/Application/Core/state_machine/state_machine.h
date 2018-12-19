@@ -30,8 +30,9 @@ typedef struct {
 
 	REGULATION_RegulatorStatus_t sIrrigationActual;
 
-	float fIrrigationPresetPressureMMHG;
+	uint8_t u8IrrigationPresetPressureMMHG;
 	float fIrrigationPresetFlowLPM;
+	uint16_t u16IrrigationPresetFlowRPM;
 
 	uint32_t u32BrightnessPercent;
 

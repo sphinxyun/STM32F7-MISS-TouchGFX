@@ -11,6 +11,9 @@ public:
     virtual ~DiagnosticsView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+
+    void mcuLoadUpdated(uint8_t mcuLoadValue);
+
 protected:
 };
 

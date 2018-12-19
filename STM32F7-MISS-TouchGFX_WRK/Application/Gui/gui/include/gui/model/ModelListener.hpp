@@ -28,15 +28,17 @@ public:
         model = m;
     }
 
-    virtual void actualPressureUpdate(float fVal) {}
+    virtual void actualPressureMMHGUpdate(float fVal) {}
     virtual void actualFlowLPMUpdate(float fVal) {}
     virtual void actualFlowRPMUpdate(float fVal) {}
+
+    virtual void presetPressureMMHGUpdate(uint8_t fVal) {}
+	virtual void presetFlowLPMUpdate(float fVal) {}
+	virtual void presetFlowRPMUpdate(uint16_t fVal) {}
 
     virtual void brightnessValueUpdate(uint32_t u32Val) {}
 
     virtual void mcuLoadUpdated(uint8_t mcuLoad) {}
-
-
 
 protected:
     Model* model;

@@ -8,10 +8,14 @@ DiagnosticsPresenter::DiagnosticsPresenter(DiagnosticsView& v)
 
 void DiagnosticsPresenter::activate()
 {
-
+	view.mcuLoadUpdated(model->getMcuLoad());
 }
 
 void DiagnosticsPresenter::deactivate()
 {
 
+}
+
+void DiagnosticsPresenter::mcuLoadUpdated(uint8_t mcuLoad) {
+	view.mcuLoadUpdated(mcuLoad);
 }

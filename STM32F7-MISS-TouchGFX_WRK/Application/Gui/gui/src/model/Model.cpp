@@ -40,9 +40,13 @@ void Model::tick()
 
 		modelListener->brightnessValueUpdate(guiStatus.u32BrightnessPercent);
 
-		modelListener->actualPressureUpdate(guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
+		modelListener->actualPressureMMHGUpdate(guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
 		modelListener->actualFlowLPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualFlowLPM);
 		modelListener->actualFlowRPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
+
+		modelListener->presetPressureMMHGUpdate(guiStatus.u8IrrigationPresetPressureMMHG);
+		modelListener->presetFlowLPMUpdate(guiStatus.fIrrigationPresetFlowLPM);
+		modelListener->presetFlowRPMUpdate(guiStatus.u16IrrigationPresetFlowRPM)
 	}
 
 	uint8_t mcuLoadPct = touchgfx::HAL::getInstance()->getMCULoadPct();
@@ -54,15 +58,15 @@ void Model::tick()
 }
 
 void Model::switchToDiagnosticMode(void) {
-
+	m_app->app.gotoDiagnosticsScreenSlideTransitionNorth();
 }
 
 void Model::switchToLevelMode(void) {
-
+	m_app->app.gotoLevelScreenCoverTransitionNorth();
 }
 
 void Model::switchToMainMode(void) {
-
+	m_app->app.gotoMainScreenSlideTransitionNorth();
 }
 
 void Model::startRegulation() {

@@ -18,7 +18,7 @@ SettingsViewBase::SettingsViewBase() :
 
     homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID), Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID));
     homeBtn.setIconXY(0, 0);
-    homeBtn.setPosition(13, 418, 50, 50);
+    homeBtn.setPosition(8, 424, 48, 48);
     homeBtn.setAction(flexButtonCallback);
 
     textArea1.setXY(15, 15);
@@ -62,7 +62,7 @@ SettingsViewBase::SettingsViewBase() :
 
     workBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID), Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID));
     workBtn.setIconXY(0, 0);
-    workBtn.setPosition(95, 418, 50, 50);
+    workBtn.setPosition(200, 424, 48, 48);
     workBtn.setAction(flexButtonCallback);
 
     slider2.setXY(284, 168);
@@ -83,6 +83,16 @@ SettingsViewBase::SettingsViewBase() :
     textArea3.setLinespacing(0);
     textArea3.setTypedText(TypedText(T_SINGLEUSEID38));
 
+    diagBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_ADD_NEW_48_ID), Bitmap(BITMAP_BLUE_ICONS_ADD_NEW_48_ID));
+    diagBtn.setIconXY(0, 0);
+    diagBtn.setPosition(72, 424, 48, 48);
+    diagBtn.setAction(flexButtonCallback);
+
+    levelBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_USER_48_ID), Bitmap(BITMAP_BLUE_ICONS_USER_48_ID));
+    levelBtn.setIconXY(0, 0);
+    levelBtn.setPosition(136, 424, 48, 48);
+    levelBtn.setAction(flexButtonCallback);
+
     add(box1);
     add(toggleButton1);
     add(homeBtn);
@@ -92,6 +102,8 @@ SettingsViewBase::SettingsViewBase() :
     add(slider2);
     add(mcuLoad);
     add(textArea3);
+    add(diagBtn);
+    add(levelBtn);
 }
 
 void SettingsViewBase::setupScreen()
@@ -111,7 +123,7 @@ void SettingsViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonC
 {
     if (&src == &homeBtn)
     {
-        //bootScreen
+        //home
         //When homeBtn clicked change screen to Boot
         //Go to Boot with screen transition towards West
         application().gotoBootScreenSlideTransitionWest();
@@ -132,9 +144,23 @@ void SettingsViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonC
     }
     else if (&src == &workBtn)
     {
-        //Interaction1
+        //work
         //When workBtn clicked change screen to Main
         //Go to Main with screen transition towards East
         application().gotoMainScreenSlideTransitionEast();
+    }
+    else if (&src == &diagBtn)
+    {
+        //diagnostics
+        //When diagBtn clicked change screen to Diagnostics
+        //Go to Diagnostics with screen transition towards South
+        application().gotoDiagnosticsScreenSlideTransitionSouth();
+    }
+    else if (&src == &levelBtn)
+    {
+        //level
+        //When levelBtn clicked change screen to Level
+        //Go to Level with screen transition towards South
+        application().gotoLevelScreenSlideTransitionSouth();
     }
 }

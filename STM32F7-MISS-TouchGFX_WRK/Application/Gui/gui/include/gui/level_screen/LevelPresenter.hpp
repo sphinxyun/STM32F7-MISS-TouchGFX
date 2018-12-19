@@ -1,17 +1,17 @@
-#ifndef DIAGNOSTICS_PRESENTER_HPP
-#define DIAGNOSTICS_PRESENTER_HPP
+#ifndef LEVEL_PRESENTER_HPP
+#define LEVEL_PRESENTER_HPP
 
 #include <gui/model/ModelListener.hpp>
 #include <mvp/Presenter.hpp>
 
 using namespace touchgfx;
 
-class DiagnosticsView;
+class LevelView;
 
-class DiagnosticsPresenter : public Presenter, public ModelListener
+class LevelPresenter : public Presenter, public ModelListener
 {
 public:
-    DiagnosticsPresenter(DiagnosticsView& v);
+    LevelPresenter(LevelView& v);
 
     /**
      * The activate function is called automatically when this screen is "switched in"
@@ -25,15 +25,15 @@ public:
      */
     virtual void deactivate();
 
-    virtual ~DiagnosticsPresenter() {};
+    virtual ~LevelPresenter() {};
 
     void mcuLoadUpdated(uint8_t mcuLoad);
 
 private:
-    DiagnosticsPresenter();
+    LevelPresenter();
 
-    DiagnosticsView& view;
+    LevelView& view;
 };
 
 
-#endif // DIAGNOSTICS_PRESENTER_HPP
+#endif // LEVEL_PRESENTER_HPP

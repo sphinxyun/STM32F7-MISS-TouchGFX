@@ -11,6 +11,8 @@
 #include <gui/boot_screen/BootPresenter.hpp>
 #include <gui/diagnostics_screen/DiagnosticsView.hpp>
 #include <gui/diagnostics_screen/DiagnosticsPresenter.hpp>
+#include <gui/level_screen/LevelView.hpp>
+#include <gui/level_screen/LevelPresenter.hpp>
 #include <gui/main_screen/MainView.hpp>
 #include <gui/main_screen/MainPresenter.hpp>
 #include <gui/settings_screen/SettingsView.hpp>
@@ -45,6 +47,18 @@ void FrontendApplicationBase::gotoBootScreenNoTransitionImpl()
 }
 
 
+void FrontendApplicationBase::gotoBootScreenSlideTransitionNorth()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoBootScreenSlideTransitionNorthImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoBootScreenSlideTransitionNorthImpl()
+{
+    makeTransition<BootView, BootPresenter, touchgfx::SlideTransition<NORTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+
 void FrontendApplicationBase::gotoBootScreenSlideTransitionWest()
 {
     transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoBootScreenSlideTransitionWestImpl);
@@ -56,17 +70,79 @@ void FrontendApplicationBase::gotoBootScreenSlideTransitionWestImpl()
     makeTransition<BootView, BootPresenter, touchgfx::SlideTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-// Main
+// Diagnostics
 
-void FrontendApplicationBase::gotoMainScreenSlideTransitionWest()
+void FrontendApplicationBase::gotoDiagnosticsScreenSlideTransitionNorth()
 {
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoMainScreenSlideTransitionWestImpl);
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoDiagnosticsScreenSlideTransitionNorthImpl);
     pendingScreenTransitionCallback = &transitionCallback;
 }
 
-void FrontendApplicationBase::gotoMainScreenSlideTransitionWestImpl()
+void FrontendApplicationBase::gotoDiagnosticsScreenSlideTransitionNorthImpl()
 {
-    makeTransition<MainView, MainPresenter, touchgfx::SlideTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+    makeTransition<DiagnosticsView, DiagnosticsPresenter, touchgfx::SlideTransition<NORTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+
+void FrontendApplicationBase::gotoDiagnosticsScreenSlideTransitionSouth()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoDiagnosticsScreenSlideTransitionSouthImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoDiagnosticsScreenSlideTransitionSouthImpl()
+{
+    makeTransition<DiagnosticsView, DiagnosticsPresenter, touchgfx::SlideTransition<SOUTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+// Level
+
+void FrontendApplicationBase::gotoLevelScreenCoverTransitionNorth()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoLevelScreenCoverTransitionNorthImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoLevelScreenCoverTransitionNorthImpl()
+{
+    makeTransition<LevelView, LevelPresenter, touchgfx::CoverTransition<NORTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+
+void FrontendApplicationBase::gotoLevelScreenSlideTransitionNorth()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoLevelScreenSlideTransitionNorthImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoLevelScreenSlideTransitionNorthImpl()
+{
+    makeTransition<LevelView, LevelPresenter, touchgfx::SlideTransition<NORTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+
+void FrontendApplicationBase::gotoLevelScreenSlideTransitionSouth()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoLevelScreenSlideTransitionSouthImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoLevelScreenSlideTransitionSouthImpl()
+{
+    makeTransition<LevelView, LevelPresenter, touchgfx::SlideTransition<SOUTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+// Main
+
+void FrontendApplicationBase::gotoMainScreenSlideTransitionNorth()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoMainScreenSlideTransitionNorthImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoMainScreenSlideTransitionNorthImpl()
+{
+    makeTransition<MainView, MainPresenter, touchgfx::SlideTransition<NORTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
 
@@ -104,5 +180,17 @@ void FrontendApplicationBase::gotoSettingsScreenSlideTransitionEast()
 void FrontendApplicationBase::gotoSettingsScreenSlideTransitionEastImpl()
 {
     makeTransition<SettingsView, SettingsPresenter, touchgfx::SlideTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+
+void FrontendApplicationBase::gotoSettingsScreenSlideTransitionNorth()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoSettingsScreenSlideTransitionNorthImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoSettingsScreenSlideTransitionNorthImpl()
+{
+    makeTransition<SettingsView, SettingsPresenter, touchgfx::SlideTransition<NORTH>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 

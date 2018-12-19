@@ -15,12 +15,12 @@ MainViewBase::MainViewBase() :
 
     homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID), Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID));
     homeBtn.setIconXY(0, 0);
-    homeBtn.setPosition(19, 419, 50, 50);
+    homeBtn.setPosition(8, 424, 48, 48);
     homeBtn.setAction(flexButtonCallback);
 
     settingsBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID), Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID));
     settingsBtn.setIconXY(0, 0);
-    settingsBtn.setPosition(83, 419, 50, 50);
+    settingsBtn.setPosition(200, 424, 48, 48);
     settingsBtn.setAction(flexButtonCallback);
 
     textArea1.setXY(15, 15);
@@ -141,6 +141,16 @@ MainViewBase::MainViewBase() :
     textArea3.setLinespacing(0);
     textArea3.setTypedText(TypedText(T_SINGLEUSEID40));
 
+    diagBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_ADD_NEW_48_ID), Bitmap(BITMAP_BLUE_ICONS_ADD_NEW_48_ID));
+    diagBtn.setIconXY(0, 0);
+    diagBtn.setPosition(72, 424, 48, 48);
+    diagBtn.setAction(flexButtonCallback);
+
+    levelBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_USER_48_ID), Bitmap(BITMAP_BLUE_ICONS_USER_48_ID));
+    levelBtn.setIconXY(0, 0);
+    levelBtn.setPosition(136, 424, 48, 48);
+    levelBtn.setAction(flexButtonCallback);
+
     add(box1);
     add(homeBtn);
     add(settingsBtn);
@@ -165,6 +175,8 @@ MainViewBase::MainViewBase() :
     add(incFlow);
     add(mcuLoad);
     add(textArea3);
+    add(diagBtn);
+    add(levelBtn);
 }
 
 void MainViewBase::setupScreen()
@@ -194,14 +206,14 @@ void MainViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonConta
 {
     if (&src == &homeBtn)
     {
-        //switchToHomeScreen
+        //home
         //When homeBtn clicked change screen to Boot
         //Go to Boot with screen transition towards West
         application().gotoBootScreenSlideTransitionWest();
     }
     else if (&src == &settingsBtn)
     {
-        //switchToSettingsScreen
+        //settings
         //When settingsBtn clicked change screen to Settings
         //Go to Settings with screen transition towards East
         application().gotoSettingsScreenSlideTransitionEast();
@@ -233,5 +245,19 @@ void MainViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonConta
         //When incFlow clicked call virtual function
         //Call incFlowBtn
         incFlowBtn();
+    }
+    else if (&src == &diagBtn)
+    {
+        //diagnostics
+        //When diagBtn clicked change screen to Diagnostics
+        //Go to Diagnostics with screen transition towards South
+        application().gotoDiagnosticsScreenSlideTransitionSouth();
+    }
+    else if (&src == &levelBtn)
+    {
+        //level
+        //When levelBtn clicked change screen to Level
+        //Go to Level with screen transition towards South
+        application().gotoLevelScreenSlideTransitionSouth();
     }
 }

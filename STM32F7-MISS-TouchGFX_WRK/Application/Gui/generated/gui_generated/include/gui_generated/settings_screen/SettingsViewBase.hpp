@@ -58,6 +58,8 @@ protected:
     touchgfx::Slider slider2;
     touchgfx::TextAreaWithOneWildcard mcuLoad;
     touchgfx::TextArea textArea3;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > diagBtn;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > levelBtn;
 
     /*
      * Wildcard Buffers
