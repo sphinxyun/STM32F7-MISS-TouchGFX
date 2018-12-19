@@ -15,40 +15,44 @@ public:
     FrontendApplicationBase(Model& m, FrontendHeap& heap);
     virtual ~FrontendApplicationBase() { }
 
-    // bootScreen
-    void gotobootScreenScreenNoTransition();
+    // Boot
+    void gotoBootScreenNoTransition();
 
-    void gotobootScreenScreenSlideTransitionWest();
-
-
-    // settingsScreen
-    void gotosettingsScreenScreenSlideTransitionEast();
+    void gotoBootScreenSlideTransitionWest();
 
 
-    // workScreen
-    void gotoworkScreenScreenSlideTransitionWest();
+    // Main
+    void gotoMainScreenSlideTransitionWest();
 
-    void gotoworkScreenScreenSlideTransitionEast();
+    void gotoMainScreenSlideTransitionSouth();
+
+    void gotoMainScreenSlideTransitionEast();
+
+
+    // Settings
+    void gotoSettingsScreenSlideTransitionEast();
 
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
     Model& model;
 
-    // bootScreen
-    void gotobootScreenScreenNoTransitionImpl();
+    // Boot
+    void gotoBootScreenNoTransitionImpl();
 
-    void gotobootScreenScreenSlideTransitionWestImpl();
-
-
-    // settingsScreen
-    void gotosettingsScreenScreenSlideTransitionEastImpl();
+    void gotoBootScreenSlideTransitionWestImpl();
 
 
-    // workScreen
-    void gotoworkScreenScreenSlideTransitionWestImpl();
+    // Main
+    void gotoMainScreenSlideTransitionWestImpl();
 
-    void gotoworkScreenScreenSlideTransitionEastImpl();
+    void gotoMainScreenSlideTransitionSouthImpl();
+
+    void gotoMainScreenSlideTransitionEastImpl();
+
+
+    // Settings
+    void gotoSettingsScreenSlideTransitionEastImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP

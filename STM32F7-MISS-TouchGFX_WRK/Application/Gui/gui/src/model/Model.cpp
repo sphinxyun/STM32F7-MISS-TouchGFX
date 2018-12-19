@@ -1,6 +1,8 @@
 #include <gui/model/Model.hpp>
 #include <gui/model/ModelListener.hpp>
 
+#include <gui/common/FrontendHeap.hpp>
+
 #include <touchgfx/hal/HAL.hpp>
 
 #include "settings/settings_app.h"
@@ -17,7 +19,8 @@ extern "C" {
 	extern QueueHandle_t xGuiStatus;
 }
 
-Model::Model() :
+Model::Model(FrontendHeap *app) :
+	m_app(app),
 	modelListener(0),
 	mcuLoadActive(true)
 {
@@ -31,6 +34,10 @@ void Model::tick()
 //		DEBUG_SendTextFrame("  tick: xGuiStatus");
 		m_brightness = guiStatus.u32BrightnessPercent;
 
+		if (m_brightness == 50) {
+//			m_app->app.gotoworkScreenScreenSlideTransitionWest();
+		}
+
 		modelListener->brightnessValueUpdate(guiStatus.u32BrightnessPercent);
 
 		modelListener->actualPressureUpdate(guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
@@ -38,13 +45,24 @@ void Model::tick()
 		modelListener->actualFlowRPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
 	}
 
-//	static int milliseconds = 123456;
 	uint8_t mcuLoadPct = touchgfx::HAL::getInstance()->getMCULoadPct();
 	if (m_mcuLoad != mcuLoadPct)
 	{
 		m_mcuLoad = mcuLoadPct;
 		modelListener->mcuLoadUpdated(m_mcuLoad);
 	}
+}
+
+void Model::switchToDiagnosticMode(void) {
+
+}
+
+void Model::switchToLevelMode(void) {
+
+}
+
+void Model::switchToMainMode(void) {
+
 }
 
 void Model::startRegulation() {

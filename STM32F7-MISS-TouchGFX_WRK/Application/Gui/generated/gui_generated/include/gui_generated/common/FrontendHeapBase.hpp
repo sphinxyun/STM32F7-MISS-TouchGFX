@@ -14,18 +14,19 @@
 #include <touchgfx/transitions/SlideTransition.hpp>
 #include <touchgfx/transitions/SlideTransition.hpp>
 #include <touchgfx/transitions/SlideTransition.hpp>
+#include <touchgfx/transitions/SlideTransition.hpp>
 
 #include <gui/common/FrontendApplication.hpp>
 #include <gui/model/Model.hpp>
 
-#include <gui/bootscreen_screen/bootScreenView.hpp>
-#include <gui/bootscreen_screen/bootScreenPresenter.hpp>
-#include <gui/autotestscreen_screen/autotestScreenView.hpp>
-#include <gui/autotestscreen_screen/autotestScreenPresenter.hpp>
-#include <gui/settingsscreen_screen/settingsScreenView.hpp>
-#include <gui/settingsscreen_screen/settingsScreenPresenter.hpp>
-#include <gui/workscreen_screen/workScreenView.hpp>
-#include <gui/workscreen_screen/workScreenPresenter.hpp>
+#include <gui/boot_screen/BootView.hpp>
+#include <gui/boot_screen/BootPresenter.hpp>
+#include <gui/diagnostics_screen/DiagnosticsView.hpp>
+#include <gui/diagnostics_screen/DiagnosticsPresenter.hpp>
+#include <gui/main_screen/MainView.hpp>
+#include <gui/main_screen/MainPresenter.hpp>
+#include <gui/settings_screen/SettingsView.hpp>
+#include <gui/settings_screen/SettingsPresenter.hpp>
 
 
 /**
@@ -48,10 +49,10 @@ public:
      * A list of all view types. Must end with meta::Nil.
      * @note All view types used in the application MUST be added to this list!
      */
-    typedef meta::TypeList< bootScreenView,
-            meta::TypeList< autotestScreenView,
-            meta::TypeList< settingsScreenView,
-            meta::TypeList< workScreenView,
+    typedef meta::TypeList< BootView,
+            meta::TypeList< DiagnosticsView,
+            meta::TypeList< MainView,
+            meta::TypeList< SettingsView,
             meta::Nil > > >
             > GeneratedViewTypes;
 
@@ -64,10 +65,10 @@ public:
      * A list of all presenter types. Must end with meta::Nil.
      * @note All presenter types used in the application MUST be added to this list!
      */
-    typedef meta::TypeList< bootScreenPresenter,
-            meta::TypeList< autotestScreenPresenter,
-            meta::TypeList< settingsScreenPresenter,
-            meta::TypeList< workScreenPresenter,
+    typedef meta::TypeList< BootPresenter,
+            meta::TypeList< DiagnosticsPresenter,
+            meta::TypeList< MainPresenter,
+            meta::TypeList< SettingsPresenter,
             meta::Nil > > >
             > GeneratedPresenterTypes;
 
@@ -83,7 +84,8 @@ public:
     typedef meta::TypeList< NoTransition,
             meta::TypeList< SlideTransition<EAST>,
             meta::TypeList< SlideTransition<WEST>,
-            meta::Nil > >
+            meta::TypeList< SlideTransition<SOUTH>,
+            meta::Nil > > >
             > GeneratedTransitionTypes;
 
     /**
@@ -93,7 +95,7 @@ public:
 
     virtual void gotoStartScreen(FrontendApplication& app)
     {
-        app.gotobootScreenScreenNoTransition();
+        app.gotoBootScreenNoTransition();
     }
 protected:
     FrontendHeapBase(AbstractPartition& presenters, AbstractPartition& views, AbstractPartition& transitions, FrontendApplication& app)

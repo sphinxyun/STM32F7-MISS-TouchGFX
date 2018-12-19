@@ -94,8 +94,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon58",
-                "IconReleased": "__designer\\dark_icons_settings_48.png",
-                "IconPressed": "__designer\\dark_icons_settings_48.png"
+                "IconReleased": "__designer\\blue_icons_settings_48.png",
+                "IconPressed": "__designer\\blue_icons_settings_48.png"
               }
             ],
             "Name": "settingsBtn",
@@ -121,8 +121,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon64",
-                "IconReleased": "__designer\\dark_icons_tools_48.png",
-                "IconPressed": "__designer\\dark_icons_tools_48.png"
+                "IconReleased": "__designer\\blue_icons_tools_48.png",
+                "IconPressed": "__designer\\blue_icons_tools_48.png"
               }
             ],
             "Name": "workBtn",
@@ -199,7 +199,7 @@
             "Action": {
               "ScreenTransitionType": "ScreenTransitionSlide",
               "ScreenTransitionDirection": "East",
-              "ActionComponent": "settingsScreen",
+              "ActionComponent": "Settings",
               "Type": "ActionGotoScreen"
             }
           },
@@ -213,12 +213,12 @@
             "Action": {
               "ScreenTransitionType": "ScreenTransitionSlide",
               "ScreenTransitionDirection": "West",
-              "ActionComponent": "workScreen",
+              "ActionComponent": "Main",
               "Type": "ActionGotoScreen"
             }
           }
         ],
-        "Name": "bootScreen",
+        "Name": "Boot",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0
       },
@@ -292,81 +292,9 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
-          }
-        ],
-        "Interactions": [],
-        "Name": "autotestScreen",
-        "OverrideDefaultBufferSize": false,
-        "CanvasBufferSize": 0
-      },
-      {
-        "Components": [
-          {
-            "Color": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "Alpha": 255,
-            "Name": "box1",
-            "X": -1,
-            "Y": 0,
-            "Width": 641,
-            "Height": 480,
-            "Type": "Box",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
           },
           {
-            "InitialStatePressed": false,
-            "Pressed": "__designer\\dark_togglebars_toggle_round_large_button_on.png",
-            "Released": "__designer\\dark_togglebars_toggle_round_large_button_off.png",
-            "Alpha": 255,
-            "Style": "Style4",
-            "Name": "toggleButton1",
-            "X": 494,
-            "Y": 209,
-            "Width": 128,
-            "Height": 38,
-            "Type": "ToggleButton",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "Alpha": 255,
-            "ButtonTrigger": {
-              "Type": "TouchButtonTrigger"
-            },
-            "ButtonStyles": [
-              {
-                "Type": "IconButtonStyle",
-                "X": 0,
-                "Y": 0,
-                "Style": "Icon28",
-                "IconReleased": "__designer\\dark_icons_home_48.png",
-                "IconPressed": "__designer\\dark_icons_home_48.png"
-              }
-            ],
-            "Name": "homeBtn",
-            "X": 13,
-            "Y": 418,
-            "Width": 50,
-            "Height": 50,
-            "Type": "FlexButton",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "TextId": "SingleUseId7",
+            "TextId": "SingleUseId43",
             "TextRotation": "0",
             "Color": {
               "Red": 0,
@@ -377,153 +305,11 @@
             "AutoSize": true,
             "LineSpacing": 0,
             "Name": "textArea1",
-            "X": 15,
-            "Y": 15,
-            "Width": 144,
+            "X": 11,
+            "Y": 20,
+            "Width": 83,
             "Height": 20,
             "Type": "TextArea",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "Components": [
-              {
-                "TextId": "SingleUseId18",
-                "TextRotation": "0",
-                "Color": {
-                  "Red": 0,
-                  "Green": 0,
-                  "Blue": 0
-                },
-                "Alpha": 255,
-                "AutoSize": true,
-                "LineSpacing": 0,
-                "Name": "textArea2",
-                "X": 17,
-                "Y": 10,
-                "Width": 167,
-                "Height": 32,
-                "Type": "TextArea",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": false
-              },
-              {
-                "Alpha": 255,
-                "ButtonTrigger": {
-                  "Type": "RepeatButtonTrigger",
-                  "Delay": 500,
-                  "Interval": 250
-                },
-                "ButtonStyles": [
-                  {
-                    "Type": "TextButtonStyle",
-                    "X": 0,
-                    "Y": 0,
-                    "TextId": "SingleUseId20",
-                    "TextRotation": "0",
-                    "ColorReleased": {
-                      "Red": 10,
-                      "Green": 10,
-                      "Blue": 10
-                    },
-                    "ColorPressed": {
-                      "Red": 10,
-                      "Green": 10,
-                      "Blue": 10
-                    }
-                  }
-                ],
-                "Name": "incBtn",
-                "X": 567,
-                "Y": 12,
-                "Width": 48,
-                "Height": 32,
-                "Type": "FlexButton",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": false
-              },
-              {
-                "TextId": "SingleUseId5",
-                "TextRotation": "0",
-                "Color": {
-                  "Red": 0,
-                  "Green": 0,
-                  "Blue": 0
-                },
-                "Alpha": 255,
-                "AutoSize": false,
-                "LineSpacing": 0,
-                "Wildcard1": {
-                  "TextId": "SingleUseId6",
-                  "UseBuffer": false,
-                  "BufferSize": 0
-                },
-                "Name": "brightnessValue",
-                "X": 470,
-                "Y": 12,
-                "Width": 89,
-                "Height": 32,
-                "Type": "TextArea",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": false
-              },
-              {
-                "Alpha": 255,
-                "ButtonTrigger": {
-                  "Type": "RepeatButtonTrigger",
-                  "Delay": 500,
-                  "Interval": 250
-                },
-                "ButtonStyles": [
-                  {
-                    "Type": "TextButtonStyle",
-                    "X": 0,
-                    "Y": 0,
-                    "TextId": "SingleUseId19",
-                    "TextRotation": "0",
-                    "ColorReleased": {
-                      "Red": 10,
-                      "Green": 10,
-                      "Blue": 10
-                    },
-                    "ColorPressed": {
-                      "Red": 10,
-                      "Green": 10,
-                      "Blue": 10
-                    }
-                  }
-                ],
-                "Name": "decBtn",
-                "X": 410,
-                "Y": 12,
-                "Width": 48,
-                "Height": 32,
-                "Type": "FlexButton",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": false
-              }
-            ],
-            "Name": "container1",
-            "X": 7,
-            "Y": 106,
-            "Width": 627,
-            "Height": 54,
-            "Type": "Container",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -541,91 +327,16 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon64",
-                "IconReleased": "__designer\\dark_icons_tools_48.png",
-                "IconPressed": "__designer\\dark_icons_tools_48.png"
+                "IconReleased": "__designer\\blue_icons_tools_48.png",
+                "IconPressed": "__designer\\blue_icons_tools_48.png"
               }
             ],
             "Name": "workBtn",
-            "X": 95,
-            "Y": 418,
+            "X": 11,
+            "Y": 417,
             "Width": 50,
             "Height": 50,
             "Type": "FlexButton",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "IsHorizontalSlider": true,
-            "BackgroundUnselected": "__designer\\blue_slider_horizontal_medium_slider2_round_back.png",
-            "BackgroundSelected": "__designer\\blue_slider_horizontal_medium_slider2_round_fill.png",
-            "Indicator": "__designer\\blue_slider_horizontal_medium_indicators_slider2_round_nob.png",
-            "BackgroundX": 2,
-            "BackgroundY": 6,
-            "IndicatorPos": 0,
-            "IndicatorMax": 284,
-            "IndicatorMin": 0,
-            "ValueMax": 100,
-            "ValueMin": 0,
-            "InitValue": 0,
-            "Name": "slider2",
-            "X": 284,
-            "Y": 168,
-            "Width": 338,
-            "Height": 34,
-            "Type": "Slider",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "TextId": "SingleUseId37",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 0,
-              "Green": 0,
-              "Blue": 0
-            },
-            "Alpha": 255,
-            "AutoSize": false,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "UseBuffer": true,
-              "BufferSize": 10
-            },
-            "Name": "mcuLoad",
-            "X": 586,
-            "Y": 0,
-            "Width": 54,
-            "Height": 20,
-            "Type": "TextArea",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "TextId": "SingleUseId38",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 0,
-              "Green": 0,
-              "Blue": 0
-            },
-            "Alpha": 255,
-            "AutoSize": true,
-            "LineSpacing": 0,
-            "Name": "textArea3",
-            "X": 486,
-            "Y": 0,
-            "Width": 100,
-            "Height": 20,
-            "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -635,45 +346,7 @@
         ],
         "Interactions": [
           {
-            "InteractionName": "bootScreen",
-            "HasCompletedTrigger": false,
-            "Trigger": {
-              "TriggerComponent": "homeBtn",
-              "Type": "TriggerClicked"
-            },
-            "Action": {
-              "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "West",
-              "ActionComponent": "bootScreen",
-              "Type": "ActionGotoScreen"
-            }
-          },
-          {
-            "InteractionName": "incBrght",
-            "HasCompletedTrigger": false,
-            "Trigger": {
-              "TriggerComponent": "incBtn",
-              "Type": "TriggerClicked"
-            },
-            "Action": {
-              "FunctionName": "incBrightness",
-              "Type": "ActionCustom"
-            }
-          },
-          {
-            "InteractionName": "decBrght",
-            "HasCompletedTrigger": false,
-            "Trigger": {
-              "TriggerComponent": "decBtn",
-              "Type": "TriggerClicked"
-            },
-            "Action": {
-              "FunctionName": "decBrightness",
-              "Type": "ActionCustom"
-            }
-          },
-          {
-            "InteractionName": "Interaction1",
+            "InteractionName": "workMode",
             "HasCompletedTrigger": false,
             "Trigger": {
               "TriggerComponent": "workBtn",
@@ -681,13 +354,13 @@
             },
             "Action": {
               "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "East",
-              "ActionComponent": "workScreen",
+              "ScreenTransitionDirection": "South",
+              "ActionComponent": "Main",
               "Type": "ActionGotoScreen"
             }
           }
         ],
-        "Name": "settingsScreen",
+        "Name": "Diagnostics",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0
       },
@@ -723,8 +396,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon28",
-                "IconReleased": "__designer\\dark_icons_home_48.png",
-                "IconPressed": "__designer\\dark_icons_home_48.png"
+                "IconReleased": "__designer\\blue_icons_home_48.png",
+                "IconPressed": "__designer\\blue_icons_home_48.png"
               }
             ],
             "Name": "homeBtn",
@@ -750,8 +423,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon58",
-                "IconReleased": "__designer\\dark_icons_settings_48.png",
-                "IconPressed": "__designer\\dark_icons_settings_48.png"
+                "IconReleased": "__designer\\blue_icons_settings_48.png",
+                "IconPressed": "__designer\\blue_icons_settings_48.png"
               }
             ],
             "Name": "settingsBtn",
@@ -1138,8 +811,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon14",
-                "IconReleased": "__designer\\dark_icons_down_arrow_48.png",
-                "IconPressed": "__designer\\dark_icons_down_arrow_48.png"
+                "IconReleased": "__designer\\blue_icons_down_arrow_48.png",
+                "IconPressed": "__designer\\blue_icons_down_arrow_48.png"
               }
             ],
             "Name": "decPressure",
@@ -1165,8 +838,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon68",
-                "IconReleased": "__designer\\dark_icons_up_arrow_48.png",
-                "IconPressed": "__designer\\dark_icons_up_arrow_48.png"
+                "IconReleased": "__designer\\blue_icons_up_arrow_48.png",
+                "IconPressed": "__designer\\blue_icons_up_arrow_48.png"
               }
             ],
             "Name": "incPressure",
@@ -1192,8 +865,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon14",
-                "IconReleased": "__designer\\dark_icons_down_arrow_48.png",
-                "IconPressed": "__designer\\dark_icons_down_arrow_48.png"
+                "IconReleased": "__designer\\blue_icons_down_arrow_48.png",
+                "IconPressed": "__designer\\blue_icons_down_arrow_48.png"
               }
             ],
             "Name": "decFlow",
@@ -1219,8 +892,8 @@
                 "X": 0,
                 "Y": 0,
                 "Style": "Icon68",
-                "IconReleased": "__designer\\dark_icons_up_arrow_48.png",
-                "IconPressed": "__designer\\dark_icons_up_arrow_48.png"
+                "IconReleased": "__designer\\blue_icons_up_arrow_48.png",
+                "IconPressed": "__designer\\blue_icons_up_arrow_48.png"
               }
             ],
             "Name": "incFlow",
@@ -1297,7 +970,7 @@
             "Action": {
               "ScreenTransitionType": "ScreenTransitionSlide",
               "ScreenTransitionDirection": "East",
-              "ActionComponent": "settingsScreen",
+              "ActionComponent": "Settings",
               "Type": "ActionGotoScreen"
             }
           },
@@ -1311,7 +984,7 @@
             "Action": {
               "ScreenTransitionType": "ScreenTransitionSlide",
               "ScreenTransitionDirection": "West",
-              "ActionComponent": "bootScreen",
+              "ActionComponent": "Boot",
               "Type": "ActionGotoScreen"
             }
           },
@@ -1388,7 +1061,399 @@
             }
           }
         ],
-        "Name": "workScreen",
+        "Name": "Main",
+        "OverrideDefaultBufferSize": false,
+        "CanvasBufferSize": 0
+      },
+      {
+        "Components": [
+          {
+            "Color": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "Alpha": 255,
+            "Name": "box1",
+            "X": -1,
+            "Y": 0,
+            "Width": 641,
+            "Height": 480,
+            "Type": "Box",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "InitialStatePressed": false,
+            "Pressed": "__designer\\blue_togglebars_toggle_round_large_button_on.png",
+            "Released": "__designer\\blue_togglebars_toggle_round_large_button_off.png",
+            "Alpha": 255,
+            "Style": "Style4",
+            "Name": "toggleButton1",
+            "X": 494,
+            "Y": 209,
+            "Width": 128,
+            "Height": 38,
+            "Type": "ToggleButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon28",
+                "IconReleased": "__designer\\blue_icons_home_48.png",
+                "IconPressed": "__designer\\blue_icons_home_48.png"
+              }
+            ],
+            "Name": "homeBtn",
+            "X": 13,
+            "Y": 418,
+            "Width": 50,
+            "Height": 50,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId7",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea1",
+            "X": 15,
+            "Y": 15,
+            "Width": 144,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Components": [
+              {
+                "TextId": "SingleUseId18",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 0,
+                  "Green": 0,
+                  "Blue": 0
+                },
+                "Alpha": 255,
+                "AutoSize": true,
+                "LineSpacing": 0,
+                "Name": "textArea2",
+                "X": 17,
+                "Y": 10,
+                "Width": 167,
+                "Height": 32,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "Alpha": 255,
+                "ButtonTrigger": {
+                  "Type": "RepeatButtonTrigger",
+                  "Delay": 500,
+                  "Interval": 250
+                },
+                "ButtonStyles": [
+                  {
+                    "Type": "TextButtonStyle",
+                    "X": 0,
+                    "Y": 0,
+                    "TextId": "SingleUseId20",
+                    "TextRotation": "0",
+                    "ColorReleased": {
+                      "Red": 10,
+                      "Green": 10,
+                      "Blue": 10
+                    },
+                    "ColorPressed": {
+                      "Red": 10,
+                      "Green": 10,
+                      "Blue": 10
+                    }
+                  }
+                ],
+                "Name": "incBtn",
+                "X": 567,
+                "Y": 12,
+                "Width": 48,
+                "Height": 32,
+                "Type": "FlexButton",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "TextId": "SingleUseId5",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 0,
+                  "Green": 0,
+                  "Blue": 0
+                },
+                "Alpha": 255,
+                "AutoSize": false,
+                "LineSpacing": 0,
+                "Wildcard1": {
+                  "TextId": "SingleUseId6",
+                  "UseBuffer": true,
+                  "BufferSize": 4
+                },
+                "Name": "brightnessValue",
+                "X": 470,
+                "Y": 12,
+                "Width": 89,
+                "Height": 32,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "Alpha": 255,
+                "ButtonTrigger": {
+                  "Type": "RepeatButtonTrigger",
+                  "Delay": 500,
+                  "Interval": 250
+                },
+                "ButtonStyles": [
+                  {
+                    "Type": "TextButtonStyle",
+                    "X": 0,
+                    "Y": 0,
+                    "TextId": "SingleUseId19",
+                    "TextRotation": "0",
+                    "ColorReleased": {
+                      "Red": 10,
+                      "Green": 10,
+                      "Blue": 10
+                    },
+                    "ColorPressed": {
+                      "Red": 10,
+                      "Green": 10,
+                      "Blue": 10
+                    }
+                  }
+                ],
+                "Name": "decBtn",
+                "X": 410,
+                "Y": 12,
+                "Width": 48,
+                "Height": 32,
+                "Type": "FlexButton",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              }
+            ],
+            "Name": "container1",
+            "X": 7,
+            "Y": 106,
+            "Width": 627,
+            "Height": 54,
+            "Type": "Container",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Alpha": 255,
+            "ButtonTrigger": {
+              "Type": "TouchButtonTrigger"
+            },
+            "ButtonStyles": [
+              {
+                "Type": "IconButtonStyle",
+                "X": 0,
+                "Y": 0,
+                "Style": "Icon64",
+                "IconReleased": "__designer\\blue_icons_tools_48.png",
+                "IconPressed": "__designer\\blue_icons_tools_48.png"
+              }
+            ],
+            "Name": "workBtn",
+            "X": 95,
+            "Y": 418,
+            "Width": 50,
+            "Height": 50,
+            "Type": "FlexButton",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "IsHorizontalSlider": true,
+            "BackgroundUnselected": "__designer\\blue_slider_horizontal_medium_slider2_round_back.png",
+            "BackgroundSelected": "__designer\\blue_slider_horizontal_medium_slider2_round_fill.png",
+            "Indicator": "__designer\\blue_slider_horizontal_medium_indicators_slider2_round_nob.png",
+            "BackgroundX": 2,
+            "BackgroundY": 6,
+            "IndicatorPos": 0,
+            "IndicatorMax": 284,
+            "IndicatorMin": 0,
+            "ValueMax": 100,
+            "ValueMin": 0,
+            "InitValue": 0,
+            "Name": "slider2",
+            "X": 284,
+            "Y": 168,
+            "Width": 338,
+            "Height": 34,
+            "Type": "Slider",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId37",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "mcuLoad",
+            "X": 586,
+            "Y": 0,
+            "Width": 54,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId38",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea3",
+            "X": 486,
+            "Y": 0,
+            "Width": 100,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "bootScreen",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "homeBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "West",
+              "ActionComponent": "Boot",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "incBrght",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "incBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "incBrightness",
+              "Type": "ActionCustom"
+            }
+          },
+          {
+            "InteractionName": "decBrght",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "decBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "decBrightness",
+              "Type": "ActionCustom"
+            }
+          },
+          {
+            "InteractionName": "Interaction1",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "workBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "Main",
+              "Type": "ActionGotoScreen"
+            }
+          }
+        ],
+        "Name": "Settings",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0
       }
@@ -1538,6 +1603,10 @@
       {
         "TextEntryId": "SingleUseId42",
         "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId43",
+        "IsResource": false
       }
     ],
     "Name": "test",
@@ -1546,9 +1615,9 @@
       "Height": 480
     },
     "SelectedColorDepth": 16,
-    "StartupScreenName": "bootScreen",
+    "StartupScreenName": "Boot",
     "SelectedStartupLanguage": "GB",
-    "Skin": "Dark",
+    "Skin": "Blue",
     "TouchGfxPath": "touchgfx",
     "UIPath": ".",
     "ApplicationTemplate": {

@@ -36,6 +36,8 @@ public:
 
     virtual void mcuLoadUpdated(uint8_t mcuLoad) {}
 
+
+
 protected:
     Model* model;
 };

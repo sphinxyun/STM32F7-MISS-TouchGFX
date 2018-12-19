@@ -4,6 +4,7 @@
 #include <touchgfx/Utils.hpp>
 
 class ModelListener;
+class FrontendHeap;
 
 /**
  * The Model class defines the data model in the model-view-presenter paradigm.
@@ -20,7 +21,7 @@ class ModelListener;
 class Model
 {
 public:
-    Model();
+    Model(FrontendHeap *app);
 
     /**
      * Sets the modelListener to point to the currently active presenter. Called automatically
@@ -52,6 +53,10 @@ public:
     void incBrightness();
     void decBrightness();
 
+    void switchToDiagnosticMode(void);
+    void switchToLevelMode(void);
+    void switchToMainMode(void);
+
 protected:
     /**
      * Pointer to the currently active presenter.
@@ -64,8 +69,12 @@ private:
     void pushAudioQueue(uint16_t u16SoundCode);
 
 private:
+    FrontendHeap *m_app;
+
     uint8_t m_brightness;
     uint8_t m_mcuLoad;
+
+
 };
 
 #endif /* MODEL_HPP */

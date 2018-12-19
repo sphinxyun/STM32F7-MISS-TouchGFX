@@ -65,6 +65,7 @@ public:
 
 private:
     FrontendHeap() : FrontendHeapBase(presenters, views, transitions, app),
+					 model(this),
                      app(model, *this)
     {
         gotoStartScreen(app);
