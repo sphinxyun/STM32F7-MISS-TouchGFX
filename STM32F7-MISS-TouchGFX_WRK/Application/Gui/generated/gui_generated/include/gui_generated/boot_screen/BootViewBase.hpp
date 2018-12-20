@@ -30,7 +30,7 @@ protected:
      * Member Declarations
      */
     touchgfx::Box box1;
-    touchgfx::Image image;
+    touchgfx::Image missLogo;
     touchgfx::TextArea textArea1;
     touchgfx::TextArea textArea2;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > settingsBtn;

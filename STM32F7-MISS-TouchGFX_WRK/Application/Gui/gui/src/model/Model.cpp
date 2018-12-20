@@ -67,6 +67,10 @@ void Model::switchToMainMode(void) {
 	m_app->app.gotoMainScreenSlideTransitionNorth();
 }
 
+void Model::guiLoaded() {
+	pushActionQueue((uint16_t)WM_GUI_LOADED);
+}
+
 void Model::startRegulation() {
 	pushActionQueue((uint16_t)WM_MAIN_START_ACTION);
 	pushAudioQueue(1);

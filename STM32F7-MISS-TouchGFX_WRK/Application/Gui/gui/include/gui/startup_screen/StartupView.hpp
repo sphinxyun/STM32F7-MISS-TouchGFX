@@ -1,0 +1,17 @@
+#ifndef STARTUP_VIEW_HPP
+#define STARTUP_VIEW_HPP
+
+#include <gui_generated/startup_screen/StartupViewBase.hpp>
+#include <gui/startup_screen/StartupPresenter.hpp>
+
+class StartupView : public StartupViewBase
+{
+public:
+    StartupView();
+    virtual ~StartupView() {}
+    virtual void setupScreen();
+    virtual void tearDownScreen();
+protected:
+};
+
+#endif // STARTUP_VIEW_HPP

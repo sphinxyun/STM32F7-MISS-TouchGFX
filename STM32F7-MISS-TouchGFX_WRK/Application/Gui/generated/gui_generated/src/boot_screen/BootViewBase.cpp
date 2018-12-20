@@ -12,8 +12,8 @@ BootViewBase::BootViewBase() :
     box1.setPosition(0, 0, 640, 480);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
 
-    image.setXY(0, 139);
-    image.setBitmap(Bitmap(BITMAP_MISS_LOGO_640PX_ID));
+    missLogo.setXY(0, 139);
+    missLogo.setBitmap(Bitmap(BITMAP_MISS_LOGO_640PX_ID));
 
     textArea1.setXY(462, 434);
     textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
@@ -58,7 +58,7 @@ BootViewBase::BootViewBase() :
     levelBtn.setAction(flexButtonCallback);
 
     add(box1);
-    add(image);
+    add(missLogo);
     add(textArea1);
     add(textArea2);
     add(settingsBtn);

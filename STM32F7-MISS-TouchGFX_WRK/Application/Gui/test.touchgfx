@@ -5,6 +5,46 @@
         "Components": [
           {
             "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "Name": "box1",
+            "X": 0,
+            "Y": 0,
+            "Width": 640,
+            "Height": 480,
+            "Type": "Box",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "boot",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "Type": "TriggerScreenEntered"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Boot",
+              "Type": "ActionGotoScreen"
+            }
+          }
+        ],
+        "Name": "Startup",
+        "OverrideDefaultBufferSize": false,
+        "CanvasBufferSize": 0
+      },
+      {
+        "Components": [
+          {
+            "Color": {
               "Red": 255,
               "Green": 255,
               "Blue": 255
@@ -25,7 +65,7 @@
           {
             "RelativeFilename": "miss_logo_640px.png",
             "Alpha": 255,
-            "Name": "image",
+            "Name": "missLogo",
             "X": 0,
             "Y": 139,
             "Width": 640,
@@ -2261,7 +2301,7 @@
       "Height": 480
     },
     "SelectedColorDepth": 16,
-    "StartupScreenName": "Boot",
+    "StartupScreenName": "Startup",
     "SelectedStartupLanguage": "GB",
     "Skin": "Blue",
     "TouchGfxPath": "touchgfx",

@@ -66,6 +66,22 @@ bool CheckLPresetPressure(void) {
 		return false;
 }
 
+bool CheckHPresetFlow(void) {
+	const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
+	if ((guiStatus.u16IrrigationPresetFlowRPM + set->u16IrrigationFlowRPMIncValue) > set->u16IrrigationFlowRPMMaxValue)
+		return true;
+	else
+		return false;
+}
+
+bool CheckLPresetFlow(void) {
+	const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
+	if ((guiStatus.u16IrrigationPresetFlowRPM - set->u16IrrigationFlowRPMIncValue) < set->u16IrrigationFlowRPMMinValue)
+		return true;
+	else
+		return false;
+}
+
 static void StateMachine_Thread(void * argument) {
 	WM_MAIN_ActionsTypdef action;
 
@@ -78,7 +94,7 @@ static void StateMachine_Thread(void * argument) {
 	const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
 
 	guiStatus.u8IrrigationPresetPressureMMHG = set->u32IrrigationPressure;
-	guiStatus.fIrrigationPresetFlowLPM = set->fIrrigationFlow;
+	guiStatus.fIrrigationPresetFlowLPM = set->fIrrigationFlowLPM;
 
 //	TickType_t xTimeBefore;
 //	xTimeBefore = xTaskGetTickCount();
@@ -89,9 +105,8 @@ static void StateMachine_Thread(void * argument) {
 		if (xQueueReceive(xGuiActions, &action, 25)) {
 			bUpdate = true;
 
-			if (action == WM_MAIN_MENU) {
-				DEBUG_SendTextFrame("WM_MAIN_MENU");
-				device_state = eMenu;
+			if (action == WM_GUI_LOADED) {
+				TOUCHGFT_SetBacklight(SETTINGS_GetBrightness());
 			} else if (action == WM_MAIN_START_ACTION) {
 				REGULATION_Start();
 
@@ -125,6 +140,26 @@ static void StateMachine_Thread(void * argument) {
 					guiStatus.u8IrrigationPresetPressureMMHG -= set->u32IrrigationPressureIncValue;
 
 				DEBUG_SendTextFrame("WM_MAIN_DECREASE_IRRIGATION_PRESSURE: %d, %x", guiStatus.u8IrrigationPresetPressureMMHG, u32BtnFlags);
+			} else if (action == WM_MAIN_INCREASE_IRRIGATION_FLOW) {
+				const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
+				if ((guiStatus.u16IrrigationPresetFlowRPM + set->u16IrrigationFlowRPMIncValue) >= set->u16IrrigationFlowRPMMaxValue) {
+					guiStatus.u16IrrigationPresetFlowRPM = set->u16IrrigationFlowRPMMaxValue;
+				} else
+					guiStatus.u16IrrigationPresetFlowRPM += set->u16IrrigationFlowRPMIncValue;
+
+				MOTOR_UpdateSpeed(guiStatus.u16IrrigationPresetFlowRPM);
+
+				DEBUG_SendTextFrame("WM_MAIN_INCREASE_IRRIGATION_FLOW: %d, %x", guiStatus.u16IrrigationPresetFlowRPM, u32BtnFlags);
+			} else if (action == WM_MAIN_DECREASE_IRRIGATION_FLOW) {
+				const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
+				if ((guiStatus.u16IrrigationPresetFlowRPM - set->u16IrrigationFlowRPMIncValue) <= set->u16IrrigationFlowRPMMinValue) {
+					guiStatus.u16IrrigationPresetFlowRPM = set->u16IrrigationFlowRPMMinValue;
+				} else
+					guiStatus.u16IrrigationPresetFlowRPM -= set->u16IrrigationFlowRPMIncValue;
+
+				MOTOR_UpdateSpeed(guiStatus.u16IrrigationPresetFlowRPM);
+
+				DEBUG_SendTextFrame("WM_MAIN_DECREASE_IRRIGATION_FLOW: %d, %x", guiStatus.u16IrrigationPresetFlowRPM, u32BtnFlags);
 			}
 
 			if (CheckHPresetPressure())
@@ -136,6 +171,16 @@ static void StateMachine_Thread(void * argument) {
 				u32BtnFlags &= (~(1 << 0));
 			else
 				u32BtnFlags |= (1 << 0);
+
+			if (CheckHPresetFlow())
+				u32BtnFlags &= (~(1 << 3));
+			else
+				u32BtnFlags |= (1 << 3);
+
+			if (CheckLPresetFlow())
+				u32BtnFlags &= (~(1 << 2));
+			else
+				u32BtnFlags |= (1 << 2);
 		}
 
 		if (xQueueReceive(xRegulationStatus, &guiStatus.sIrrigationActual, 50)) {

@@ -12,11 +12,19 @@ extern "C" {
 
 typedef struct {
 	uint32_t u32IrrigationPressure;
-	float fIrrigationFlow;
-
 	uint32_t u32IrrigationPressureMinValue;
 	uint32_t u32IrrigationPressureMaxValue;
 	uint32_t u32IrrigationPressureIncValue;
+
+	uint16_t u16IrrigationFlowRPM;
+	uint16_t u16IrrigationFlowRPMMinValue;
+	uint16_t u16IrrigationFlowRPMMaxValue;
+	uint16_t u16IrrigationFlowRPMIncValue;
+
+	float fIrrigationFlowLPM;
+	float fIrrigationFlowLPMMinValue;
+	float fIrrigationFlowLPMMaxValue;
+	float fIrrigationFlowLPMIncValue;
 } SETTINGS_ProgramSettingsTypedef;
 
 typedef enum {

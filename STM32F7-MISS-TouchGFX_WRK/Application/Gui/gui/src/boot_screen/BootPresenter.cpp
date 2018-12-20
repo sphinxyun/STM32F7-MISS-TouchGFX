@@ -8,6 +8,7 @@ BootPresenter::BootPresenter(BootView& v)
 
 void BootPresenter::activate()
 {
+	model->guiLoaded();
 	view.mcuLoadUpdated(model->getMcuLoad());
 }
 

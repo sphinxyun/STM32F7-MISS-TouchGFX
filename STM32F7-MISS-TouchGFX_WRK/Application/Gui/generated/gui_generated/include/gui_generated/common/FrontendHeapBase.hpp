@@ -8,6 +8,7 @@
 #include <common/Partition.hpp>
 #include <mvp/MVPHeap.hpp>
 #include <touchgfx/transitions/NoTransition.hpp>
+
 #include <touchgfx/transitions/SlideTransition.hpp>
 #include <touchgfx/transitions/SlideTransition.hpp>
 #include <touchgfx/transitions/SlideTransition.hpp>
@@ -32,6 +33,8 @@
 #include <gui/common/FrontendApplication.hpp>
 #include <gui/model/Model.hpp>
 
+#include <gui/startup_screen/StartupView.hpp>
+#include <gui/startup_screen/StartupPresenter.hpp>
 #include <gui/boot_screen/BootView.hpp>
 #include <gui/boot_screen/BootPresenter.hpp>
 #include <gui/diagnostics_screen/DiagnosticsView.hpp>
@@ -64,12 +67,13 @@ public:
      * A list of all view types. Must end with meta::Nil.
      * @note All view types used in the application MUST be added to this list!
      */
-    typedef meta::TypeList< BootView,
+    typedef meta::TypeList< StartupView,
+            meta::TypeList< BootView,
             meta::TypeList< DiagnosticsView,
             meta::TypeList< LevelView,
             meta::TypeList< MainView,
             meta::TypeList< SettingsView,
-            meta::Nil > > > >
+            meta::Nil > > > > >
             > GeneratedViewTypes;
 
     /**
@@ -81,12 +85,13 @@ public:
      * A list of all presenter types. Must end with meta::Nil.
      * @note All presenter types used in the application MUST be added to this list!
      */
-    typedef meta::TypeList< BootPresenter,
+    typedef meta::TypeList< StartupPresenter,
+            meta::TypeList< BootPresenter,
             meta::TypeList< DiagnosticsPresenter,
             meta::TypeList< LevelPresenter,
             meta::TypeList< MainPresenter,
             meta::TypeList< SettingsPresenter,
-            meta::Nil > > > >
+            meta::Nil > > > > >
             > GeneratedPresenterTypes;
 
     /**
@@ -114,7 +119,7 @@ public:
 
     virtual void gotoStartScreen(FrontendApplication& app)
     {
-        app.gotoBootScreenNoTransition();
+        app.gotoStartupScreenNoTransition();
     }
 protected:
     FrontendHeapBase(AbstractPartition& presenters, AbstractPartition& views, AbstractPartition& transitions, FrontendApplication& app)

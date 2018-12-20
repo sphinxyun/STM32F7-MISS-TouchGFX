@@ -263,6 +263,11 @@ void MOTOR_Start(void) {
 	__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, 1500);
 }
 
+void MOTOR_UpdateSpeed(uint16_t u16PWM) {
+	if (u16PWM <= 5399)
+		__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, u16PWM);
+}
+
 void MOTOR_Stop(void) {
 	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_SET);
 	__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, 0);

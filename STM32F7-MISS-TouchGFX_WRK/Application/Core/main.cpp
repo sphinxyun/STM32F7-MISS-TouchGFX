@@ -32,8 +32,6 @@ extern "C" {
 #define CANVAS_BUFFER_SIZE (5500)
 
 static void GUITask(void* params) {
-	TOUCHGFT_SetBacklight(SETTINGS_GetBrightness());
-
     touchgfx::HAL::getInstance()->taskEntry();
 }
 

@@ -15,6 +15,10 @@ public:
     FrontendApplicationBase(Model& m, FrontendHeap& heap);
     virtual ~FrontendApplicationBase() { }
 
+    // Startup
+    void gotoStartupScreenNoTransition();
+
+
     // Boot
     void gotoBootScreenNoTransition();
 
@@ -54,6 +58,10 @@ protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
     Model& model;
+
+    // Startup
+    void gotoStartupScreenNoTransitionImpl();
+
 
     // Boot
     void gotoBootScreenNoTransitionImpl();

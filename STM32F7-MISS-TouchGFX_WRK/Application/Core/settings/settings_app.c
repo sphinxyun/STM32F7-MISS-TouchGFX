@@ -22,11 +22,19 @@ SETTINGS_ErrorTypdef SETTINGS_Init(void) {
 	DeviceSettings.b.brightness = 40;
 
 	ProgramSettings.u32IrrigationPressure = 35;
-	ProgramSettings.fIrrigationFlow = 0.5;
-
 	ProgramSettings.u32IrrigationPressureMinValue = 20;
 	ProgramSettings.u32IrrigationPressureMaxValue = 150;
 	ProgramSettings.u32IrrigationPressureIncValue = 5;
+
+	ProgramSettings.u16IrrigationFlowRPM = 350;
+	ProgramSettings.u16IrrigationFlowRPMMinValue = 1500;
+	ProgramSettings.u16IrrigationFlowRPMMaxValue = 5399;
+	ProgramSettings.u16IrrigationFlowRPMIncValue = 250;
+
+	ProgramSettings.fIrrigationFlowLPM = 0.5;
+	ProgramSettings.fIrrigationFlowLPMMinValue = 0.1;
+	ProgramSettings.fIrrigationFlowLPMMaxValue = 1.5;
+	ProgramSettings.fIrrigationFlowLPMIncValue = 0.05;
 
 	return SETTINGS_ERROR_NONE;
 }

@@ -7,6 +7,8 @@
 #include <touchgfx/transitions/NoTransition.hpp>
 #include <texts/TextKeysAndLanguages.hpp>
 #include <touchgfx/Texts.hpp>
+#include <gui/startup_screen/StartupView.hpp>
+#include <gui/startup_screen/StartupPresenter.hpp>
 #include <gui/boot_screen/BootView.hpp>
 #include <gui/boot_screen/BootPresenter.hpp>
 #include <gui/diagnostics_screen/DiagnosticsView.hpp>
@@ -33,6 +35,19 @@ FrontendApplicationBase::FrontendApplicationBase(Model& m, FrontendHeap& heap)
 /*
  * Screen Transition Declarations
  */
+// Startup
+
+void FrontendApplicationBase::gotoStartupScreenNoTransition()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoStartupScreenNoTransitionImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoStartupScreenNoTransitionImpl()
+{
+    makeTransition<StartupView, StartupPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
 // Boot
 
 void FrontendApplicationBase::gotoBootScreenNoTransition()

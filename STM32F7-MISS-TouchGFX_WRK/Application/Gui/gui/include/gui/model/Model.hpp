@@ -45,6 +45,8 @@ public:
     uint8_t getMcuLoad(void) { return m_mcuLoad; }
     WM_MAIN_GuiStatus getGuiStatus(void) { return m_guiStatus; }
 
+    void guiLoaded();
+
     void startRegulation();
     void stopRegulation();
 
