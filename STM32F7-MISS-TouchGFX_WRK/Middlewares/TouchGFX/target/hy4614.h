@@ -12,23 +12,23 @@ extern "C" {
 	#define TS_MULTI_TOUCH_SUPPORTED        0
 #endif /* TS_MONO_TOUCH_SUPPORTED */
 
-#define DISCOVERY_AUDIO_I2Cx                             I2C3
-#define DISCOVERY_AUDIO_I2Cx_CLK_ENABLE()                __HAL_RCC_I2C3_CLK_ENABLE()
-#define DISCOVERY_AUDIO_DMAx_CLK_ENABLE()                __HAL_RCC_DMA1_CLK_ENABLE()
-#define DISCOVERY_AUDIO_I2Cx_SCL_SDA_GPIO_CLK_ENABLE()   __HAL_RCC_GPIOH_CLK_ENABLE()
-
-#define DISCOVERY_AUDIO_I2Cx_FORCE_RESET()               __HAL_RCC_I2C3_FORCE_RESET()
-#define DISCOVERY_AUDIO_I2Cx_RELEASE_RESET()             __HAL_RCC_I2C3_RELEASE_RESET()
-
-/* Definition for I2Cx Pins */
-#define DISCOVERY_AUDIO_I2Cx_SCL_PIN                     GPIO_PIN_7
-#define DISCOVERY_AUDIO_I2Cx_SCL_SDA_GPIO_PORT           GPIOH
-#define DISCOVERY_AUDIO_I2Cx_SCL_SDA_AF                  GPIO_AF4_I2C3
-#define DISCOVERY_AUDIO_I2Cx_SDA_PIN                     GPIO_PIN_8
-
-/* I2C interrupt requests */
-#define DISCOVERY_AUDIO_I2Cx_EV_IRQn                     I2C3_EV_IRQn
-#define DISCOVERY_AUDIO_I2Cx_ER_IRQn                     I2C3_ER_IRQn
+//#define DISCOVERY_AUDIO_I2Cx                             I2C3
+//#define DISCOVERY_AUDIO_I2Cx_CLK_ENABLE()                __HAL_RCC_I2C3_CLK_ENABLE()
+//#define DISCOVERY_AUDIO_DMAx_CLK_ENABLE()                __HAL_RCC_DMA1_CLK_ENABLE()
+//#define DISCOVERY_AUDIO_I2Cx_SCL_SDA_GPIO_CLK_ENABLE()   __HAL_RCC_GPIOH_CLK_ENABLE()
+//
+//#define DISCOVERY_AUDIO_I2Cx_FORCE_RESET()               __HAL_RCC_I2C3_FORCE_RESET()
+//#define DISCOVERY_AUDIO_I2Cx_RELEASE_RESET()             __HAL_RCC_I2C3_RELEASE_RESET()
+//
+///* Definition for I2Cx Pins */
+//#define DISCOVERY_AUDIO_I2Cx_SCL_PIN                     GPIO_PIN_7
+//#define DISCOVERY_AUDIO_I2Cx_SCL_SDA_GPIO_PORT           GPIOH
+//#define DISCOVERY_AUDIO_I2Cx_SCL_SDA_AF                  GPIO_AF4_I2C3
+//#define DISCOVERY_AUDIO_I2Cx_SDA_PIN                     GPIO_PIN_8
+//
+///* I2C interrupt requests */
+//#define DISCOVERY_AUDIO_I2Cx_EV_IRQn                     I2C3_EV_IRQn
+//#define DISCOVERY_AUDIO_I2Cx_ER_IRQn                     I2C3_ER_IRQn
 
 /**
   * @brief Touch screen interrupt signal

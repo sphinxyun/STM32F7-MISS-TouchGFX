@@ -1,27 +1,22 @@
 #include <gui/main_screen/MainView.hpp>
 
-MainView::MainView()
-{
+MainView::MainView() {
 
 }
 
-void MainView::setupScreen()
-{
+void MainView::setupScreen() {
     MainViewBase::setupScreen();
 }
 
-void MainView::tearDownScreen()
-{
+void MainView::tearDownScreen() {
     MainViewBase::tearDownScreen();
 }
 
-void MainView::startRegulation()
-{
+void MainView::startRegulation() {
 	presenter->startRegulation();
 }
 
-void MainView::stopRegulation()
-{
+void MainView::stopRegulation() {
 	presenter->stopRegulation();
 }
 

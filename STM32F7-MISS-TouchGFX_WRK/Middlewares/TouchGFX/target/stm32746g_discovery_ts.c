@@ -1,7 +1,5 @@
 #include "stm32746g_discovery_ts.h"
 
-//#include "GUI.h"
-
 __IO TS_StateTypeDef ts;
 
 static uint16_t tsXBoundary, tsYBoundary;

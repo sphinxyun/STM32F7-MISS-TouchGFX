@@ -3,7 +3,7 @@
 #include "stm32f7xx_hal.h"
 #include "stm32f7xx_it.h"
 
-static I2C_HandleTypeDef hI2cAudioHandler = { 0 };
+static I2C_HandleTypeDef hI2cDcmiExtHandler = { 0 };
 
 
 
@@ -16,48 +16,46 @@ static I2C_HandleTypeDef hI2cAudioHandler = { 0 };
 static void I2Cx_MspInit(I2C_HandleTypeDef *i2c_handler) {
 	GPIO_InitTypeDef gpio_init_structure;
 
-	/* AUDIO and LCD I2C MSP init */
+	/* EXT / DCMI I2C MSP init */
 
 	/*** Configure the GPIOs ***/
 	/* Enable GPIO clock */
-	DISCOVERY_AUDIO_I2Cx_SCL_SDA_GPIO_CLK_ENABLE()
-	;
+	__HAL_RCC_GPIOB_CLK_ENABLE();
 
 	/* Configure I2C Tx as alternate function */
-	gpio_init_structure.Pin = DISCOVERY_AUDIO_I2Cx_SCL_PIN;
+	gpio_init_structure.Pin = GPIO_PIN_8;
 	gpio_init_structure.Mode = GPIO_MODE_AF_OD;
 	gpio_init_structure.Pull = GPIO_NOPULL;
 	gpio_init_structure.Speed = GPIO_SPEED_FAST;
-	gpio_init_structure.Alternate = DISCOVERY_AUDIO_I2Cx_SCL_SDA_AF;
-	HAL_GPIO_Init(DISCOVERY_AUDIO_I2Cx_SCL_SDA_GPIO_PORT, &gpio_init_structure);
+	gpio_init_structure.Alternate = GPIO_AF4_I2C1;
+	HAL_GPIO_Init(GPIOB, &gpio_init_structure);
 
 	/* Configure I2C Rx as alternate function */
-	gpio_init_structure.Pin = DISCOVERY_AUDIO_I2Cx_SDA_PIN;
-	HAL_GPIO_Init(DISCOVERY_AUDIO_I2Cx_SCL_SDA_GPIO_PORT, &gpio_init_structure);
+	gpio_init_structure.Pin = GPIO_PIN_9;
+	HAL_GPIO_Init(GPIOB, &gpio_init_structure);
 
 	/*** Configure the I2C peripheral ***/
 	/* Enable I2C clock */
-	DISCOVERY_AUDIO_I2Cx_CLK_ENABLE()
-	;
+	__HAL_RCC_I2C1_CLK_ENABLE();
 
 	/* Force the I2C peripheral clock reset */
-	DISCOVERY_AUDIO_I2Cx_FORCE_RESET();
+	__HAL_RCC_I2C1_FORCE_RESET();
 
 	/* Release the I2C peripheral clock reset */
-	DISCOVERY_AUDIO_I2Cx_RELEASE_RESET();
+	__HAL_RCC_I2C1_RELEASE_RESET();
 
 	/* Enable and set I2Cx Interrupt to a lower priority */
-	HAL_NVIC_SetPriority(DISCOVERY_AUDIO_I2Cx_EV_IRQn, 0x0F, 0);
-	HAL_NVIC_EnableIRQ(DISCOVERY_AUDIO_I2Cx_EV_IRQn);
+	HAL_NVIC_SetPriority(I2C1_EV_IRQn, 0x0F, 0);
+	HAL_NVIC_EnableIRQ(I2C1_EV_IRQn);
 
 	/* Enable and set I2Cx Interrupt to a lower priority */
-	HAL_NVIC_SetPriority(DISCOVERY_AUDIO_I2Cx_ER_IRQn, 0x0F, 0);
-	HAL_NVIC_EnableIRQ(DISCOVERY_AUDIO_I2Cx_ER_IRQn);
+	HAL_NVIC_SetPriority(I2C1_ER_IRQn, 0x0F, 0);
+	HAL_NVIC_EnableIRQ(I2C1_ER_IRQn);
 }
 
 static void I2Cx_Init(I2C_HandleTypeDef *i2c_handler) {
 	if (HAL_I2C_GetState(i2c_handler) == HAL_I2C_STATE_RESET) {
-		i2c_handler->Instance = DISCOVERY_AUDIO_I2Cx;
+		i2c_handler->Instance = I2C1;
 		i2c_handler->Init.Timing = DISCOVERY_I2Cx_TIMING;
 		i2c_handler->Init.OwnAddress1 = 0;
 		i2c_handler->Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -161,14 +159,14 @@ uint16_t HY4614_ReadID(uint16_t DeviceAddr) {
 	HY4614_I2C_InitializeIfRequired();
 
     /* Read register HY4614_CHIP_ID_REG as DeviceID detection */
-	I2Cx_ReadMultiple(&hI2cAudioHandler, DeviceAddr, 0xA9, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &ucReadId, 1);
+	I2Cx_ReadMultiple(&hI2cDcmiExtHandler, DeviceAddr, 0xA9, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &ucReadId, 1);
 
 	if (ucReadId == 0x15) {
 		/* At maximum 4 attempts to read ID : exit at first finding of the searched device ID */
 		for (nbReadAttempts = 0; ((nbReadAttempts < 3) && !(bFoundDevice)); nbReadAttempts++) {
 			/* Read register HY4614_CHIP_ID_REG as DeviceID detection */
-			I2Cx_ReadMultiple(&hI2cAudioHandler, DeviceAddr, 0xA6, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &ucReadVerH, 1);
-			I2Cx_ReadMultiple(&hI2cAudioHandler, DeviceAddr, 0xA7, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &ucReadVerL, 1);
+			I2Cx_ReadMultiple(&hI2cDcmiExtHandler, DeviceAddr, 0xA6, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &ucReadVerH, 1);
+			I2Cx_ReadMultiple(&hI2cDcmiExtHandler, DeviceAddr, 0xA7, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &ucReadVerL, 1);
 		}
 	}
 
@@ -187,7 +185,7 @@ uint8_t HY4614_TS_DetectTouch(uint16_t DeviceAddr) {
 	volatile uint8_t nbTouch = 0;
 
 	/* Read register HY4614_TD_STAT_REG to check number of touches detection */
-	I2Cx_ReadMultiple(&hI2cAudioHandler, DeviceAddr, HY4614_TD_STAT_REG, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &nbTouch, 1);
+	I2Cx_ReadMultiple(&hI2cDcmiExtHandler, DeviceAddr, HY4614_TD_STAT_REG, I2C_MEMADD_SIZE_8BIT, (uint8_t*) &nbTouch, 1);
 
 	nbTouch &= HY4614_TD_STAT_MASK;
 
@@ -248,7 +246,7 @@ void HY4614_TS_GetXY(uint16_t DeviceAddr, uint16_t *X, uint16_t *Y) {
 		}
 
 		/* Read touch data */
-		I2Cx_ReadMultiple(&hI2cAudioHandler, DeviceAddr, baseRegAddress, I2C_MEMADD_SIZE_8BIT, ucReadData, 4);
+		I2Cx_ReadMultiple(&hI2cDcmiExtHandler, DeviceAddr, baseRegAddress, I2C_MEMADD_SIZE_8BIT, ucReadData, 4);
 
 		/* low part of X position */
 		coord = (ucReadData[1] & HY4614_TOUCH_POS_LSB_MASK)
@@ -430,7 +428,7 @@ static uint8_t HY4614_Get_I2C_InitializedStatus(void) {
 static void HY4614_I2C_InitializeIfRequired(void) {
 	if (HY4614_Get_I2C_InitializedStatus() == HY4614_I2C_NOT_INITIALIZED) {
 		/* Initialize TS IO BUS layer (I2C) */
-		I2Cx_Init(&hI2cAudioHandler);
+		I2Cx_Init(&hI2cDcmiExtHandler);
 
 		/* Set state to initialized */
 		HY4614_handle.i2cInitialized = HY4614_I2C_INITIALIZED;

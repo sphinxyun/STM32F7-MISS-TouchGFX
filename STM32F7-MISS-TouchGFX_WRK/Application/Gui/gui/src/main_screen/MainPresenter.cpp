@@ -2,12 +2,11 @@
 #include <gui/main_screen/MainPresenter.hpp>
 
 MainPresenter::MainPresenter(MainView& v)
-    : view(v)
-{
+    : view(v) {
+
 }
 
-void MainPresenter::activate()
-{
+void MainPresenter::activate() {
 	view.actualPressureMMHGUpdate(model->getGuiStatus().sIrrigationActual.fIrrigationActualPressureMMHG);
 	view.actualFlowLPMUpdate(model->getGuiStatus().sIrrigationActual.fIrrigationActualFlowLPM);
 	view.actualFlowRPMUpdate(model->getGuiStatus().sIrrigationActual.fIrrigationActualSpeedRPM);
@@ -17,8 +16,7 @@ void MainPresenter::activate()
 	view.presetFlowRPMUpdate(model->getGuiStatus().u16IrrigationPresetFlowRPM);
 }
 
-void MainPresenter::deactivate()
-{
+void MainPresenter::deactivate() {
 
 }
 
@@ -46,13 +44,11 @@ void MainPresenter::presetFlowRPMUpdate(uint16_t u16Val) {
 	view.presetFlowRPMUpdate(u16Val);
 }
 
-void MainPresenter::startRegulation()
-{
+void MainPresenter::startRegulation() {
 	model->startRegulation();
 }
 
-void MainPresenter::stopRegulation()
-{
+void MainPresenter::stopRegulation() {
 	model->stopRegulation();
 }
 
