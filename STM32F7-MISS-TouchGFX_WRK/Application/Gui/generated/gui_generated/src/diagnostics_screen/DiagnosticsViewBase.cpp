@@ -7,6 +7,8 @@
 #include "BitmapDatabase.hpp"
 
 DiagnosticsViewBase::DiagnosticsViewBase() :
+    exitDiagCounter(0),
+    noErrCounter(0),
     flexButtonCallback(this, &DiagnosticsViewBase::flexButtonCallbackHandler)
 {
     box1.setPosition(0, 0, 640, 480);
@@ -24,7 +26,7 @@ DiagnosticsViewBase::DiagnosticsViewBase() :
     textArea3.setLinespacing(0);
     textArea3.setTypedText(TypedText(T_SINGLEUSEID42));
 
-    textArea1.setXY(11, 20);
+    textArea1.setXY(12, 24);
     textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(TypedText(T_SINGLEUSEID43));
@@ -32,22 +34,45 @@ DiagnosticsViewBase::DiagnosticsViewBase() :
     workBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID), Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID));
     workBtn.setIconXY(0, 0);
     workBtn.setPosition(136, 424, 48, 48);
+    workBtn.setVisible(false);
     workBtn.setAction(flexButtonCallback);
 
     homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID), Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID));
     homeBtn.setIconXY(0, 0);
     homeBtn.setPosition(8, 424, 48, 48);
+    homeBtn.setVisible(false);
     homeBtn.setAction(flexButtonCallback);
 
     settingsBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID), Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID));
     settingsBtn.setIconXY(0, 0);
     settingsBtn.setPosition(200, 424, 48, 48);
+    settingsBtn.setVisible(false);
     settingsBtn.setAction(flexButtonCallback);
 
     levelBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_USER_48_ID), Bitmap(BITMAP_BLUE_ICONS_USER_48_ID));
     levelBtn.setIconXY(0, 0);
     levelBtn.setPosition(72, 424, 48, 48);
+    levelBtn.setVisible(false);
     levelBtn.setAction(flexButtonCallback);
+
+    progress.setXY(120, 205);
+    progress.setProgressIndicatorPosition(2, 2, 400, 30);
+    progress.setRange(0, 100);
+    progress.setDirection(AbstractDirectionProgress::RIGHT);
+    progress.setBackground(Bitmap(BITMAP_BLUE_PROGRESSINDICATORS_BG_LARGE_PROGRESS_INDICATOR_BG_SQUARE_0_DEGREES_ID));
+    progress.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 151, 255));
+    progress.setValue(0);
+
+    textArea4.setXY(424, 250);
+    textArea4.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea4.setLinespacing(0);
+    textArea4.setTypedText(TypedText(T_SINGLEUSEID47));
+
+    noErrInfo.setXY(173, 348);
+    noErrInfo.setVisible(false);
+    noErrInfo.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 61));
+    noErrInfo.setLinespacing(0);
+    noErrInfo.setTypedText(TypedText(T_SINGLEUSEID48));
 
     add(box1);
     add(mcuLoad);
@@ -57,11 +82,57 @@ DiagnosticsViewBase::DiagnosticsViewBase() :
     add(homeBtn);
     add(settingsBtn);
     add(levelBtn);
+    add(progress);
+    add(textArea4);
+    add(noErrInfo);
 }
 
 void DiagnosticsViewBase::setupScreen()
 {
 
+}
+
+//Handles delays
+void DiagnosticsViewBase::handleTickEvent()
+{
+    View::handleTickEvent();
+    if(exitDiagCounter > 0)
+    {
+        exitDiagCounter--;
+        if(exitDiagCounter == 0)
+        {
+            //Interaction2
+            //When exitDiag completed change screen to Level
+            //Go to Level with no screen transition
+            application().gotoLevelScreenNoTransition();
+        }
+    }
+    if(noErrCounter > 0)
+    {
+        noErrCounter--;
+        if(noErrCounter == 0)
+        {
+            //Interaction3
+            //When noErr completed show noErrInfo
+            //Show noErrInfo
+            noErrInfo.setVisible(true);
+            noErrInfo.invalidate();
+        }
+    }
+}
+
+//Called when the screen is done with transition/load
+void DiagnosticsViewBase::afterTransition()
+{
+    //exitDiag
+    //When screen is entered delay
+    //Delay for 2500 ms (150 Ticks)
+    exitDiagCounter = EXITDIAG_DURATION;
+
+    //noErr
+    //When screen is entered delay
+    //Delay for 1750 ms (105 Ticks)
+    noErrCounter = NOERR_DURATION;
 }
 
 void DiagnosticsViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src)
@@ -70,28 +141,28 @@ void DiagnosticsViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButt
     {
         //work
         //When workBtn clicked change screen to Main
-        //Go to Main with screen transition towards South
-        application().gotoMainScreenSlideTransitionSouth();
+        //Go to Main with no screen transition
+        application().gotoMainScreenNoTransition();
     }
     else if (&src == &homeBtn)
     {
         //home
         //When homeBtn clicked change screen to Level
-        //Go to Level with screen transition towards North
-        application().gotoLevelScreenSlideTransitionNorth();
+        //Go to Level with no screen transition
+        application().gotoLevelScreenNoTransition();
     }
     else if (&src == &settingsBtn)
     {
         //settings
         //When settingsBtn clicked change screen to Settings
-        //Go to Settings with screen transition towards North
-        application().gotoSettingsScreenSlideTransitionNorth();
+        //Go to Settings with no screen transition
+        application().gotoSettingsScreenNoTransition();
     }
     else if (&src == &levelBtn)
     {
         //level
         //When levelBtn clicked change screen to Level
-        //Go to Level with screen transition towards North
-        application().gotoLevelScreenSlideTransitionNorth();
+        //Go to Level with no screen transition
+        application().gotoLevelScreenNoTransition();
     }
 }

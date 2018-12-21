@@ -251,7 +251,7 @@ void Configure_PWM(void) {
 	}
 }
 
-void MOTOR_Start(void) {
+void MOTOR_Start(uint16_t u16PWM) {
 	TIM5->CNT = 0;
 
 	i32SpeedSum = 0;
@@ -260,7 +260,8 @@ void MOTOR_Start(void) {
 	u16SpeedIdx = 0;
 
 	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_RESET);
-	__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, 1500);
+	if (u16PWM <= 5399)
+		__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, u16PWM);
 }
 
 void MOTOR_UpdateSpeed(uint16_t u16PWM) {

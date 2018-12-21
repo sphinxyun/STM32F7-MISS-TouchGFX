@@ -36,9 +36,10 @@ typedef struct {
 	uint32_t u32CurrentSample;
 } AUDIOPLAYER_Sound_t;
 
-AUDIOPLAYER_Sound_t m_soundEffects[2] = {
+AUDIOPLAYER_Sound_t m_soundEffects[3] = {
 	{clickSoundRawData, clickSoundRawData_LEN, 0},
 	{errorSoundRawData, errorSoundRawData_LEN, 0},
+	{alarmSoundRawData, alarmSoundRawData_LEN, 0}
 };
 
 AUDIOPLAYER_ErrorTypdef AUDIOPLAYER_Init(uint8_t volume) {
@@ -284,6 +285,10 @@ static void Audio_HL_Thread(void * argument) {
 
 			case 2:
 				AUDIOPLAYER_Play(1);
+				break;
+
+			case 3:
+				AUDIOPLAYER_Play(2);
 				break;
 			}
 		}

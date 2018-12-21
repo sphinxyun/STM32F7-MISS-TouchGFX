@@ -22,37 +22,37 @@ public:
     // Boot
     void gotoBootScreenNoTransition();
 
-    void gotoBootScreenSlideTransitionNorth();
-
     void gotoBootScreenSlideTransitionWest();
 
 
     // Diagnostics
-    void gotoDiagnosticsScreenSlideTransitionNorth();
+    void gotoDiagnosticsScreenNoTransition();
 
     void gotoDiagnosticsScreenSlideTransitionSouth();
 
 
     // Level
-    void gotoLevelScreenCoverTransitionNorth();
+    void gotoLevelScreenNoTransition();
 
-    void gotoLevelScreenSlideTransitionNorth();
+    void gotoLevelScreenSlideTransitionWest();
 
     void gotoLevelScreenSlideTransitionSouth();
 
 
     // Main
-    void gotoMainScreenSlideTransitionNorth();
-
-    void gotoMainScreenSlideTransitionSouth();
+    void gotoMainScreenNoTransition();
 
     void gotoMainScreenSlideTransitionEast();
 
+    void gotoMainScreenSlideTransitionWest();
+
 
     // Settings
-    void gotoSettingsScreenSlideTransitionEast();
+    void gotoSettingsScreenNoTransition();
 
-    void gotoSettingsScreenSlideTransitionNorth();
+    void gotoSettingsScreenSlideTransitionWest();
+
+    void gotoSettingsScreenSlideTransitionEast();
 
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
@@ -66,37 +66,37 @@ protected:
     // Boot
     void gotoBootScreenNoTransitionImpl();
 
-    void gotoBootScreenSlideTransitionNorthImpl();
-
     void gotoBootScreenSlideTransitionWestImpl();
 
 
     // Diagnostics
-    void gotoDiagnosticsScreenSlideTransitionNorthImpl();
+    void gotoDiagnosticsScreenNoTransitionImpl();
 
     void gotoDiagnosticsScreenSlideTransitionSouthImpl();
 
 
     // Level
-    void gotoLevelScreenCoverTransitionNorthImpl();
+    void gotoLevelScreenNoTransitionImpl();
 
-    void gotoLevelScreenSlideTransitionNorthImpl();
+    void gotoLevelScreenSlideTransitionWestImpl();
 
     void gotoLevelScreenSlideTransitionSouthImpl();
 
 
     // Main
-    void gotoMainScreenSlideTransitionNorthImpl();
-
-    void gotoMainScreenSlideTransitionSouthImpl();
+    void gotoMainScreenNoTransitionImpl();
 
     void gotoMainScreenSlideTransitionEastImpl();
 
+    void gotoMainScreenSlideTransitionWestImpl();
+
 
     // Settings
-    void gotoSettingsScreenSlideTransitionEastImpl();
+    void gotoSettingsScreenNoTransitionImpl();
 
-    void gotoSettingsScreenSlideTransitionNorthImpl();
+    void gotoSettingsScreenSlideTransitionWestImpl();
+
+    void gotoSettingsScreenSlideTransitionEastImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP

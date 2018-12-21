@@ -12,6 +12,7 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
 
+    void sliderChanged(int value);
     void mcuLoadUpdated(uint8_t mcuLoadValue);
 protected:
 };

@@ -28,23 +28,50 @@ Model::Model(FrontendHeap *app) :
 
 void Model::tick()
 {
-	if (xGuiStatus && xQueueReceive(xGuiStatus, &m_guiStatus, 0)  == pdTRUE) {
+	WM_MAIN_GuiStatus guiStatus;
+
+	if (xGuiStatus && xQueueReceive(xGuiStatus, &guiStatus, 0)  == pdTRUE) {
+		if (m_guiStatus.eDevMode != guiStatus.eDevMode) {
+			switch (guiStatus.eDevMode) {
+			case eAutoTest:
+				switchToDiagnosticMode();
+				break;
+			case eLevel:
+				switchToLevelMode();
+				break;
+			case eIdle:
+				switchToMainMode();
+				break;
+			}
+		}
+
 //		DEBUG_SendTextFrame("  tick: xGuiStatus");
-		m_brightness = m_guiStatus.u32BrightnessPercent;
+		m_brightness = guiStatus.u32BrightnessPercent;
 
 		if (m_brightness == 50) {
 //			m_app->app.gotoworkScreenScreenSlideTransitionWest();
 		}
 
-		modelListener->brightnessValueUpdate(m_guiStatus.u32BrightnessPercent);
+		modelListener->brightnessValueUpdate(guiStatus.u32BrightnessPercent);
 
-		modelListener->actualPressureMMHGUpdate(m_guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
-		modelListener->actualFlowLPMUpdate(m_guiStatus.sIrrigationActual.fIrrigationActualFlowLPM);
-		modelListener->actualFlowRPMUpdate(m_guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
+		modelListener->actualPressureMMHGUpdate(guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
+		modelListener->actualFlowLPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualFlowLPM);
+		modelListener->actualFlowRPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
 
-		modelListener->presetPressureMMHGUpdate(m_guiStatus.u8IrrigationPresetPressureMMHG);
-		modelListener->presetFlowLPMUpdate(m_guiStatus.fIrrigationPresetFlowLPM);
-		modelListener->presetFlowRPMUpdate(m_guiStatus.u16IrrigationPresetFlowRPM);
+		modelListener->presetPressureMMHGUpdate(guiStatus.u8IrrigationPresetPressureMMHG);
+		modelListener->presetFlowLPMUpdate(guiStatus.fIrrigationPresetFlowLPM);
+		modelListener->presetFlowRPMUpdate(guiStatus.u16IrrigationPresetFlowRPM);
+
+		if (m_guiStatus.u32AlarmFlags != guiStatus.u32AlarmFlags) {
+			if (guiStatus.u32AlarmFlags) {
+				modelListener->showAlarmMessage(true);
+				pushAudioQueue(3);
+			} else {
+				modelListener->showAlarmMessage(false);
+			}
+		}
+
+		m_guiStatus = guiStatus;
 	}
 
 	uint8_t mcuLoadPct = touchgfx::HAL::getInstance()->getMCULoadPct();
@@ -56,15 +83,15 @@ void Model::tick()
 }
 
 void Model::switchToDiagnosticMode(void) {
-	m_app->app.gotoDiagnosticsScreenSlideTransitionNorth();
+	m_app->app.gotoDiagnosticsScreenNoTransition();
 }
 
 void Model::switchToLevelMode(void) {
-	m_app->app.gotoLevelScreenCoverTransitionNorth();
+	m_app->app.gotoLevelScreenNoTransition();
 }
 
 void Model::switchToMainMode(void) {
-	m_app->app.gotoMainScreenSlideTransitionNorth();
+	m_app->app.gotoMainScreenNoTransition();
 }
 
 void Model::guiLoaded() {

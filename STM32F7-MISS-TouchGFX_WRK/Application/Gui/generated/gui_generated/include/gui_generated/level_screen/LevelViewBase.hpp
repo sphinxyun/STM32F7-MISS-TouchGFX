@@ -11,6 +11,10 @@
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/buttons/Buttons.hpp>
+#include <touchgfx/containers/Slider.hpp>
+#include <touchgfx/widgets/ButtonWithLabel.hpp>
+#include <touchgfx/widgets/canvas/Line.hpp>
+#include <touchgfx/widgets/canvas/PainterRGB565.hpp>
 
 class LevelViewBase : public touchgfx::View<LevelPresenter>
 {
@@ -19,6 +23,14 @@ public:
     virtual ~LevelViewBase() {}
 
     virtual void setupScreen();
+
+    /*
+     * Custom Action Handlers
+     */
+    virtual void sliderChanged(int value)
+    {
+        // Override and implement this function in LevelView
+    }
 
 protected:
     FrontendApplication& application() {
@@ -36,24 +48,49 @@ protected:
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > workBtn;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > diagBtn;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > homeBtn;
+    touchgfx::Slider levelSlider;
+    touchgfx::ButtonWithLabel okBtn;
+    touchgfx::TextArea textArea4;
+    touchgfx::TextArea textArea4_1;
+    touchgfx::Line line1;
+    touchgfx::PainterRGB565 line1Painter;
+    touchgfx::Line line2;
+    touchgfx::PainterRGB565 line2Painter;
+    touchgfx::Line line2_1;
+    touchgfx::PainterRGB565 line2_1Painter;
+    touchgfx::TextArea textArea4_2;
+    touchgfx::TextAreaWithOneWildcard levelVal;
+    touchgfx::TextArea textArea4_2_1;
 
     /*
      * Wildcard Buffers
      */
     static const uint16_t MCULOAD_SIZE = 10;
     touchgfx::Unicode::UnicodeChar mcuLoadBuffer[MCULOAD_SIZE];
+    static const uint16_t LEVELVAL_SIZE = 5;
+    touchgfx::Unicode::UnicodeChar levelValBuffer[LEVELVAL_SIZE];
 
 private:
 
     /*
      * Callback Handler Declarations
      */
+    void buttonCallbackHandler(const touchgfx::AbstractButton& src);
     void flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src);
+    void sliderValueChangedCallbackHandler(const touchgfx::Slider& src, int value);
 
     /*
      * Callback Declarations
      */
+    touchgfx::Callback<LevelViewBase, const touchgfx::AbstractButton&> buttonCallback;
     touchgfx::Callback<LevelViewBase, const touchgfx::AbstractButtonContainer&> flexButtonCallback;
+    touchgfx::Callback<LevelViewBase, const touchgfx::Slider&, int> sliderValueChangedCallback;
+
+    /*
+     * Canvas Buffer Size
+     */
+    static const uint16_t CANVAS_BUFFER_SIZE = 9600;
+    uint8_t canvasBuffer[CANVAS_BUFFER_SIZE];
 
 };
 

@@ -20,6 +20,10 @@ void MainPresenter::deactivate() {
 
 }
 
+void MainPresenter::showAlarmMessage(bool bVisible) {
+	view.showAlarmMessage(bVisible);
+}
+
 void MainPresenter::actualPressureMMHGUpdate(float fVal) {
 	view.actualPressureMMHGUpdate(fVal);
 }

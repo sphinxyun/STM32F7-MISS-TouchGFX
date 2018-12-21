@@ -28,11 +28,13 @@ BootViewBase::BootViewBase() :
     settingsBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID), Bitmap(BITMAP_BLUE_ICONS_SETTINGS_48_ID));
     settingsBtn.setIconXY(0, 0);
     settingsBtn.setPosition(200, 424, 48, 48);
+    settingsBtn.setVisible(false);
     settingsBtn.setAction(flexButtonCallback);
 
     workBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID), Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID));
     workBtn.setIconXY(0, 0);
     workBtn.setPosition(136, 424, 48, 48);
+    workBtn.setVisible(false);
     workBtn.setAction(flexButtonCallback);
 
     mcuLoad.setPosition(586, 0, 54, 20);
@@ -50,11 +52,13 @@ BootViewBase::BootViewBase() :
     diagBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_ADD_NEW_48_ID), Bitmap(BITMAP_BLUE_ICONS_ADD_NEW_48_ID));
     diagBtn.setIconXY(0, 0);
     diagBtn.setPosition(8, 424, 48, 48);
+    diagBtn.setVisible(false);
     diagBtn.setAction(flexButtonCallback);
 
     levelBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_USER_48_ID), Bitmap(BITMAP_BLUE_ICONS_USER_48_ID));
     levelBtn.setIconXY(0, 0);
     levelBtn.setPosition(72, 424, 48, 48);
+    levelBtn.setVisible(false);
     levelBtn.setAction(flexButtonCallback);
 
     add(box1);
@@ -80,28 +84,28 @@ void BootViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonConta
     {
         //settings
         //When settingsBtn clicked change screen to Settings
-        //Go to Settings with screen transition towards East
-        application().gotoSettingsScreenSlideTransitionEast();
+        //Go to Settings with no screen transition
+        application().gotoSettingsScreenNoTransition();
     }
     else if (&src == &workBtn)
     {
         //work
         //When workBtn clicked change screen to Main
-        //Go to Main with screen transition towards North
-        application().gotoMainScreenSlideTransitionNorth();
+        //Go to Main with no screen transition
+        application().gotoMainScreenNoTransition();
     }
     else if (&src == &diagBtn)
     {
         //diagnostics
         //When diagBtn clicked change screen to Diagnostics
-        //Go to Diagnostics with screen transition towards North
-        application().gotoDiagnosticsScreenSlideTransitionNorth();
+        //Go to Diagnostics with no screen transition
+        application().gotoDiagnosticsScreenNoTransition();
     }
     else if (&src == &levelBtn)
     {
         //level
         //When levelBtn clicked change screen to Level
-        //Go to Level with screen transition towards North
-        application().gotoLevelScreenCoverTransitionNorth();
+        //Go to Level with no screen transition
+        application().gotoLevelScreenNoTransition();
     }
 }

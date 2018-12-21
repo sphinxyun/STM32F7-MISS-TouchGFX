@@ -21,6 +21,7 @@ public:
 	void presetFlowRPMUpdate(uint16_t fVal);
 
     void mcuLoadUpdated(uint8_t mcuLoad);
+    void showAlarmMessage(bool bVisible);
 
 protected:
     void startRegulation();

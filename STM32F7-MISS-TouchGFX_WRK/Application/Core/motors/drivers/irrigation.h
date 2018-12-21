@@ -6,7 +6,7 @@
 void Configure_ENCODER(void);
 void Configure_PWM(void);
 
-void MOTOR_Start(void);
+void MOTOR_Start(uint16_t u16PWM);
 void MOTOR_UpdateSpeed(uint16_t u16PWM);
 void MOTOR_Stop(void);
 

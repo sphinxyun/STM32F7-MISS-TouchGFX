@@ -144,7 +144,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -171,7 +171,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -248,7 +248,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -275,7 +275,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -291,8 +291,7 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "East",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Settings",
               "Type": "ActionGotoScreen"
             }
@@ -305,8 +304,7 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "North",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Main",
               "Type": "ActionGotoScreen"
             }
@@ -319,8 +317,7 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "North",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Diagnostics",
               "Type": "ActionGotoScreen"
             }
@@ -333,8 +330,7 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionCover",
-              "ScreenTransitionDirection": "North",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Level",
               "Type": "ActionGotoScreen"
             }
@@ -427,8 +423,8 @@
             "AutoSize": true,
             "LineSpacing": 0,
             "Name": "textArea1",
-            "X": 11,
-            "Y": 20,
+            "X": 12,
+            "Y": 24,
             "Width": 111,
             "Height": 20,
             "Type": "TextArea",
@@ -459,7 +455,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -486,7 +482,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -513,7 +509,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -540,7 +536,84 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
+            "Visible": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Color": {
+              "Red": 0,
+              "Green": 151,
+              "Blue": 255
+            },
+            "Direction": "Right",
+            "Alpha": 255,
+            "Style": "Style5",
+            "FileNameBackground": "__designer\\blue_progressindicators_bg_large_progress_indicator_bg_square_0_degrees.png",
+            "IndicatorPositionX": 2,
+            "IndicatorPositionY": 2,
+            "IndicatorPositionWidth": 400,
+            "IndicatorPositionHeight": 30,
+            "ProgressRangeMin": 0,
+            "ProgressRangeMax": 100,
+            "ProgressRangeSteps": 0,
+            "ProgressRangeStepsMin": 0,
+            "ProgressInitialValue": 0,
+            "Name": "progress",
+            "X": 120,
+            "Y": 205,
+            "Width": 404,
+            "Height": 34,
+            "Type": "BoxProgress",
             "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId47",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea4",
+            "X": 424,
+            "Y": 250,
+            "Width": 200,
+            "Height": 40,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId48",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 255,
+              "Blue": 61
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "noErrInfo",
+            "X": 173,
+            "Y": 348,
+            "Width": 295,
+            "Height": 32,
+            "Type": "TextArea",
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -556,8 +629,7 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "South",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Main",
               "Type": "ActionGotoScreen"
             }
@@ -570,8 +642,7 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "North",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Level",
               "Type": "ActionGotoScreen"
             }
@@ -584,8 +655,7 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "North",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Level",
               "Type": "ActionGotoScreen"
             }
@@ -598,10 +668,56 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "North",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Settings",
               "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "exitDiag",
+            "HasCompletedTrigger": true,
+            "Trigger": {
+              "Type": "TriggerScreenEntered"
+            },
+            "Action": {
+              "Duration": 2500,
+              "Type": "ActionDelay"
+            }
+          },
+          {
+            "InteractionName": "Interaction2",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "InteractionToTriggerOn": "exitDiag",
+              "Type": "TriggerInteractionCompleted"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "Level",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "noErr",
+            "HasCompletedTrigger": true,
+            "Trigger": {
+              "Type": "TriggerScreenEntered"
+            },
+            "Action": {
+              "Duration": 1750,
+              "Type": "ActionDelay"
+            }
+          },
+          {
+            "InteractionName": "Interaction3",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "InteractionToTriggerOn": "noErr",
+              "Type": "TriggerInteractionCompleted"
+            },
+            "Action": {
+              "ActionComponent": "noErrInfo",
+              "Type": "ActionShow"
             }
           }
         ],
@@ -692,9 +808,9 @@
             "AutoSize": true,
             "LineSpacing": 0,
             "Name": "textArea1",
-            "X": 23,
-            "Y": 20,
-            "Width": 54,
+            "X": 12,
+            "Y": 24,
+            "Width": 524,
             "Height": 20,
             "Type": "TextArea",
             "Visible": true,
@@ -724,7 +840,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -751,7 +867,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -778,7 +894,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -805,6 +921,255 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
+            "Visible": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "IsHorizontalSlider": false,
+            "BackgroundUnselected": "__designer\\blue_slider_vertical_medium_slider3_vertical_round_back.png",
+            "BackgroundSelected": "__designer\\blue_slider_vertical_medium_slider3_vertical_round_back.png",
+            "Indicator": "__designer\\blue_slider_vertical_medium_indicators_slider3_vertical_round_nob.png",
+            "BackgroundX": 7,
+            "BackgroundY": 3,
+            "IndicatorPos": 0,
+            "IndicatorMax": 285,
+            "IndicatorMin": 0,
+            "ValueMax": 200,
+            "ValueMin": 0,
+            "InitValue": 100,
+            "Name": "levelSlider",
+            "X": 62,
+            "Y": 71,
+            "Width": 34,
+            "Height": 339,
+            "Type": "Slider",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Pressed": "__designer\\blue_buttons_round_edge_small_pressed.png",
+            "Released": "__designer\\blue_buttons_round_edge_small.png",
+            "Alpha": 255,
+            "TextId": "SingleUseId50",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Style": "Style4",
+            "Name": "okBtn",
+            "X": 436,
+            "Y": 388,
+            "Width": 170,
+            "Height": 60,
+            "Type": "ButtonWithLabel",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId51",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea4",
+            "X": 149,
+            "Y": 136,
+            "Width": 152,
+            "Height": 40,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId52",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea4_1",
+            "X": 149,
+            "Y": 305,
+            "Width": 152,
+            "Height": 40,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "StartX": 8,
+            "StartY": 8,
+            "EndX": 100,
+            "EndY": 8,
+            "LineWidth": 4,
+            "LineEndingStyle": "Round",
+            "Name": "line1",
+            "X": 120,
+            "Y": 232,
+            "Width": 104,
+            "Height": 16,
+            "Type": "Line",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Color": {
+              "Red": 43,
+              "Green": 255,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "StartX": 8,
+            "StartY": 3,
+            "EndX": 8,
+            "EndY": 165,
+            "LineWidth": 4,
+            "LineEndingStyle": "Round",
+            "Name": "line2",
+            "X": 104,
+            "Y": 71,
+            "Width": 16,
+            "Height": 170,
+            "Type": "Line",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Color": {
+              "Red": 255,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "StartX": 8,
+            "StartY": 6,
+            "EndX": 8,
+            "EndY": 164,
+            "LineWidth": 4,
+            "LineEndingStyle": "Round",
+            "Name": "line2_1",
+            "X": 104,
+            "Y": 240,
+            "Width": 16,
+            "Height": 170,
+            "Type": "Line",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId53",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea4_2",
+            "X": 234,
+            "Y": 230,
+            "Width": 106,
+            "Height": 20,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId54",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": false,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId55",
+              "UseBuffer": true,
+              "BufferSize": 5
+            },
+            "Name": "levelVal",
+            "X": 468,
+            "Y": 345,
+            "Width": 68,
+            "Height": 32,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId56",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea4_2_1",
+            "X": 542,
+            "Y": 355,
+            "Width": 26,
+            "Height": 20,
+            "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -821,8 +1186,7 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "North",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Boot",
               "Type": "ActionGotoScreen"
             }
@@ -835,8 +1199,7 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "North",
+              "ScreenTransitionType": "ScreenTransitionNone",
               "ActionComponent": "Diagnostics",
               "Type": "ActionGotoScreen"
             }
@@ -850,7 +1213,7 @@
             },
             "Action": {
               "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "North",
+              "ScreenTransitionDirection": "East",
               "ActionComponent": "Main",
               "Type": "ActionGotoScreen"
             }
@@ -864,15 +1227,41 @@
             },
             "Action": {
               "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "North",
+              "ScreenTransitionDirection": "West",
               "ActionComponent": "Settings",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "Interaction1",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "levelSlider",
+              "Type": "TriggerSliderValueChanged"
+            },
+            "Action": {
+              "FunctionName": "sliderChanged",
+              "Type": "ActionCustom"
+            }
+          },
+          {
+            "InteractionName": "ok",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "okBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "Main",
               "Type": "ActionGotoScreen"
             }
           }
         ],
         "Name": "Level",
         "OverrideDefaultBufferSize": false,
-        "CanvasBufferSize": 0
+        "CanvasBufferSize": 9600
       },
       {
         "Components": [
@@ -916,7 +1305,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -929,6 +1318,23 @@
             },
             "ButtonStyles": [
               {
+                "Type": "TextButtonStyle",
+                "X": 25,
+                "Y": 6,
+                "TextId": "SingleUseId58",
+                "TextRotation": "0",
+                "ColorReleased": {
+                  "Red": 10,
+                  "Green": 10,
+                  "Blue": 10
+                },
+                "ColorPressed": {
+                  "Red": 8,
+                  "Green": 224,
+                  "Blue": 27
+                }
+              },
+              {
                 "Type": "IconButtonStyle",
                 "X": 0,
                 "Y": 0,
@@ -940,7 +1346,7 @@
             "Name": "settingsBtn",
             "X": 200,
             "Y": 424,
-            "Width": 48,
+            "Width": 200,
             "Height": 48,
             "Type": "FlexButton",
             "Visible": true,
@@ -961,8 +1367,8 @@
             "AutoSize": true,
             "LineSpacing": 0,
             "Name": "textArea1",
-            "X": 15,
-            "Y": 15,
+            "X": 12,
+            "Y": 12,
             "Width": 109,
             "Height": 20,
             "Type": "TextArea",
@@ -1313,7 +1719,7 @@
           {
             "Alpha": 255,
             "ButtonTrigger": {
-              "Type": "ClickButtonTrigger"
+              "Type": "TouchButtonTrigger"
             },
             "ButtonStyles": [
               {
@@ -1340,7 +1746,7 @@
           {
             "Alpha": 255,
             "ButtonTrigger": {
-              "Type": "ClickButtonTrigger"
+              "Type": "TouchButtonTrigger"
             },
             "ButtonStyles": [
               {
@@ -1367,7 +1773,7 @@
           {
             "Alpha": 255,
             "ButtonTrigger": {
-              "Type": "ClickButtonTrigger"
+              "Type": "TouchButtonTrigger"
             },
             "ButtonStyles": [
               {
@@ -1394,7 +1800,7 @@
           {
             "Alpha": 255,
             "ButtonTrigger": {
-              "Type": "ClickButtonTrigger"
+              "Type": "TouchButtonTrigger"
             },
             "ButtonStyles": [
               {
@@ -1489,7 +1895,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -1502,6 +1908,23 @@
             },
             "ButtonStyles": [
               {
+                "Type": "TextButtonStyle",
+                "X": 20,
+                "Y": 6,
+                "TextId": "SingleUseId57",
+                "TextRotation": "0",
+                "ColorReleased": {
+                  "Red": 10,
+                  "Green": 10,
+                  "Blue": 10
+                },
+                "ColorPressed": {
+                  "Red": 8,
+                  "Green": 224,
+                  "Blue": 27
+                }
+              },
+              {
                 "Type": "IconButtonStyle",
                 "X": 0,
                 "Y": 0,
@@ -1511,12 +1934,98 @@
               }
             ],
             "Name": "levelBtn",
-            "X": 136,
+            "X": 12,
             "Y": 424,
-            "Width": 48,
+            "Width": 150,
             "Height": 48,
             "Type": "FlexButton",
             "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Components": [
+              {
+                "Color": {
+                  "Red": 255,
+                  "Green": 246,
+                  "Blue": 0
+                },
+                "Alpha": 255,
+                "Name": "box2",
+                "X": -15,
+                "Y": -5,
+                "Width": 666,
+                "Height": 213,
+                "Type": "Box",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "TextId": "SingleUseId60",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 0,
+                  "Green": 0,
+                  "Blue": 0
+                },
+                "Alpha": 255,
+                "AutoSize": true,
+                "LineSpacing": 0,
+                "Name": "textArea4",
+                "X": 23,
+                "Y": 18,
+                "Width": 384,
+                "Height": 32,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "Pressed": "stop_disabled.png",
+                "Released": "stop.png",
+                "Alpha": 255,
+                "Name": "stopBtnAlarm",
+                "X": 536,
+                "Y": 98,
+                "Width": 96,
+                "Height": 96,
+                "Type": "Button",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              }
+            ],
+            "FileName": "miss_logo_640px.png",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "ModalX": 0,
+            "ModalY": 139,
+            "ModalWidth": 640,
+            "ModalHeight": 202,
+            "ContX": 0,
+            "ContY": 0,
+            "Alpha": 192,
+            "Name": "alarmWindow",
+            "X": 0,
+            "Y": 0,
+            "Width": 640,
+            "Height": 480,
+            "Type": "ModalWindow",
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -1633,7 +2142,7 @@
             },
             "Action": {
               "ScreenTransitionType": "ScreenTransitionSlide",
-              "ScreenTransitionDirection": "South",
+              "ScreenTransitionDirection": "West",
               "ActionComponent": "Level",
               "Type": "ActionGotoScreen"
             }
@@ -1650,6 +2159,18 @@
               "ScreenTransitionDirection": "South",
               "ActionComponent": "Diagnostics",
               "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "Interaction1",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "stopBtnAlarm",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "stopRegulation",
+              "Type": "ActionCustom"
             }
           }
         ],
@@ -1717,7 +2238,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -1735,8 +2256,8 @@
             "AutoSize": true,
             "LineSpacing": 0,
             "Name": "textArea1",
-            "X": 15,
-            "Y": 15,
+            "X": 12,
+            "Y": 12,
             "Width": 144,
             "Height": 20,
             "Type": "TextArea",
@@ -1909,7 +2430,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -2011,7 +2532,7 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
-            "Visible": true,
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -2038,6 +2559,35 @@
             "Width": 48,
             "Height": 48,
             "Type": "FlexButton",
+            "Visible": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Pressed": "__designer\\blue_buttons_round_edge_small_pressed.png",
+            "Released": "__designer\\blue_buttons_round_edge_small.png",
+            "Alpha": 255,
+            "TextId": "SingleUseId59",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Style": "Style4",
+            "Name": "okBtn",
+            "X": 459,
+            "Y": 409,
+            "Width": 170,
+            "Height": 60,
+            "Type": "ButtonWithLabel",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -2123,6 +2673,20 @@
               "ScreenTransitionType": "ScreenTransitionSlide",
               "ScreenTransitionDirection": "South",
               "ActionComponent": "Diagnostics",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "ok",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "okBtn",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "West",
+              "ActionComponent": "Main",
               "Type": "ActionGotoScreen"
             }
           }
@@ -2292,6 +2856,58 @@
       },
       {
         "TextEntryId": "SingleUseId46",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId47",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId48",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId50",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId51",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId52",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId53",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId54",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId55",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId56",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId57",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId58",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId59",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId60",
         "IsResource": false
       }
     ],

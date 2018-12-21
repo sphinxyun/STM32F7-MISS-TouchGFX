@@ -11,6 +11,7 @@
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/buttons/Buttons.hpp>
+#include <touchgfx/containers/progress_indicators/BoxProgress.hpp>
 
 class DiagnosticsViewBase : public touchgfx::View<DiagnosticsPresenter>
 {
@@ -19,6 +20,8 @@ public:
     virtual ~DiagnosticsViewBase() {}
 
     virtual void setupScreen();
+    virtual void handleTickEvent();
+    virtual void afterTransition();
 
 protected:
     FrontendApplication& application() {
@@ -36,6 +39,9 @@ protected:
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > homeBtn;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > settingsBtn;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > levelBtn;
+    touchgfx::BoxProgress progress;
+    touchgfx::TextArea textArea4;
+    touchgfx::TextArea noErrInfo;
 
     /*
      * Wildcard Buffers
@@ -49,6 +55,14 @@ private:
      * Callback Handler Declarations
      */
     void flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src);
+
+    /*
+     * Delay Variable Declarations
+     */
+    static const uint16_t EXITDIAG_DURATION = 150;
+    uint16_t exitDiagCounter;
+    static const uint16_t NOERR_DURATION = 105;
+    uint16_t noErrCounter;
 
     /*
      * Callback Declarations

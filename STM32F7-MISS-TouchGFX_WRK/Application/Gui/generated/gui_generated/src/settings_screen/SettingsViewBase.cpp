@@ -19,9 +19,10 @@ SettingsViewBase::SettingsViewBase() :
     homeBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID), Bitmap(BITMAP_BLUE_ICONS_HOME_48_ID));
     homeBtn.setIconXY(0, 0);
     homeBtn.setPosition(8, 424, 48, 48);
+    homeBtn.setVisible(false);
     homeBtn.setAction(flexButtonCallback);
 
-    textArea1.setXY(15, 15);
+    textArea1.setXY(12, 12);
     textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea1.setLinespacing(0);
     textArea1.setTypedText(TypedText(T_SINGLEUSEID7));
@@ -63,6 +64,7 @@ SettingsViewBase::SettingsViewBase() :
     workBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID), Bitmap(BITMAP_BLUE_ICONS_TOOLS_48_ID));
     workBtn.setIconXY(0, 0);
     workBtn.setPosition(200, 424, 48, 48);
+    workBtn.setVisible(false);
     workBtn.setAction(flexButtonCallback);
 
     slider2.setXY(284, 168);
@@ -86,12 +88,21 @@ SettingsViewBase::SettingsViewBase() :
     diagBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_ADD_NEW_48_ID), Bitmap(BITMAP_BLUE_ICONS_ADD_NEW_48_ID));
     diagBtn.setIconXY(0, 0);
     diagBtn.setPosition(72, 424, 48, 48);
+    diagBtn.setVisible(false);
     diagBtn.setAction(flexButtonCallback);
 
     levelBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_USER_48_ID), Bitmap(BITMAP_BLUE_ICONS_USER_48_ID));
     levelBtn.setIconXY(0, 0);
     levelBtn.setPosition(136, 424, 48, 48);
+    levelBtn.setVisible(false);
     levelBtn.setAction(flexButtonCallback);
+
+    okBtn.setXY(459, 409);
+    okBtn.setBitmaps(Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_ID), Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
+    okBtn.setLabelText(TypedText(T_SINGLEUSEID59));
+    okBtn.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    okBtn.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    okBtn.setAction(buttonCallback);
 
     add(box1);
     add(toggleButton1);
@@ -104,6 +115,7 @@ SettingsViewBase::SettingsViewBase() :
     add(textArea3);
     add(diagBtn);
     add(levelBtn);
+    add(okBtn);
 }
 
 void SettingsViewBase::setupScreen()
@@ -116,6 +128,13 @@ void SettingsViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src
     if (&src == &toggleButton1)
     {
 
+    }
+    else if (&src == &okBtn)
+    {
+        //ok
+        //When okBtn clicked change screen to Main
+        //Go to Main with screen transition towards West
+        application().gotoMainScreenSlideTransitionWest();
     }
 }
 

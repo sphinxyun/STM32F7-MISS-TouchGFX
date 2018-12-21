@@ -40,6 +40,8 @@ public:
 
     virtual void mcuLoadUpdated(uint8_t mcuLoad) {}
 
+    virtual void showAlarmMessage(bool bVisible) {}
+
 protected:
     Model* model;
 };

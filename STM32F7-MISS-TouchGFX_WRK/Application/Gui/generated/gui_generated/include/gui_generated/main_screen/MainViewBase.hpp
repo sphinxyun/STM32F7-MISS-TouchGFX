@@ -12,6 +12,8 @@
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/Button.hpp>
+#include <touchgfx/containers/ModalWindow.hpp>
+#include <touchgfx/Color.hpp>
 
 class MainViewBase : public touchgfx::View<MainPresenter>
 {
@@ -64,7 +66,7 @@ protected:
      */
     touchgfx::Box box1;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > homeBtn;
-    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > settingsBtn;
+    touchgfx::TextButtonStyle< touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > > settingsBtn;
     touchgfx::TextArea textArea1;
     touchgfx::TextArea textArea1_1;
     touchgfx::TextArea textArea1_1_1;
@@ -80,14 +82,19 @@ protected:
     touchgfx::TextAreaWithOneWildcard presetlPressure;
     touchgfx::TextAreaWithOneWildcard presetFlowLPM;
     touchgfx::TextAreaWithOneWildcard presetFlowRPM;
-    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > decPressure;
-    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > incPressure;
-    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > decFlow;
-    touchgfx::IconButtonStyle< touchgfx::ClickButtonTrigger > incFlow;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > decPressure;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > incPressure;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > decFlow;
+    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > incFlow;
     touchgfx::TextAreaWithOneWildcard mcuLoad;
     touchgfx::TextArea textArea3;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > diagBtn;
-    touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > levelBtn;
+    touchgfx::TextButtonStyle< touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > > levelBtn;
+    touchgfx::ModalWindow alarmWindow;
+    touchgfx::Box box2;
+    touchgfx::TextArea textArea4;
+    touchgfx::Button stopBtnAlarm;
+
 
     /*
      * Wildcard Buffers

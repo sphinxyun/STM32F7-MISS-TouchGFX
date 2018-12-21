@@ -36,6 +36,13 @@ void MainView::decFlowBtn() {
 	presenter->decFlowBtn();
 }
 
+void MainView::showAlarmMessage(bool bVisible) {
+	if (bVisible)
+		alarmWindow.show();
+	else
+		alarmWindow.hide();
+}
+
 void MainView::mcuLoadUpdated(uint8_t mcuLoadValue) {
 	Unicode::snprintf(mcuLoadBuffer, MCULOAD_SIZE, "%d", mcuLoadValue);
 	mcuLoad.setWildcard(mcuLoadBuffer);
@@ -44,7 +51,10 @@ void MainView::mcuLoadUpdated(uint8_t mcuLoadValue) {
 }
 
 void MainView::actualPressureMMHGUpdate(float fVal) {
-	Unicode::snprintf(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%d", (int)fVal);
+	int iVal = (int)fVal;
+	if (iVal < 0)
+		iVal = 0;
+	Unicode::snprintf(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%d", iVal);
 //	Unicode::snprintfFloats(actualPressureBuffer, ACTUALPRESSURE_SIZE, "%4.2f", &fVal);
 	actualPressure.setWildcard(actualPressureBuffer);
 

@@ -15,6 +15,7 @@
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 #include <touchgfx/containers/Slider.hpp>
+#include <touchgfx/widgets/ButtonWithLabel.hpp>
 class SettingsViewBase : public touchgfx::View<SettingsPresenter>
 {
 public:
@@ -60,6 +61,7 @@ protected:
     touchgfx::TextArea textArea3;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > diagBtn;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > levelBtn;
+    touchgfx::ButtonWithLabel okBtn;
 
     /*
      * Wildcard Buffers

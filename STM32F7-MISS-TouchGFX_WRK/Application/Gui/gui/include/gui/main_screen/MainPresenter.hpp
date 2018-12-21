@@ -43,6 +43,8 @@ public:
 	void incFlowBtn();
 	void decFlowBtn();
 
+	void showAlarmMessage(bool bVisible);
+
 	void mcuLoadUpdated(uint8_t mcuLoad);
 
 private:

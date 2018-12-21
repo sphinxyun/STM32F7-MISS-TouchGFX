@@ -15,7 +15,8 @@ extern "C" {
 #include "regulation/regulation.h"
 
 typedef enum {
-	eAutoTest = 0,
+	eStartup = 0,
+	eAutoTest,
 	eLevel,
 	eIdle,
 	eSettings,
@@ -37,6 +38,7 @@ typedef struct {
 	uint32_t u32BrightnessPercent;
 
 	uint32_t u32ButtonFlags;
+	uint32_t u32AlarmFlags;
 } WM_MAIN_GuiStatus;
 
 typedef enum {

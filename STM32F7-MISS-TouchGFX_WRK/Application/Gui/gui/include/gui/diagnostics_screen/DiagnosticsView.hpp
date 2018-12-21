@@ -12,6 +12,8 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
 
+    void handleTickEvent();
+
     void mcuLoadUpdated(uint8_t mcuLoadValue);
 
 protected:

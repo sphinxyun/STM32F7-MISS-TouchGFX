@@ -10,6 +10,13 @@ void DiagnosticsView::setupScreen()
     DiagnosticsViewBase::setupScreen();
 }
 
+void DiagnosticsView::handleTickEvent() {
+	static int i = 0;
+	progress.setValue(i++);
+
+	DiagnosticsViewBase::handleTickEvent();
+}
+
 void DiagnosticsView::tearDownScreen()
 {
     DiagnosticsViewBase::tearDownScreen();

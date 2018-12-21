@@ -334,8 +334,8 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 
 //			memset(pRxBuffer, 0xFF, DMA_RX_BUFFER_SIZE);
 
-			if (bErrors)
-				HAL_GPIO_WritePin(GPIOG, GPIO_PIN_6, GPIO_PIN_SET); //nCS
+//			if (bErrors)
+//				HAL_GPIO_WritePin(GPIOG, GPIO_PIN_6, GPIO_PIN_SET); //nCS
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
 			DEBUG_SendTextFrame("Pressure - STOP PROCESSING (%x)", ulNotifiedValue);

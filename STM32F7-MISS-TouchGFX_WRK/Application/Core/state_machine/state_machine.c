@@ -89,18 +89,28 @@ static void StateMachine_Thread(void * argument) {
 
 	bool bUpdate = true;
 
-	device_state = eAutoTest;
+	device_state = eStartup;
 
 	const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
 
 	guiStatus.u8IrrigationPresetPressureMMHG = set->u32IrrigationPressure;
+	guiStatus.u16IrrigationPresetFlowRPM = set->u16IrrigationFlowRPM;
 	guiStatus.fIrrigationPresetFlowLPM = set->fIrrigationFlowLPM;
 
-//	TickType_t xTimeBefore;
-//	xTimeBefore = xTaskGetTickCount();
+	REGULATION_Start();
+
+	TickType_t xTimeBefore = xTaskGetTickCount();
 
 	for (;;) {
 		DEBUG_UART_SysTick();
+
+		if (((xTaskGetTickCount() - xTimeBefore) > 2500) && ((xTaskGetTickCount() - xTimeBefore) < 2700)) {
+			DEBUG_SendTextFrame("state change -> eAutoTest");
+			device_state = eAutoTest;
+			bUpdate = true;
+		} else {
+			DEBUG_SendTextFrame("state change -> %d", xTaskGetTickCount() - xTimeBefore);
+		}
 
 		if (xQueueReceive(xGuiActions, &action, 25)) {
 			bUpdate = true;
@@ -108,14 +118,14 @@ static void StateMachine_Thread(void * argument) {
 			if (action == WM_GUI_LOADED) {
 				TOUCHGFT_SetBacklight(SETTINGS_GetBrightness());
 			} else if (action == WM_MAIN_START_ACTION) {
-				REGULATION_Start();
+
+				MOTOR_Start(guiStatus.u16IrrigationPresetFlowRPM);
 
 				DEBUG_SendTextFrame("WM_MAIN_START_ACTION");
-				MOTOR_Start();
 			} else if (action == WM_MAIN_STOP_ACTION) {
-				REGULATION_Stop();
-
+//				REGULATION_Stop();
 				MOTOR_Stop();
+
 				DEBUG_SendTextFrame("WM_MAIN_STOP_ACTION");
 			} else if (action == WM_MAIN_INCREASE_BRIGHTNESS) {
 				SETTINGS_IncBrightness();
@@ -184,8 +194,23 @@ static void StateMachine_Thread(void * argument) {
 		}
 
 		if (xQueueReceive(xRegulationStatus, &guiStatus.sIrrigationActual, 50)) {
+			if (guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG < 0)
+				guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG = 0;
 //			DEBUG_SendTextFrame("Main_Thread PRESSURE: %f", guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
 //			DEBUG_SendTextFrame("Main_Thread SPEED   : %f", guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
+			static int iAlCnt = 0;
+			if (guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG > guiStatus.u8IrrigationPresetPressureMMHG + 5) {
+				iAlCnt++;
+				if (iAlCnt > 10) {
+					guiStatus.u32AlarmFlags = 1;
+					iAlCnt = 11;
+				}
+			}
+			else {
+				iAlCnt = 0;
+				guiStatus.u32AlarmFlags = 0;
+			}
+
 			bUpdate = true;
 		} else {
 //			DEBUG_SendTextFrame("Regulation_Thread SPEED: ---");
