@@ -41,9 +41,11 @@ int main(void) {
     DEBUG_Init();
     DEBUG_SendTextHeader();
 
+    SETTINGS_Init();
+
     TOUCHGFX_Init();
 
-    SETTINGS_Init();
+
 
     AUDIOPLAYER_Init(100);
 

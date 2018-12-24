@@ -8,15 +8,6 @@
              To be able to use this driver, the switch EE_M24LR64 must be defined
              in your toolchain compiler preprocessor
              
-             =================================================================== 
-             Notes:
-              - The I2C EEPROM memory (M24LR64) is available on separate daughter 
-                board ANT7-M24LR-A, which is not provided with the STM32746G_DISCOVERY
-                board.
-                To use this driver you have to connect the ANT7-M24LR-A to CN3 
-                connector of STM32746G_DISCOVERY board.
-             ===================================================================
-                 
              It implements a high level communication layer for read and write 
              from/to this memory. The needed STM32F7xx hardware resources (I2C and
              GPIO) are defined in stm32746g_discovery.h file, and the initialization is
@@ -54,97 +45,14 @@
         | .                                     |   VDD     |    8 (3.3V) |
         +---------------------------------------+-----------+-------------+
   @endverbatim   
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
-  *
-  * Redistribution and use in source and binary forms, with or without modification,
-  * are permitted provided that the following conditions are met:
-  *   1. Redistributions of source code must retain the above copyright notice,
-  *      this list of conditions and the following disclaimer.
-  *   2. Redistributions in binary form must reproduce the above copyright notice,
-  *      this list of conditions and the following disclaimer in the documentation
-  *      and/or other materials provided with the distribution.
-  *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  *      may be used to endorse or promote products derived from this software
-  *      without specific prior written permission.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  *
-  ******************************************************************************
   */
-
-/* Dependencies 
-- stm32746g_discovery.c
-EndDependencies */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32746g_discovery_eeprom.h"
+#include <settings/driver/eeprom.h>
 
-/** @addtogroup BSP
-  * @{
-  */
-  
-/** @addtogroup STM32746G_DISCOVERY
-  * @{
-  */ 
-  
-/** @addtogroup STM32746G_DISCOVERY_EEPROM
-  * @brief This file includes the I2C EEPROM driver of STM32746G-Discovery board.
-  * @{
-  */ 
-
-/** @defgroup STM32746G_DISCOVERY_EEPROM_Private_Types STM32746G_DISCOVERY_EEPROM Private Types
-  * @{
-  */ 
-/**
-  * @}
-  */ 
-
-/** @defgroup STM32746G_DISCOVERY_EEPROM_Private_Defines STM32746G_DISCOVERY_EEPROM Private Defines
-  * @{
-  */  
-/**
-  * @}
-  */ 
-
-/** @defgroup STM32746G_DISCOVERY_EEPROM_Private_Macros STM32746G_DISCOVERY_EEPROM Private Macros
-  * @{
-  */
-/**
-  * @}
-  */ 
-  
-/** @defgroup STM32746G_DISCOVERY_EEPROM_Private_Variables STM32746G_DISCOVERY_EEPROM Private Variables
-  * @{
-  */
 __IO uint16_t EEPROMAddress = 0;
 __IO uint16_t EEPROMDataRead;
 __IO uint8_t  EEPROMDataWrite;
-/**
-  * @}
-  */ 
-
-/** @defgroup STM32746G_DISCOVERY_EEPROM_Private_Function_Prototypes STM32746G_DISCOVERY_EEPROM Private Function Prototypes
-  * @{
-  */ 
-/**
-  * @}
-  */ 
-
-/** @defgroup STM32746G_DISCOVERY_EEPROM_Exported_Functions STM32746G_DISCOVERY_EEPROM Exported Functions
-  * @{
-  */ 
 
 /**
   * @brief  Initializes peripherals used by the I2C EEPROM driver.
@@ -457,21 +365,3 @@ uint32_t BSP_EEPROM_WaitEepromStandbyState(void)
 __weak void BSP_EEPROM_TIMEOUT_UserCallback(void)
 {
 }
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

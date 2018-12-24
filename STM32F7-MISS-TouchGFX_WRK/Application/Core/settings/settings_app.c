@@ -1,5 +1,7 @@
 #include "settings_app.h"
 
+#include "driver/eeprom.h"
+
 typedef union {
 	uint32_t d32;
 	struct {
@@ -19,6 +21,8 @@ const SETTINGS_ProgramSettingsTypedef *SETTINGS_Get(void) {
 
 
 SETTINGS_ErrorTypdef SETTINGS_Init(void) {
+	BSP_EEPROM_Init();
+
 	DeviceSettings.b.brightness = 40;
 
 	ProgramSettings.u32IrrigationPressure = 35;
