@@ -14,7 +14,7 @@ touchgfx::InternalFlashFont& getFont_verdanab_16_4bpp();
 
 touchgfx::InternalFlashFont& getFont_verdanab_16_4bpp()
 {
-    static touchgfx::InternalFlashFont verdanab_16_4bpp(glyphs_verdanab_16_4bpp, 55, 16, 3, 4, 0, 1, unicodes_verdanab_16_4bpp, kerning_verdanab_16_4bpp, 63, 0);
+    static touchgfx::InternalFlashFont verdanab_16_4bpp(glyphs_verdanab_16_4bpp, 52, 16, 3, 4, 0, 1, unicodes_verdanab_16_4bpp, kerning_verdanab_16_4bpp, 63, 0);
     return verdanab_16_4bpp;
 }
 
@@ -26,7 +26,7 @@ touchgfx::InternalFlashFont& getFont_verdanab_26_4bpp();
 
 touchgfx::InternalFlashFont& getFont_verdanab_26_4bpp()
 {
-    static touchgfx::InternalFlashFont verdanab_26_4bpp(glyphs_verdanab_26_4bpp, 45, 26, 5, 4, 0, 1, unicodes_verdanab_26_4bpp, kerning_verdanab_26_4bpp, 63, 0);
+    static touchgfx::InternalFlashFont verdanab_26_4bpp(glyphs_verdanab_26_4bpp, 43, 26, 5, 4, 0, 1, unicodes_verdanab_26_4bpp, kerning_verdanab_26_4bpp, 63, 0);
     return verdanab_26_4bpp;
 }
 

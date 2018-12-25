@@ -11,22 +11,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-#include <touchgfx/transitions/SlideTransition.hpp>
-#include <touchgfx/transitions/SlideTransition.hpp>
-#include <touchgfx/transitions/SlideTransition.hpp>
-#include <touchgfx/transitions/SlideTransition.hpp>
-#include <touchgfx/transitions/SlideTransition.hpp>
-#include <touchgfx/transitions/SlideTransition.hpp>
-#include <touchgfx/transitions/SlideTransition.hpp>
 #include <touchgfx/transitions/SlideTransition.hpp>
 #include <touchgfx/transitions/SlideTransition.hpp>
 #include <touchgfx/transitions/SlideTransition.hpp>
@@ -40,10 +24,6 @@
 #include <gui/startup_screen/StartupPresenter.hpp>
 #include <gui/boot_screen/BootView.hpp>
 #include <gui/boot_screen/BootPresenter.hpp>
-#include <gui/diagnostics_screen/DiagnosticsView.hpp>
-#include <gui/diagnostics_screen/DiagnosticsPresenter.hpp>
-#include <gui/level_screen/LevelView.hpp>
-#include <gui/level_screen/LevelPresenter.hpp>
 #include <gui/main_screen/MainView.hpp>
 #include <gui/main_screen/MainPresenter.hpp>
 #include <gui/settings_screen/SettingsView.hpp>
@@ -72,11 +52,9 @@ public:
      */
     typedef meta::TypeList< StartupView,
             meta::TypeList< BootView,
-            meta::TypeList< DiagnosticsView,
-            meta::TypeList< LevelView,
             meta::TypeList< MainView,
             meta::TypeList< SettingsView,
-            meta::Nil > > > > >
+            meta::Nil > > >
             > GeneratedViewTypes;
 
     /**
@@ -90,11 +68,9 @@ public:
      */
     typedef meta::TypeList< StartupPresenter,
             meta::TypeList< BootPresenter,
-            meta::TypeList< DiagnosticsPresenter,
-            meta::TypeList< LevelPresenter,
             meta::TypeList< MainPresenter,
             meta::TypeList< SettingsPresenter,
-            meta::Nil > > > > >
+            meta::Nil > > >
             > GeneratedPresenterTypes;
 
     /**
@@ -109,8 +85,7 @@ public:
     typedef meta::TypeList< NoTransition,
             meta::TypeList< SlideTransition<EAST>,
             meta::TypeList< SlideTransition<WEST>,
-            meta::TypeList< SlideTransition<SOUTH>,
-            meta::Nil > > >
+            meta::Nil > >
             > GeneratedTransitionTypes;
 
     /**

@@ -89,13 +89,11 @@ SettingsViewBase::SettingsViewBase() :
     diagBtn.setIconXY(0, 0);
     diagBtn.setPosition(72, 424, 48, 48);
     diagBtn.setVisible(false);
-    diagBtn.setAction(flexButtonCallback);
 
     levelBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_USER_48_ID), Bitmap(BITMAP_BLUE_ICONS_USER_48_ID));
     levelBtn.setIconXY(0, 0);
     levelBtn.setPosition(136, 424, 48, 48);
     levelBtn.setVisible(false);
-    levelBtn.setAction(flexButtonCallback);
 
     okBtn.setXY(459, 409);
     okBtn.setBitmaps(Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_ID), Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
@@ -170,16 +168,10 @@ void SettingsViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonC
     }
     else if (&src == &diagBtn)
     {
-        //diagnostics
-        //When diagBtn clicked change screen to Diagnostics
-        //Go to Diagnostics with screen transition towards South
-        application().gotoDiagnosticsScreenSlideTransitionSouth();
+
     }
     else if (&src == &levelBtn)
     {
-        //level
-        //When levelBtn clicked change screen to Level
-        //Go to Level with screen transition towards South
-        application().gotoLevelScreenSlideTransitionSouth();
+
     }
 }

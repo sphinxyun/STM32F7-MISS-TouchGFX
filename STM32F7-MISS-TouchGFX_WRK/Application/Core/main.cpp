@@ -45,8 +45,6 @@ int main(void) {
 
     TOUCHGFX_Init();
 
-
-
     AUDIOPLAYER_Init(100);
 
     REGULATION_Init();

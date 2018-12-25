@@ -14,17 +14,31 @@
 
 typedef union {
 	uint8_t u8Stat[3];
+
 	struct {
 		uint8_t fail_hires : 1;
 		uint8_t fail_capsens_ovp : 1;
-		uint8_t fail_loressens_1: 1;
-		uint8_t fail_loressens_2: 1;
-		uint8_t fail_ADC1: 1;
-		uint8_t fail_ADC2_1: 1;
-		uint8_t fail_ADC2_2: 1;
-		uint8_t fail_ADC2_3: 1;
-		uint8_t stat1;
-		uint8_t stat2 : 7;
+		uint8_t fail_loressens_1 : 1;
+		uint8_t fail_loressens_2 : 1;
+		uint8_t fail_ADC1 : 1;
+		uint8_t fail_ADC2_1 : 1;
+		uint8_t fail_ADC2_2 : 1;
+		uint8_t fail_ADC2_3 : 1;
+		uint8_t fail_XTAL_osc : 1;
+		uint8_t fail_clock : 1;
+		uint8_t fail_ldo_vdda : 1;
+		uint8_t dsp_usrflag1 : 1;
+		uint8_t dsp_usrflag2 : 1;
+		uint8_t dsp_newminmax : 1;
+		uint8_t dsp_overlimit : 1;
+		uint8_t dsp_overflow : 1;
+		uint8_t dsp_running : 1;
+		uint8_t dsp_watchdog : 1;
+		uint8_t fail_memory : 1;
+		uint8_t EEPROM_WIP : 1;
+		uint8_t transfer_error : 1;
+		uint8_t aux_in : 1;
+		uint8_t cef : 1;
 		uint8_t meas_data_rdy : 1;
 	};
 } uCarmentStatusReg_t;

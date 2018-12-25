@@ -53,13 +53,11 @@ BootViewBase::BootViewBase() :
     diagBtn.setIconXY(0, 0);
     diagBtn.setPosition(8, 424, 48, 48);
     diagBtn.setVisible(false);
-    diagBtn.setAction(flexButtonCallback);
 
     levelBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_USER_48_ID), Bitmap(BITMAP_BLUE_ICONS_USER_48_ID));
     levelBtn.setIconXY(0, 0);
     levelBtn.setPosition(72, 424, 48, 48);
     levelBtn.setVisible(false);
-    levelBtn.setAction(flexButtonCallback);
 
     add(box1);
     add(missLogo);
@@ -96,16 +94,10 @@ void BootViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonConta
     }
     else if (&src == &diagBtn)
     {
-        //diagnostics
-        //When diagBtn clicked change screen to Diagnostics
-        //Go to Diagnostics with no screen transition
-        application().gotoDiagnosticsScreenNoTransition();
+
     }
     else if (&src == &levelBtn)
     {
-        //level
-        //When levelBtn clicked change screen to Level
-        //Go to Level with no screen transition
-        application().gotoLevelScreenNoTransition();
+
     }
 }

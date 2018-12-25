@@ -16,8 +16,8 @@ extern "C" {
 
 typedef enum {
 	eStartup = 0,
-	eAutoTest,
-	eLevel,
+//	eAutoTest,
+//	eLevel,
 	eIdle,
 	eSettings,
 	eMenu,

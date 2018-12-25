@@ -33,12 +33,12 @@ void Model::tick()
 	if (xGuiStatus && xQueueReceive(xGuiStatus, &guiStatus, 0)  == pdTRUE) {
 		if (m_guiStatus.eDevMode != guiStatus.eDevMode) {
 			switch (guiStatus.eDevMode) {
-			case eAutoTest:
-				switchToDiagnosticMode();
-				break;
-			case eLevel:
-				switchToLevelMode();
-				break;
+//			case eAutoTest:
+//				switchToDiagnosticMode();
+//				break;
+//			case eLevel:
+//				switchToLevelMode();
+//				break;
 			case eIdle:
 				switchToMainMode();
 				break;
@@ -82,13 +82,13 @@ void Model::tick()
 	}
 }
 
-void Model::switchToDiagnosticMode(void) {
-	m_app->app.gotoDiagnosticsScreenNoTransition();
-}
-
-void Model::switchToLevelMode(void) {
-	m_app->app.gotoLevelScreenNoTransition();
-}
+//void Model::switchToDiagnosticMode(void) {
+//	m_app->app.gotoDiagnosticsScreenNoTransition();
+//}
+//
+//void Model::switchToLevelMode(void) {
+//	m_app->app.gotoLevelScreenNoTransition();
+//}
 
 void Model::switchToMainMode(void) {
 	m_app->app.gotoMainScreenNoTransition();

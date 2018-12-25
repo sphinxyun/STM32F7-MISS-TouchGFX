@@ -149,7 +149,6 @@ MainViewBase::MainViewBase() :
     diagBtn.setIconXY(0, 0);
     diagBtn.setPosition(72, 424, 48, 48);
     diagBtn.setVisible(false);
-    diagBtn.setAction(flexButtonCallback);
 
     levelBtn.setIconBitmaps(Bitmap(BITMAP_BLUE_ICONS_USER_48_ID), Bitmap(BITMAP_BLUE_ICONS_USER_48_ID));
     levelBtn.setIconXY(0, 0);
@@ -157,7 +156,6 @@ MainViewBase::MainViewBase() :
     levelBtn.setTextPosition(20, 6, 150, 48);
     levelBtn.setTextColors(touchgfx::Color::getColorFrom24BitRGB(10, 10, 10), touchgfx::Color::getColorFrom24BitRGB(8, 224, 27));
     levelBtn.setPosition(12, 424, 150, 48);
-    levelBtn.setAction(flexButtonCallback);
 
     alarmWindow.setXY(0, 0);
     alarmWindow.setBackground(BitmapId(BITMAP_MISS_LOGO_640PX_ID), 0, 139);
@@ -285,16 +283,10 @@ void MainViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonConta
     }
     else if (&src == &diagBtn)
     {
-        //diagnostics
-        //When diagBtn clicked change screen to Diagnostics
-        //Go to Diagnostics with screen transition towards South
-        application().gotoDiagnosticsScreenSlideTransitionSouth();
+
     }
     else if (&src == &levelBtn)
     {
-        //level
-        //When levelBtn clicked change screen to Level
-        //Go to Level with screen transition towards West
-        application().gotoLevelScreenSlideTransitionWest();
+
     }
 }

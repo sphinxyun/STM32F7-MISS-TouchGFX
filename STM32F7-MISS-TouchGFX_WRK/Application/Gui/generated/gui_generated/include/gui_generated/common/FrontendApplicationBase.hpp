@@ -25,20 +25,6 @@ public:
     void gotoBootScreenSlideTransitionWest();
 
 
-    // Diagnostics
-    void gotoDiagnosticsScreenNoTransition();
-
-    void gotoDiagnosticsScreenSlideTransitionSouth();
-
-
-    // Level
-    void gotoLevelScreenNoTransition();
-
-    void gotoLevelScreenSlideTransitionWest();
-
-    void gotoLevelScreenSlideTransitionSouth();
-
-
     // Main
     void gotoMainScreenNoTransition();
 
@@ -49,8 +35,6 @@ public:
 
     // Settings
     void gotoSettingsScreenNoTransition();
-
-    void gotoSettingsScreenSlideTransitionWest();
 
     void gotoSettingsScreenSlideTransitionEast();
 
@@ -69,20 +53,6 @@ protected:
     void gotoBootScreenSlideTransitionWestImpl();
 
 
-    // Diagnostics
-    void gotoDiagnosticsScreenNoTransitionImpl();
-
-    void gotoDiagnosticsScreenSlideTransitionSouthImpl();
-
-
-    // Level
-    void gotoLevelScreenNoTransitionImpl();
-
-    void gotoLevelScreenSlideTransitionWestImpl();
-
-    void gotoLevelScreenSlideTransitionSouthImpl();
-
-
     // Main
     void gotoMainScreenNoTransitionImpl();
 
@@ -93,8 +63,6 @@ protected:
 
     // Settings
     void gotoSettingsScreenNoTransitionImpl();
-
-    void gotoSettingsScreenSlideTransitionWestImpl();
 
     void gotoSettingsScreenSlideTransitionEastImpl();
 };

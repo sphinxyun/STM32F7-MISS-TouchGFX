@@ -104,12 +104,12 @@ static void StateMachine_Thread(void * argument) {
 	for (;;) {
 		DEBUG_UART_SysTick();
 
-		if (((xTaskGetTickCount() - xTimeBefore) > 2500) && ((xTaskGetTickCount() - xTimeBefore) < 2700)) {
+		if (((xTaskGetTickCount() - xTimeBefore) > 500) && ((xTaskGetTickCount() - xTimeBefore) < 2700)) {
 			DEBUG_SendTextFrame("state change -> eAutoTest");
-			device_state = eAutoTest;
+			device_state = eIdle;
 			bUpdate = true;
 		} else {
-			DEBUG_SendTextFrame("state change -> %d", xTaskGetTickCount() - xTimeBefore);
+//			DEBUG_SendTextFrame("state change -> %d", xTaskGetTickCount() - xTimeBefore);
 		}
 
 		if (xQueueReceive(xGuiActions, &action, 25)) {
