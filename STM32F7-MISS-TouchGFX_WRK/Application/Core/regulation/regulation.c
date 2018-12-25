@@ -1,5 +1,7 @@
 #include "regulation.h"
 
+#include "pressure_sensor/pressure_sensor_thread.h"
+
 /* Kernel includes. */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -16,14 +18,11 @@ extern QueueHandle_t xIrrigationMotorSpeedRPM;
 
 static void Regulation_Thread(void * argument);
 
-REGULATION_ErrorTypdef 	REGULATION_Init(void) {
+REGULATION_ErrorTypdef REGULATION_Init(void) {
     PRESSURE_SENSOR_Init();
     MOTORS_Init();
 
     xRegulationStatus = xQueueCreate( 2, sizeof( REGULATION_RegulatorStatus_t ) );
-
-//	osThreadDef(osRegulation_Thread, Regulation_Thread, osPriorityNormal, 0, 512);
-//	RegulationThreadId = osThreadCreate(osThread(osRegulation_Thread), NULL);
 
     xTaskCreate(Regulation_Thread, "RegulationTask",
                 512,
@@ -86,7 +85,9 @@ static void Regulation_Thread(void * argument) {
 	bool bUpdate = false;
 
 	for (;;) {
-		if (xQueueReceive(xIrrigationPressureMMHG, &status.fIrrigationActualPressureMMHG, 50)) {
+		sCarmenData_t sensorData;
+		if (xQueueReceive(xIrrigationPressureMMHG, &sensorData, 50)) {
+			status.fIrrigationActualPressureMMHG = sensorData.fPressureMMHG;
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: %f", status.fIrrigationActualPressureMMHG);
 			bUpdate = true;
 		} else {

@@ -1,6 +1,8 @@
 #include "pressure_sensor_thread.h"
 #include "stm32f7xx_hal.h"
 
+#include <string.h>
+
 #include "stm32f7xx_ll_dma.h"
 #include "stm32f7xx_ll_usart.h"
 #include "stm32f7xx_ll_gpio.h"
@@ -23,7 +25,7 @@ LL_DMA_InitTypeDef DMA_USART6_RX_InitStruct;
 volatile uint8_t UART6_DMA_RX_Buffer_A[DMA_RX_BUFFER_SIZE];
 volatile uint8_t UART6_DMA_RX_Buffer_B[DMA_RX_BUFFER_SIZE];
 
-static inline int32_t PRESSURE_SENSOR_ParseFrame(uint8_t *u8Frame);
+static inline bool PRESSURE_SENSOR_ParseFrame(uint8_t *u8Frame, sCarmenData_t *sData);
 static inline uint16_t CalculateCarmenCRC16(uint16_t crc, const void *c_ptr, size_t len);
 
 static void PressureAnalysis_Thread(void * argument);
@@ -221,7 +223,7 @@ PRESSURE_SENSOR_ErrorTypdef PRESSURE_SENSOR_Init(void) {
 	DEBUG_SendTextFrame("PRESSURE_SENSOR_Init - A");
 #endif
 
-	xIrrigationPressureMMHG = xQueueCreate( 20, sizeof( float ) );
+	xIrrigationPressureMMHG = xQueueCreate( 5, sizeof( sCarmenData_t ) );
 
 	CARMEN_Init();
 
@@ -244,36 +246,48 @@ PRESSURE_SENSOR_ErrorTypdef PRESSURE_SENSOR_Init(void) {
 	return PRESSURE_SENSOR_ERROR_NONE;
 }
 
-static inline int32_t PRESSURE_SENSOR_ParseFrame(uint8_t *u8Frame) {
+static inline bool PRESSURE_SENSOR_ParseFrame(uint8_t *u8Frame, sCarmenData_t *sData) {
 	if (u8Frame[0] == 0x35) {
 		int32_t i32Digout_1 = (((uint32_t)u8Frame[3]) << 16) | (((uint32_t)u8Frame[2]) << 8) | (((uint32_t)u8Frame[1]) << 0);
-		//check U2 coding:
 		if (i32Digout_1 & 0x00800000) i32Digout_1 |= 0xFF000000;
+		sData->fPressureMMHG = (i32Digout_1 / 16777216.0) / 0.25 * 2 * 750.06;
 
-		return i32Digout_1;
+		int16_t i16Digout_2 = (((uint32_t)u8Frame[5]) << 8) | (((uint32_t)u8Frame[4]) << 0);
+		sData->fTemperatureC = (i16Digout_2 / 65536.0) / 0.454545 * 100 + 25;
+
+//		int16_t i16Digout_3 = (((uint32_t)u8Frame[7]) << 8) | (((uint32_t)u8Frame[6]) << 0);
+
+		memcpy(&sData->uStatus.u8Stat[0], &u8Frame[8], 3);
+
+		return true;
 	}
 
-	return 0;
+	return false;
 }
 
 static void PressureAnalysis_Thread(void * pvParameters ) {
 	( void ) pvParameters;
 
-	uint32_t ulNotifiedValue;
+	uint32_t u32ValidFrames = 0;
+	uint32_t u32ErrorsSOF = 0;
+	uint32_t u32ErrorsCRC = 0;
+	uint32_t u32ErrorsUNK = 0;
+
+	uint32_t ulNotifiedValue = 0;
 
 	for (;;) {
-		bool bErrors = false;
-
 		if (xTaskNotifyWait(0x00000000, 0xFFFFFFFF, &ulNotifiedValue, 1000)) {
 
-//#if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
+			sCarmenData_t sData;
+
+#if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
 			DEBUG_SendTextFrame("Pressure - START PROCESSING (%x)", ulNotifiedValue);
-//#endif
+#endif
 
 			uint8_t *pRxBuffer = (uint8_t *)ulNotifiedValue;
 
-			uint32_t u32FrmeCnt = 0;
-			int32_t i32PressSum = 0;
+//			uint32_t u32FrmeCnt = 0;
+//			int32_t i32PressSum = 0;
 
 			size_t idx = 0;
 			while (idx < DMA_RX_BUFFER_SIZE) {
@@ -292,14 +306,22 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 
 					if (u16CompCRC == *pu16RxedCrc) {
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-						DEBUG_SendTextFrame("CRC OK!!!");
+						DEBUG_SendTextFrame("CARMEN FRAME CRC OK!!!");
 #endif
 
 						//parse rxed frame:
-						i32PressSum += PRESSURE_SENSOR_ParseFrame(&pRxBuffer[idx]);
-						u32FrmeCnt++;
+
+
+//						i32PressSum += PRESSURE_SENSOR_ParseFrame(&pRxBuffer[idx]);
+						if (PRESSURE_SENSOR_ParseFrame(&pRxBuffer[idx], &sData)) {
+							u32ValidFrames++;
+						} else {
+							u32ErrorsUNK++;
+						}
+
+//						u32FrmeCnt++;
 					} else {
-						bErrors = true;
+						u32ErrorsCRC++;
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
 						DEBUG_SendTextFrame("CARMEN FRAME CRC ERROR ( idx = %d ):", idx);
@@ -316,26 +338,23 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 
 					idx += 13;
 				} else {
+					u32ErrorsSOF++;
+
 					idx++;
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-					DEBUG_SendTextFrame("CARMEN SOF ERR");
+					DEBUG_SendTextFrame("CARMEN FRAME SOF ERROR!!!");
 #endif
 				}
 			}
 
-			float fPressureMMHG = 0;
-			if (u32FrmeCnt == DMA_RX_BUFFER_CHK)
-				fPressureMMHG = ((float)(i32PressSum >> DMA_RX_BUFFER_DIV) / 16777216.0) / 0.25 * 2* 750.06;
-			else
-				fPressureMMHG = ((float)(i32PressSum / u32FrmeCnt) / 16777216.0) / 0.25 * 2* 750.06;
+//			float fPressureMMHG = 0;
+//			if (u32FrmeCnt == DMA_RX_BUFFER_CHK)
+//				fPressureMMHG = ((float)(i32PressSum >> DMA_RX_BUFFER_DIV) / 16777216.0) / 0.25 * 2* 750.06;
+//			else
+//				fPressureMMHG = ((float)(i32PressSum / u32FrmeCnt) / 16777216.0) / 0.25 * 2* 750.06;
 
-			xQueueSend( xIrrigationPressureMMHG, ( void * ) &fPressureMMHG, ( TickType_t ) 0 );
-
-//			memset(pRxBuffer, 0xFF, DMA_RX_BUFFER_SIZE);
-
-//			if (bErrors)
-//				HAL_GPIO_WritePin(GPIOG, GPIO_PIN_6, GPIO_PIN_SET); //nCS
+			xQueueSend( xIrrigationPressureMMHG, ( void * ) &sData, ( TickType_t ) 0 );
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
 			DEBUG_SendTextFrame("Pressure - STOP PROCESSING (%x)", ulNotifiedValue);
