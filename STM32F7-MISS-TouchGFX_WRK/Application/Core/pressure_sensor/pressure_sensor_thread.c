@@ -354,6 +354,11 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 //			else
 //				fPressureMMHG = ((float)(i32PressSum / u32FrmeCnt) / 16777216.0) / 0.25 * 2* 750.06;
 
+			sData.sErrorStats.u32Valid = u32ValidFrames;
+			sData.sErrorStats.u32ErrCRC = u32ErrorsCRC;
+			sData.sErrorStats.u32ErrSOF = u32ErrorsSOF;
+			sData.sErrorStats.u32ErrUNK = u32ErrorsUNK;
+
 			xQueueSend( xIrrigationPressureMMHG, ( void * ) &sData, ( TickType_t ) 0 );
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)

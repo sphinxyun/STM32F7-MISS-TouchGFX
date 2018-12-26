@@ -50,6 +50,22 @@ void MainView::mcuLoadUpdated(uint8_t mcuLoadValue) {
 	mcuLoad.invalidate();
 }
 
+void MainView::updateTemp(float fVal) {
+	Unicode::snprintfFloats(actualTempBuffer, ACTUALTEMP_SIZE, "%3.2f", &fVal);
+	actualTemp.setWildcard(actualTempBuffer);
+
+	actualTemp.invalidate();
+}
+
+void MainView::updateCarmenErrStats(uint32_t u32Valid, uint32_t u32ECRC, uint32_t u32ESOF, uint32_t u32EUNK) {
+	Unicode::snprintf(errorStatsBuffer1, ERRORSTATSBUFFER1_SIZE, "%d", u32Valid);
+	Unicode::snprintf(errorStatsBuffer2, ERRORSTATSBUFFER2_SIZE, "%d", u32ECRC);
+
+	errorStats.setWildcard1(errorStatsBuffer1);
+	errorStats.setWildcard2(errorStatsBuffer2);
+	errorStats.invalidate();
+}
+
 void MainView::actualPressureMMHGUpdate(float fVal) {
 	int iVal = (int)fVal;
 	if (iVal < 0)

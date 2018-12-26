@@ -194,12 +194,12 @@ static void StateMachine_Thread(void * argument) {
 		}
 
 		if (xQueueReceive(xRegulationStatus, &guiStatus.sIrrigationActual, 50)) {
-			if (guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG < 0)
-				guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG = 0;
+			if (guiStatus.sIrrigationActual.sRawPressureSensorData.fPressureMMHG < 0)
+				guiStatus.sIrrigationActual.sRawPressureSensorData.fPressureMMHG = 0;
 //			DEBUG_SendTextFrame("Main_Thread PRESSURE: %f", guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
 //			DEBUG_SendTextFrame("Main_Thread SPEED   : %f", guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
 			static int iAlCnt = 0;
-			if (guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG > guiStatus.u8IrrigationPresetPressureMMHG + 5) {
+			if (guiStatus.sIrrigationActual.sRawPressureSensorData.fPressureMMHG > guiStatus.u8IrrigationPresetPressureMMHG + 5) {
 				iAlCnt++;
 				if (iAlCnt > 10) {
 					guiStatus.u32AlarmFlags = 1;

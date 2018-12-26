@@ -7,7 +7,7 @@ MainPresenter::MainPresenter(MainView& v)
 }
 
 void MainPresenter::activate() {
-	view.actualPressureMMHGUpdate(model->getGuiStatus().sIrrigationActual.fIrrigationActualPressureMMHG);
+	view.actualPressureMMHGUpdate(model->getGuiStatus().sIrrigationActual.sRawPressureSensorData.fPressureMMHG);
 	view.actualFlowLPMUpdate(model->getGuiStatus().sIrrigationActual.fIrrigationActualFlowLPM);
 	view.actualFlowRPMUpdate(model->getGuiStatus().sIrrigationActual.fIrrigationActualSpeedRPM);
 
@@ -74,5 +74,13 @@ void MainPresenter::decFlowBtn() {
 
 void MainPresenter::mcuLoadUpdated(uint8_t mcuLoad) {
 	view.mcuLoadUpdated(mcuLoad);
+}
+
+void MainPresenter::updateTemp(float fVal) {
+	view.updateTemp(fVal);
+}
+
+void MainPresenter::updateCarmenErrStats(uint32_t u32Valid, uint32_t u32ECRC, uint32_t u32ESOF, uint32_t u32EUNK) {
+	view.updateCarmenErrStats(u32Valid, u32ECRC, u32ESOF, u32EUNK);
 }
 

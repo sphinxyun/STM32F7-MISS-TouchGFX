@@ -47,6 +47,8 @@ public:
 
 	void mcuLoadUpdated(uint8_t mcuLoad);
 
+	void updateTemp(float fVal);
+	void updateCarmenErrStats(uint32_t u32Valid, uint32_t u32ECRC, uint32_t u32ESOF, uint32_t u32EUNK);
 private:
     MainPresenter();
 

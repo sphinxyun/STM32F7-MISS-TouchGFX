@@ -47,6 +47,13 @@ typedef struct {
 	float fPressureMMHG;
 	float fTemperatureC;
 	uCarmentStatusReg_t uStatus;
+
+	struct {
+		uint32_t u32Valid;
+		uint32_t u32ErrCRC;
+		uint32_t u32ErrUNK;
+		uint32_t u32ErrSOF;
+	} sErrorStats;
 } sCarmenData_t;
 
 typedef enum {

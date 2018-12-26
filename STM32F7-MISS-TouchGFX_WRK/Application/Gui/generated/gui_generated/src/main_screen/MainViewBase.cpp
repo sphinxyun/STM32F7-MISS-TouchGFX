@@ -178,6 +178,33 @@ MainViewBase::MainViewBase() :
     stopBtnAlarm.setAction(buttonCallback);
     alarmWindow.add(stopBtnAlarm);
 
+    textArea1_1_2_1.setXY(12, 327);
+    textArea1_1_2_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1_1_2_1.setLinespacing(0);
+    textArea1_1_2_1.setTypedText(TypedText(T_SINGLEUSEID61));
+
+    textArea1_1_2_1_1.setXY(12, 361);
+    textArea1_1_2_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1_1_2_1_1.setLinespacing(0);
+    textArea1_1_2_1_1.setTypedText(TypedText(T_SINGLEUSEID62));
+
+    actualTemp.setXY(228, 327);
+    actualTemp.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    actualTemp.setLinespacing(0);
+    Unicode::snprintf(actualTempBuffer, ACTUALTEMP_SIZE, "%s", TypedText(T_SINGLEUSEID64).getText());
+    actualTemp.setWildcard(actualTempBuffer);
+    actualTemp.resizeToCurrentText();
+    actualTemp.setTypedText(TypedText(T_SINGLEUSEID63));
+
+    errorStats.setPosition(157, 361, 182, 20);
+    errorStats.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    errorStats.setLinespacing(0);
+    Unicode::snprintf(errorStatsBuffer1, ERRORSTATSBUFFER1_SIZE, "%s", TypedText(T_SINGLEUSEID68).getText());
+    errorStats.setWildcard1(errorStatsBuffer1);
+    Unicode::snprintf(errorStatsBuffer2, ERRORSTATSBUFFER2_SIZE, "%s", TypedText(T_SINGLEUSEID67).getText());
+    errorStats.setWildcard2(errorStatsBuffer2);
+    errorStats.setTypedText(TypedText(T_SINGLEUSEID65));
+
     add(box1);
     add(homeBtn);
     add(settingsBtn);
@@ -205,6 +232,10 @@ MainViewBase::MainViewBase() :
     add(diagBtn);
     add(levelBtn);
     add(alarmWindow);
+    add(textArea1_1_2_1);
+    add(textArea1_1_2_1_1);
+    add(actualTemp);
+    add(errorStats);
 }
 
 void MainViewBase::setupScreen()

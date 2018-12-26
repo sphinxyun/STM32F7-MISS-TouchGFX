@@ -95,6 +95,10 @@ protected:
     touchgfx::TextArea textArea4;
     touchgfx::Button stopBtnAlarm;
 
+    touchgfx::TextArea textArea1_1_2_1;
+    touchgfx::TextArea textArea1_1_2_1_1;
+    touchgfx::TextAreaWithOneWildcard actualTemp;
+    touchgfx::TextAreaWithTwoWildcards errorStats;
 
     /*
      * Wildcard Buffers
@@ -113,6 +117,12 @@ protected:
     touchgfx::Unicode::UnicodeChar presetFlowRPMBuffer[PRESETFLOWRPM_SIZE];
     static const uint16_t MCULOAD_SIZE = 10;
     touchgfx::Unicode::UnicodeChar mcuLoadBuffer[MCULOAD_SIZE];
+    static const uint16_t ACTUALTEMP_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar actualTempBuffer[ACTUALTEMP_SIZE];
+    static const uint16_t ERRORSTATSBUFFER1_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar errorStatsBuffer1[ERRORSTATSBUFFER1_SIZE];
+    static const uint16_t ERRORSTATSBUFFER2_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar errorStatsBuffer2[ERRORSTATSBUFFER2_SIZE];
 
 private:
 

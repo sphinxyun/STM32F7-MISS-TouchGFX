@@ -5,10 +5,14 @@
 extern "C" {
 #endif
 
+#include "pressure_sensor/pressure_sensor_thread.h"
+
 typedef struct {
-	float fIrrigationActualPressureMMHG;
+//	float fIrrigationActualPressureMMHG;
 	float fIrrigationActualSpeedRPM;
 	float fIrrigationActualFlowLPM;
+//	float fIrrigationTemperatureC;
+	sCarmenData_t sRawPressureSensorData;
 } REGULATION_RegulatorStatus_t;
 
 typedef enum {

@@ -40,6 +40,9 @@ public:
 
     virtual void mcuLoadUpdated(uint8_t mcuLoad) {}
 
+    virtual void updateTemp(float fVal) {}
+    virtual void updateCarmenErrStats(uint32_t u32Valid, uint32_t u32ECRC, uint32_t u32ESOF, uint32_t u32EUNK) {}
+
     virtual void showAlarmMessage(bool bVisible) {}
 
 protected:
