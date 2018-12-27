@@ -11,10 +11,10 @@ extern "C" {
 
 
 typedef struct {
-	uint32_t u32IrrigationPressure;
-	uint32_t u32IrrigationPressureMinValue;
-	uint32_t u32IrrigationPressureMaxValue;
-	uint32_t u32IrrigationPressureIncValue;
+	uint32_t u32IrrigationPressureMMHG;
+	uint32_t u32IrrigationPressureMMHGMinValue;
+	uint32_t u32IrrigationPressureMMHGMaxValue;
+	uint32_t u32IrrigationPressureMMHGIncValue;
 
 	uint16_t u16IrrigationFlowRPM;
 	uint16_t u16IrrigationFlowRPMMinValue;
