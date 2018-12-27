@@ -41,6 +41,11 @@ typedef struct {
 	uint32_t u32AlarmFlags;
 } WM_MAIN_GuiStatus;
 
+typedef struct {
+	bool inUse;
+	WM_MAIN_GuiStatus status;
+} WM_MAIN_GuiPool;
+
 typedef enum {
 	WM_MAIN_STOP_ACTION = 0,
 	WM_MAIN_START_ACTION,
@@ -73,6 +78,8 @@ WM_MAIN_ErrorTypdef WM_MAIN_DeInit(void);
 
 WM_MAIN_ErrorTypdef WM_MAIN_Start(void);
 WM_MAIN_ErrorTypdef WM_MAIN_Stop(void);
+
+void free_struct(WM_MAIN_GuiPool *toRelease);
 
 #ifdef __cplusplus
 }

@@ -26,13 +26,12 @@ Model::Model(FrontendHeap *app) :
 {
 }
 
-void Model::tick()
-{
-	WM_MAIN_GuiStatus guiStatus;
+void Model::tick() {
+	WM_MAIN_GuiPool *guiStatus;
 
 	if (xGuiStatus && xQueueReceive(xGuiStatus, &guiStatus, 0)  == pdTRUE) {
-		if (m_guiStatus.eDevMode != guiStatus.eDevMode) {
-			switch (guiStatus.eDevMode) {
+		if (m_guiStatus.eDevMode != guiStatus->status.eDevMode) {
+			switch (guiStatus->status.eDevMode) {
 //			case eAutoTest:
 //				switchToDiagnosticMode();
 //				break;
@@ -42,32 +41,34 @@ void Model::tick()
 			case eIdle:
 				switchToMainMode();
 				break;
+			default:
+				break;
 			}
 		}
 
 //		DEBUG_SendTextFrame("  tick: xGuiStatus");
-		m_brightness = guiStatus.u32BrightnessPercent;
+		m_brightness = guiStatus->status.u32BrightnessPercent;
 
 		if (m_brightness == 50) {
 //			m_app->app.gotoworkScreenScreenSlideTransitionWest();
 		}
 
-		modelListener->brightnessValueUpdate(guiStatus.u32BrightnessPercent);
+		modelListener->brightnessValueUpdate(guiStatus->status.u32BrightnessPercent);
 
-		modelListener->actualPressureMMHGUpdate(guiStatus.sIrrigationActual.sRawPressureSensorData.fPressureMMHG);
-		modelListener->actualFlowLPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualFlowLPM);
-		modelListener->actualFlowRPMUpdate(guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
+		modelListener->actualPressureMMHGUpdate(guiStatus->status.sIrrigationActual.sRawPressureSensorData.fPressureMMHG);
+		modelListener->actualFlowLPMUpdate(guiStatus->status.sIrrigationActual.fIrrigationActualFlowLPM);
+		modelListener->actualFlowRPMUpdate(guiStatus->status.sIrrigationActual.fIrrigationActualSpeedRPM);
 
-		modelListener->presetPressureMMHGUpdate(guiStatus.u8IrrigationPresetPressureMMHG);
-		modelListener->presetFlowLPMUpdate(guiStatus.fIrrigationPresetFlowLPM);
-		modelListener->presetFlowRPMUpdate(guiStatus.u16IrrigationPresetFlowRPM);
+		modelListener->presetPressureMMHGUpdate(guiStatus->status.u8IrrigationPresetPressureMMHG);
+		modelListener->presetFlowLPMUpdate(guiStatus->status.fIrrigationPresetFlowLPM);
+		modelListener->presetFlowRPMUpdate(guiStatus->status.u16IrrigationPresetFlowRPM);
 
-		modelListener->updateTemp(guiStatus.sIrrigationActual.sRawPressureSensorData.fTemperatureC);
-		modelListener->updateCarmenErrStats(guiStatus.sIrrigationActual.sRawPressureSensorData.sErrorStats.u32Valid,
-				guiStatus.sIrrigationActual.sRawPressureSensorData.sErrorStats.u32ErrCRC, 3, 4);
+		modelListener->updateTemp(guiStatus->status.sIrrigationActual.sRawPressureSensorData.fTemperatureC);
+		modelListener->updateCarmenErrStats(guiStatus->status.sIrrigationActual.sRawPressureSensorData.sErrorStats.u32Valid,
+				guiStatus->status.sIrrigationActual.sRawPressureSensorData.sErrorStats.u32ErrCRC, 3, 4);
 
-		if (m_guiStatus.u32AlarmFlags != guiStatus.u32AlarmFlags) {
-			if (guiStatus.u32AlarmFlags) {
+		if (m_guiStatus.u32AlarmFlags != guiStatus->status.u32AlarmFlags) {
+			if (guiStatus->status.u32AlarmFlags) {
 				modelListener->showAlarmMessage(true);
 				pushAudioQueue(3);
 			} else {
@@ -75,7 +76,8 @@ void Model::tick()
 			}
 		}
 
-		m_guiStatus = guiStatus;
+		m_guiStatus = guiStatus->status;
+		free_struct(guiStatus);
 	}
 
 	uint8_t mcuLoadPct = touchgfx::HAL::getInstance()->getMCULoadPct();
@@ -86,13 +88,13 @@ void Model::tick()
 	}
 }
 
-//void Model::switchToDiagnosticMode(void) {
+void Model::switchToDiagnosticMode(void) {
 //	m_app->app.gotoDiagnosticsScreenNoTransition();
-//}
-//
-//void Model::switchToLevelMode(void) {
+}
+
+void Model::switchToLevelMode(void) {
 //	m_app->app.gotoLevelScreenNoTransition();
-//}
+}
 
 void Model::switchToMainMode(void) {
 	m_app->app.gotoMainScreenNoTransition();
