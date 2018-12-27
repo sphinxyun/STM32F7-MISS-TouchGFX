@@ -87,8 +87,6 @@ static void Regulation_Thread(void * argument) {
 		if (xIrrigationPressureData && xQueueReceive(xIrrigationPressureData, &sensorData, 50)) {
 			status.sRawPressureSensorData = sensorData->data;
 			free_sensor_struct(sensorData);
-//			status.fIrrigationActualPressureMMHG = sensorData.fPressureMMHG;
-//			status.fIrrigationTemperatureC = sensorData.fTemperatureC;
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: %f", status.fIrrigationActualPressureMMHG);
 			bUpdate = true;
 		} else {

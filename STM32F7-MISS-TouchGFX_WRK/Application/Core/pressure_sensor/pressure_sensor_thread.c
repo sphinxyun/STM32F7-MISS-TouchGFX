@@ -23,13 +23,12 @@ QueueHandle_t xIrrigationPressureData = 0;
 LL_USART_InitTypeDef USART6_InitStruct;
 LL_DMA_InitTypeDef DMA_USART6_RX_InitStruct;
 
-#define DMA_RX_BUFFER_DIV		4
-#define DMA_RX_BUFFER_CHK		16
+#define DMA_RX_BUFFER_DIV		3
+#define DMA_RX_BUFFER_CHK		8
 #define DMA_RX_BUFFER_SIZE		(DMA_RX_BUFFER_CHK * 13)
 volatile uint8_t UART6_DMA_RX_Buffer_A[DMA_RX_BUFFER_SIZE];
 volatile uint8_t UART6_DMA_RX_Buffer_B[DMA_RX_BUFFER_SIZE];
 
-static inline bool PRESSURE_SENSOR_ParseFrame(uint8_t *u8Frame, sCarmenData_t *sData);
 static inline uint16_t CalculateCarmenCRC16(uint16_t crc, const void *c_ptr, size_t len);
 
 static void PressureAnalysis_Thread(void * argument);
@@ -276,24 +275,24 @@ PRESSURE_SENSOR_ErrorTypdef PRESSURE_SENSOR_Init(void) {
 	return PRESSURE_SENSOR_ERROR_NONE;
 }
 
-static inline bool PRESSURE_SENSOR_ParseFrame(uint8_t *u8Frame, sCarmenData_t *sData) {
-	if (u8Frame[0] == 0x35) {
-		int32_t i32Digout_1 = (((uint32_t)u8Frame[3]) << 16) | (((uint32_t)u8Frame[2]) << 8) | (((uint32_t)u8Frame[1]) << 0);
-		if (i32Digout_1 & 0x00800000) i32Digout_1 |= 0xFF000000;
-		sData->fPressureMMHG = (i32Digout_1 / 16777216.0) / 0.25 * 2 * 750.06;
-
-		int16_t i16Digout_2 = (((uint32_t)u8Frame[5]) << 8) | (((uint32_t)u8Frame[4]) << 0);
-		sData->fTemperatureC = (i16Digout_2 / 65536.0) / 0.454545 * 100 + 25;
-
-//		int16_t i16Digout_3 = (((uint32_t)u8Frame[7]) << 8) | (((uint32_t)u8Frame[6]) << 0);
-
-		memcpy(&sData->uStatus.u8Stat[0], &u8Frame[8], 3);
-
-		return true;
-	}
-
-	return false;
-}
+//static inline bool PRESSURE_SENSOR_ParseFrame(uint8_t *u8Frame, sCarmenData_t *sData) {
+//	if (u8Frame[0] == 0x35) {
+//		int32_t i32Digout_1 = (((uint32_t)u8Frame[3]) << 16) | (((uint32_t)u8Frame[2]) << 8) | (((uint32_t)u8Frame[1]) << 0);
+//		if (i32Digout_1 & 0x00800000) i32Digout_1 |= 0xFF000000;
+//		sData->fPressureMMHG = (i32Digout_1 / 16777216.0) / 0.25 * 2 * 750.06;
+//
+//		int16_t i16Digout_2 = (((uint32_t)u8Frame[5]) << 8) | (((uint32_t)u8Frame[4]) << 0);
+//		sData->fTemperatureC = (i16Digout_2 / 65536.0) / 0.454545 * 100 + 25;
+//
+////		int16_t i16Digout_3 = (((uint32_t)u8Frame[7]) << 8) | (((uint32_t)u8Frame[6]) << 0);
+//
+//		memcpy(&sData->uStatus.u8Stat[0], &u8Frame[8], 3);
+//
+//		return true;
+//	}
+//
+//	return false;
+//}
 
 static void PressureAnalysis_Thread(void * pvParameters ) {
 	( void ) pvParameters;
@@ -315,8 +314,12 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 
 			uint8_t *pRxBuffer = (uint8_t *)ulNotifiedValue;
 
-//			uint32_t u32FrmeCnt = 0;
-//			int32_t i32PressSum = 0;
+			uint32_t u32BufferFrmeCnt = 0;
+			int32_t i32BufferPressSum = 0;
+			int32_t i32BufferTempSum = 0;
+			uCarmentStatusReg_t uStatusSum;
+			for (int i = 0; i < 3; i++)
+				uStatusSum.u8Stat[i] = 0;
 
 			size_t idx = 0;
 			while (idx < DMA_RX_BUFFER_SIZE) {
@@ -339,16 +342,26 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 #endif
 
 						//parse rxed frame:
+						if (pRxBuffer[idx] == 0x35) {
+							int32_t i32Digout_1 = (((uint32_t)pRxBuffer[idx + 3]) << 16) | (((uint32_t)pRxBuffer[idx + 2]) << 8) | (((uint32_t)pRxBuffer[idx + 1]) << 0);
+							if (i32Digout_1 & 0x00800000) i32Digout_1 |= 0xFF000000;
+							i32BufferPressSum += i32Digout_1;
 
+							int16_t i16Digout_2 = (((uint32_t)pRxBuffer[idx + 5]) << 8) | (((uint32_t)pRxBuffer[idx + 4]) << 0);
+							i32BufferTempSum += i16Digout_2;
 
-//						i32PressSum += PRESSURE_SENSOR_ParseFrame(&pRxBuffer[idx]);
-						if (PRESSURE_SENSOR_ParseFrame(&pRxBuffer[idx], &sData->data)) {
+							//int16_t i16Digout_3 = (((uint32_t)pRxBuffer[idx + 7]) << 8) | (((uint32_t)pRxBuffer[idx + 6]) << 0);
+
+							uCarmentStatusReg_t uStatus;
+							memcpy(&uStatus.u8Stat[0], &pRxBuffer[idx + 8], 3);
+							for (int i = 0; i < 3; i++)
+								uStatusSum.u8Stat[i] |= uStatus.u8Stat[i];
+
+							u32BufferFrmeCnt++;
 							u32ValidFrames++;
 						} else {
 							u32ErrorsUNK++;
 						}
-
-//						u32FrmeCnt++;
 					} else {
 						u32ErrorsCRC++;
 
@@ -377,11 +390,15 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 				}
 			}
 
-//			float fPressureMMHG = 0;
-//			if (u32FrmeCnt == DMA_RX_BUFFER_CHK)
-//				fPressureMMHG = ((float)(i32PressSum >> DMA_RX_BUFFER_DIV) / 16777216.0) / 0.25 * 2* 750.06;
-//			else
-//				fPressureMMHG = ((float)(i32PressSum / u32FrmeCnt) / 16777216.0) / 0.25 * 2* 750.06;
+			if (u32BufferFrmeCnt == DMA_RX_BUFFER_CHK) {
+				sData->data.fPressureMMHG = ((float)(i32BufferPressSum >> DMA_RX_BUFFER_DIV) / 16777216.0) / 0.25 * 2* 750.06;
+				sData->data.fTemperatureC = ((float)(i32BufferTempSum >> DMA_RX_BUFFER_DIV) / 65536.0) / 0.454545 * 100 + 25;
+			} else {
+				sData->data.fPressureMMHG = ((float)(i32BufferPressSum / (float)u32BufferFrmeCnt) / 16777216.0) / 0.25 * 2* 750.06;
+				sData->data.fTemperatureC = ((float)(i32BufferTempSum / (float)u32BufferFrmeCnt) / 65536.0) / 0.454545 * 100 + 25;
+			}
+
+			memcpy(&sData->data.uStatus.u8Stat[0], &uStatusSum.u8Stat[0], 3);
 
 			sData->data.sErrorStats.u32Valid = u32ValidFrames;
 			sData->data.sErrorStats.u32ErrCRC = u32ErrorsCRC;
