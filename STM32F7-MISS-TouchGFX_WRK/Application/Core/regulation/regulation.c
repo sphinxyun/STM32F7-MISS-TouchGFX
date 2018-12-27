@@ -11,7 +11,7 @@ TaskHandle_t RegulationThreadId = 0;
 
 QueueHandle_t xRegulationStatus;
 
-extern QueueHandle_t xIrrigationPressureMMHG;
+extern QueueHandle_t xIrrigationPressureData;
 extern QueueHandle_t xIrrigationMotorSpeedRPM;
 
 static void Regulation_Thread(void * argument);
@@ -83,8 +83,10 @@ static void Regulation_Thread(void * argument) {
 	bool bUpdate = false;
 
 	for (;;) {
-		sCarmenData_t sensorData;
-		if (xQueueReceive(xIrrigationPressureMMHG, &status.sRawPressureSensorData, 50)) {
+		sCarmenDataPool_t *sensorData;
+		if (xIrrigationPressureData && xQueueReceive(xIrrigationPressureData, &sensorData, 50)) {
+			status.sRawPressureSensorData = sensorData->data;
+			free_sensor_struct(sensorData);
 //			status.fIrrigationActualPressureMMHG = sensorData.fPressureMMHG;
 //			status.fIrrigationTemperatureC = sensorData.fTemperatureC;
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: %f", status.fIrrigationActualPressureMMHG);
@@ -93,7 +95,7 @@ static void Regulation_Thread(void * argument) {
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: ---");
 		}
 
-		if (xQueueReceive(xIrrigationMotorSpeedRPM, &status.fIrrigationActualSpeedRPM, 50)) {
+		if (xIrrigationMotorSpeedRPM && xQueueReceive(xIrrigationMotorSpeedRPM, &status.fIrrigationActualSpeedRPM, 50)) {
 //			DEBUG_SendTextFrame("Regulation_Thread SPEED: %f", status.fIrrigationActualSpeedRPM);
 			bUpdate = true;
 		} else {
@@ -104,6 +106,5 @@ static void Regulation_Thread(void * argument) {
 			status.fIrrigationActualFlowLPM = FCE_fIrrGetFlowCoeff(status.fIrrigationActualSpeedRPM) * status.fIrrigationActualSpeedRPM;
 			xQueueSend( xRegulationStatus, ( void * ) &status, ( TickType_t ) 0 );
 		}
-
 	}
 }

@@ -14,7 +14,11 @@
 
 static TaskHandle_t PressureSensorHandlerThreadId = 0;
 
-QueueHandle_t xIrrigationPressureMMHG = 0;
+#define POOL_MAX_STRUCTS		5
+
+sCarmenDataPool_t sensorDataPool[ POOL_MAX_STRUCTS ];
+
+QueueHandle_t xIrrigationPressureData = 0;
 
 LL_USART_InitTypeDef USART6_InitStruct;
 LL_DMA_InitTypeDef DMA_USART6_RX_InitStruct;
@@ -218,19 +222,45 @@ PRESSURE_SENSOR_ErrorTypdef PRESSURE_SENSOR_Stop(void) {
 	return PRESSURE_SENSOR_ERROR_NONE;
 }
 
+sCarmenDataPool_t *get_sensor_struct(void) {
+	// Find the next free struct
+	for (int i = 0; i < POOL_MAX_STRUCTS; i++) {
+		if (sensorDataPool[i].inUse == false) {
+			// Mark struct in use and return it
+			sensorDataPool[i].inUse = true;
+			return &sensorDataPool[i];
+		}
+	}
+
+	// All in use
+	return NULL;
+}
+
+void free_sensor_struct(sCarmenDataPool_t *toRelease) {
+	// Find the struct being freed
+	for (int i = 0; i < POOL_MAX_STRUCTS; i++) {
+		if (toRelease == &sensorDataPool[i]) {
+			// Mark struct not in use
+			sensorDataPool[i].inUse = false;
+			return;
+		}
+	}
+}
+
 PRESSURE_SENSOR_ErrorTypdef PRESSURE_SENSOR_Init(void) {
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
 	DEBUG_SendTextFrame("PRESSURE_SENSOR_Init - A");
 #endif
 
-	xIrrigationPressureMMHG = xQueueCreate( 5, sizeof( sCarmenData_t ) );
+	for (int i = 0; i < POOL_MAX_STRUCTS; i++) {
+		sensorDataPool[i].inUse = false;
+	}
+
+	xIrrigationPressureData = xQueueCreate( 2, sizeof( sCarmenDataPool_t* ) );
 
 	CARMEN_Init();
 
 	/* Create actual task */
-//	osThreadDef(osPressureAnalysis_Thread, PressureAnalysis_Thread, osPriorityLow, 0, 1024);
-//	PressureSensorHandlerThreadId = osThreadCreate(osThread(osPressureAnalysis_Thread), NULL);
-
     xTaskCreate(PressureAnalysis_Thread, "PressureTask",
                 1024,
                 NULL,
@@ -268,6 +298,8 @@ static inline bool PRESSURE_SENSOR_ParseFrame(uint8_t *u8Frame, sCarmenData_t *s
 static void PressureAnalysis_Thread(void * pvParameters ) {
 	( void ) pvParameters;
 
+	sCarmenDataPool_t *sData = get_sensor_struct();
+
 	uint32_t u32ValidFrames = 0;
 	uint32_t u32ErrorsSOF = 0;
 	uint32_t u32ErrorsCRC = 0;
@@ -277,9 +309,6 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 
 	for (;;) {
 		if (xTaskNotifyWait(0x00000000, 0xFFFFFFFF, &ulNotifiedValue, 1000)) {
-
-			sCarmenData_t sData;
-
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
 			DEBUG_SendTextFrame("Pressure - START PROCESSING (%x)", ulNotifiedValue);
 #endif
@@ -313,7 +342,7 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 
 
 //						i32PressSum += PRESSURE_SENSOR_ParseFrame(&pRxBuffer[idx]);
-						if (PRESSURE_SENSOR_ParseFrame(&pRxBuffer[idx], &sData)) {
+						if (PRESSURE_SENSOR_ParseFrame(&pRxBuffer[idx], &sData->data)) {
 							u32ValidFrames++;
 						} else {
 							u32ErrorsUNK++;
@@ -354,12 +383,18 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 //			else
 //				fPressureMMHG = ((float)(i32PressSum / u32FrmeCnt) / 16777216.0) / 0.25 * 2* 750.06;
 
-			sData.sErrorStats.u32Valid = u32ValidFrames;
-			sData.sErrorStats.u32ErrCRC = u32ErrorsCRC;
-			sData.sErrorStats.u32ErrSOF = u32ErrorsSOF;
-			sData.sErrorStats.u32ErrUNK = u32ErrorsUNK;
+			sData->data.sErrorStats.u32Valid = u32ValidFrames;
+			sData->data.sErrorStats.u32ErrCRC = u32ErrorsCRC;
+			sData->data.sErrorStats.u32ErrSOF = u32ErrorsSOF;
+			sData->data.sErrorStats.u32ErrUNK = u32ErrorsUNK;
 
-			xQueueSend( xIrrigationPressureMMHG, ( void * ) &sData, ( TickType_t ) 0 );
+			xQueueSend( xIrrigationPressureData, ( void * ) &sData, ( TickType_t ) 0 );
+
+			sData = get_sensor_struct();
+
+			if (sData == NULL) {
+				DEBUG_SendTextFrame("PressureAnalysis_Thread: get_sensor_struct ERROR");
+			}
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
 			DEBUG_SendTextFrame("Pressure - STOP PROCESSING (%x)", ulNotifiedValue);

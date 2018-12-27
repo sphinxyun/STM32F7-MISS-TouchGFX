@@ -56,6 +56,11 @@ typedef struct {
 	} sErrorStats;
 } sCarmenData_t;
 
+typedef struct {
+	bool inUse;
+	sCarmenData_t data;
+} sCarmenDataPool_t;
+
 typedef enum {
   PRESSURE_SENSOR_ERROR_NONE = 0,
 } PRESSURE_SENSOR_ErrorTypdef;
@@ -64,6 +69,8 @@ PRESSURE_SENSOR_ErrorTypdef  PRESSURE_SENSOR_Init(void);
 
 PRESSURE_SENSOR_ErrorTypdef PRESSURE_SENSOR_Start(void);
 PRESSURE_SENSOR_ErrorTypdef PRESSURE_SENSOR_Stop(void);
+
+void free_sensor_struct(sCarmenDataPool_t *toRelease);
 
 #ifdef __cplusplus
 }

@@ -8,7 +8,6 @@ QueueHandle_t xGuiStatus;
 
 static WM_MAIN_DeviceMode device_state;
 
-//WM_MAIN_GuiStatus guiStatus;
 #define POOL_MAX_STRUCTS		5
 
 WM_MAIN_GuiPool guiStatusPool[ POOL_MAX_STRUCTS ];
