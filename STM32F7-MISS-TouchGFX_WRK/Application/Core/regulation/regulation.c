@@ -11,6 +11,7 @@
 
 TaskHandle_t RegulationTaskId = 0;
 
+QueueHandle_t xRegulationActions;
 QueueHandle_t xRegulationStatus;
 
 extern QueueHandle_t xIrrigationPressureData;
@@ -23,6 +24,7 @@ REGULATION_ErrorTypdef REGULATION_Init(void) {
     MOTORS_Init();
 
     xRegulationStatus = xQueueCreate( 2, sizeof( REGULATION_IrrActual_t ) );
+    xRegulationActions = xQueueCreate( 2, sizeof( REGULATION_IrrPresets_t ) );
 
     xTaskCreate(Regulation_Thread, "RegulationTask",
                 512,
@@ -95,10 +97,17 @@ static inline float FCE_fIrrGetFlowCoeff(float fRPMSpeed) {
 
 static void Regulation_Thread(void * argument) {
 	REGULATION_IrrActual_t status;
+	REGULATION_IrrPresets_t presets;
+
+	sCarmenDataPool_t *sensorData;
+
 	bool bUpdate = false;
 
 	for (;;) {
-		sCarmenDataPool_t *sensorData;
+		if (xRegulationActions && xQueueReceive(xRegulationActions, &presets, 50)) {
+			REGULATION_Update(presets.u16FlowRPM);
+		}
+
 		if (xIrrigationPressureData && xQueueReceive(xIrrigationPressureData, &sensorData, 50)) {
 			status.sPressureData = sensorData->data;
 			free_sensor_struct(sensorData);

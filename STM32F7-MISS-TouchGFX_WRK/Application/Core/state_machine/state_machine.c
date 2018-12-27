@@ -15,6 +15,7 @@ static WM_MAIN_DeviceMode device_state;
 
 WM_MAIN_GuiPool guiStatusPool[ POOL_MAX_STRUCTS ];
 
+extern QueueHandle_t xRegulationActions;
 extern QueueHandle_t xRegulationStatus;
 
 static void StateMachine_Thread(void * argument);
@@ -191,8 +192,6 @@ static void StateMachine_Thread(void * argument) {
 				} else
 					sIrrigationPresets.u16FlowRPM += set->u16IrrigationFlowRPMIncValue;
 
-				REGULATION_Update(sIrrigationPresets.u16FlowRPM);
-
 				DEBUG_SendTextFrame("WM_MAIN_INCREASE_IRRIGATION_FLOW: %d, %x", sIrrigationPresets.u16FlowRPM, u32BtnFlags);
 			} else if (action == WM_MAIN_DECREASE_IRRIGATION_FLOW) {
 				const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
@@ -200,8 +199,6 @@ static void StateMachine_Thread(void * argument) {
 					sIrrigationPresets.u16FlowRPM = set->u16IrrigationFlowRPMMinValue;
 				} else
 					sIrrigationPresets.u16FlowRPM -= set->u16IrrigationFlowRPMIncValue;
-
-				REGULATION_Update(sIrrigationPresets.u16FlowRPM);
 
 				DEBUG_SendTextFrame("WM_MAIN_DECREASE_IRRIGATION_FLOW: %d, %x", sIrrigationPresets.u16FlowRPM, u32BtnFlags);
 			}
@@ -268,6 +265,8 @@ static void StateMachine_Thread(void * argument) {
 			guiStatus->status.sIrrigationPresets.u8PressureMMHG = sIrrigationPresets.u8PressureMMHG;
 			guiStatus->status.sIrrigationPresets.u16FlowRPM = sIrrigationPresets.u16FlowRPM;
 			guiStatus->status.sIrrigationPresets.fFlowLPM = sIrrigationPresets.fFlowLPM;
+
+			xQueueSend( xRegulationActions, ( void * ) &sIrrigationPresets, ( TickType_t ) 0 );
 
 			bUpdate = false;
 		}
