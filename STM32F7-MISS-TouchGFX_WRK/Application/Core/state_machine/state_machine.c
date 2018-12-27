@@ -130,7 +130,7 @@ static void StateMachine_Thread(void * argument) {
 	sIrrigationPresets.u16FlowRPM = set->u16IrrigationFlowRPM;
 	sIrrigationPresets.fFlowLPM = set->fIrrigationFlowLPM;
 
-	REGULATION_Start();
+	REGULATION_TaskStart();
 
 	TickType_t xTimeBefore = xTaskGetTickCount();
 

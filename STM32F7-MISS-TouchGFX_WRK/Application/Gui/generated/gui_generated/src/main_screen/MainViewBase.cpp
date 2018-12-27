@@ -157,27 +157,6 @@ MainViewBase::MainViewBase() :
     levelBtn.setTextColors(touchgfx::Color::getColorFrom24BitRGB(10, 10, 10), touchgfx::Color::getColorFrom24BitRGB(8, 224, 27));
     levelBtn.setPosition(12, 424, 150, 48);
 
-    alarmWindow.setXY(0, 0);
-    alarmWindow.setBackground(BitmapId(BITMAP_MISS_LOGO_640PX_ID), 0, 139);
-    alarmWindow.setShadeColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-    alarmWindow.setShadeAlpha(192);
-    alarmWindow.hide();
-
-    box2.setPosition(-15, -5, 666, 213);
-    box2.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 246, 0));
-    alarmWindow.add(box2);
-
-    textArea4.setXY(23, 18);
-    textArea4.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-    textArea4.setLinespacing(0);
-    textArea4.setTypedText(TypedText(T_SINGLEUSEID60));
-    alarmWindow.add(textArea4);
-
-    stopBtnAlarm.setXY(536, 98);
-    stopBtnAlarm.setBitmaps(Bitmap(BITMAP_STOP_ID), Bitmap(BITMAP_STOP_DISABLED_ID));
-    stopBtnAlarm.setAction(buttonCallback);
-    alarmWindow.add(stopBtnAlarm);
-
     textArea1_1_2_1.setXY(12, 327);
     textArea1_1_2_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea1_1_2_1.setLinespacing(0);
@@ -205,6 +184,27 @@ MainViewBase::MainViewBase() :
     errorStats.setWildcard2(errorStatsBuffer2);
     errorStats.setTypedText(TypedText(T_SINGLEUSEID65));
 
+    alarmWindow.setXY(0, 0);
+    alarmWindow.setBackground(BitmapId(BITMAP_MISS_LOGO_640PX_ID), 0, 139);
+    alarmWindow.setShadeColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    alarmWindow.setShadeAlpha(192);
+    alarmWindow.hide();
+
+    box2.setPosition(-15, -5, 666, 213);
+    box2.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 246, 0));
+    alarmWindow.add(box2);
+
+    textArea4.setXY(23, 18);
+    textArea4.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea4.setLinespacing(0);
+    textArea4.setTypedText(TypedText(T_SINGLEUSEID60));
+    alarmWindow.add(textArea4);
+
+    stopBtnAlarm.setXY(536, 98);
+    stopBtnAlarm.setBitmaps(Bitmap(BITMAP_STOP_ID), Bitmap(BITMAP_STOP_DISABLED_ID));
+    stopBtnAlarm.setAction(buttonCallback);
+    alarmWindow.add(stopBtnAlarm);
+
     add(box1);
     add(homeBtn);
     add(settingsBtn);
@@ -231,11 +231,11 @@ MainViewBase::MainViewBase() :
     add(textArea3);
     add(diagBtn);
     add(levelBtn);
-    add(alarmWindow);
     add(textArea1_1_2_1);
     add(textArea1_1_2_1_1);
     add(actualTemp);
     add(errorStats);
+    add(alarmWindow);
 }
 
 void MainViewBase::setupScreen()

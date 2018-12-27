@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include "motors/motors_thread.h"
 #include "pressure_sensor/pressure_sensor_thread.h"
 
 typedef struct {
@@ -21,8 +22,8 @@ typedef enum {
 REGULATION_ErrorTypdef REGULATION_Init(void);
 REGULATION_ErrorTypdef REGULATION_DeInit(void);
 
-REGULATION_ErrorTypdef REGULATION_Start(void);
-REGULATION_ErrorTypdef REGULATION_Stop(void);
+REGULATION_ErrorTypdef REGULATION_TaskStart(void);
+REGULATION_ErrorTypdef REGULATION_TaskStop(void);
 
 #ifdef __cplusplus
 }

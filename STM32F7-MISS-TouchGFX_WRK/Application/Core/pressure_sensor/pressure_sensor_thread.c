@@ -248,7 +248,7 @@ void free_sensor_struct(sCarmenDataPool_t *toRelease) {
 
 PRESSURE_SENSOR_ErrorTypdef PRESSURE_SENSOR_Init(void) {
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-	DEBUG_SendTextFrame("PRESSURE_SENSOR_Init - A");
+	DEBUG_SendTextFrame("PRESSURE_SENSOR_Init");
 #endif
 
 	for (int i = 0; i < POOL_MAX_STRUCTS; i++) {
@@ -268,31 +268,8 @@ PRESSURE_SENSOR_ErrorTypdef PRESSURE_SENSOR_Init(void) {
 
 	PRESSURE_SENSOR_Stop();
 
-#if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-	DEBUG_SendTextFrame("PRESSURE_SENSOR_Init - B");
-#endif
-
 	return PRESSURE_SENSOR_ERROR_NONE;
 }
-
-//static inline bool PRESSURE_SENSOR_ParseFrame(uint8_t *u8Frame, sCarmenData_t *sData) {
-//	if (u8Frame[0] == 0x35) {
-//		int32_t i32Digout_1 = (((uint32_t)u8Frame[3]) << 16) | (((uint32_t)u8Frame[2]) << 8) | (((uint32_t)u8Frame[1]) << 0);
-//		if (i32Digout_1 & 0x00800000) i32Digout_1 |= 0xFF000000;
-//		sData->fPressureMMHG = (i32Digout_1 / 16777216.0) / 0.25 * 2 * 750.06;
-//
-//		int16_t i16Digout_2 = (((uint32_t)u8Frame[5]) << 8) | (((uint32_t)u8Frame[4]) << 0);
-//		sData->fTemperatureC = (i16Digout_2 / 65536.0) / 0.454545 * 100 + 25;
-//
-////		int16_t i16Digout_3 = (((uint32_t)u8Frame[7]) << 8) | (((uint32_t)u8Frame[6]) << 0);
-//
-//		memcpy(&sData->uStatus.u8Stat[0], &u8Frame[8], 3);
-//
-//		return true;
-//	}
-//
-//	return false;
-//}
 
 static void PressureAnalysis_Thread(void * pvParameters ) {
 	( void ) pvParameters;

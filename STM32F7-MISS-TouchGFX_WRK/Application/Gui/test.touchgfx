@@ -997,92 +997,6 @@
             "Moveable": false
           },
           {
-            "Components": [
-              {
-                "Color": {
-                  "Red": 255,
-                  "Green": 246,
-                  "Blue": 0
-                },
-                "Alpha": 255,
-                "Name": "box2",
-                "X": -15,
-                "Y": -5,
-                "Width": 666,
-                "Height": 213,
-                "Type": "Box",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": false
-              },
-              {
-                "TextId": "SingleUseId60",
-                "TextRotation": "0",
-                "Color": {
-                  "Red": 0,
-                  "Green": 0,
-                  "Blue": 0
-                },
-                "Alpha": 255,
-                "AutoSize": true,
-                "LineSpacing": 0,
-                "Name": "textArea4",
-                "X": 23,
-                "Y": 18,
-                "Width": 384,
-                "Height": 32,
-                "Type": "TextArea",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": false
-              },
-              {
-                "Pressed": "stop_disabled.png",
-                "Released": "stop.png",
-                "Alpha": 255,
-                "Name": "stopBtnAlarm",
-                "X": 536,
-                "Y": 98,
-                "Width": 96,
-                "Height": 96,
-                "Type": "Button",
-                "Visible": true,
-                "Draggable": false,
-                "Clickable": false,
-                "Fadeable": false,
-                "Moveable": false
-              }
-            ],
-            "FileName": "miss_logo_640px.png",
-            "Color": {
-              "Red": 0,
-              "Green": 0,
-              "Blue": 0
-            },
-            "ModalX": 0,
-            "ModalY": 139,
-            "ModalWidth": 640,
-            "ModalHeight": 202,
-            "ContX": 0,
-            "ContY": 0,
-            "Alpha": 192,
-            "Name": "alarmWindow",
-            "X": 0,
-            "Y": 0,
-            "Width": 640,
-            "Height": 480,
-            "Type": "ModalWindow",
-            "Visible": false,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
             "TextId": "SingleUseId61",
             "TextRotation": "0",
             "Color": {
@@ -1184,6 +1098,92 @@
             "Height": 20,
             "Type": "TextArea",
             "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Components": [
+              {
+                "Color": {
+                  "Red": 255,
+                  "Green": 246,
+                  "Blue": 0
+                },
+                "Alpha": 255,
+                "Name": "box2",
+                "X": -15,
+                "Y": -5,
+                "Width": 666,
+                "Height": 213,
+                "Type": "Box",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "TextId": "SingleUseId60",
+                "TextRotation": "0",
+                "Color": {
+                  "Red": 0,
+                  "Green": 0,
+                  "Blue": 0
+                },
+                "Alpha": 255,
+                "AutoSize": true,
+                "LineSpacing": 0,
+                "Name": "textArea4",
+                "X": 23,
+                "Y": 18,
+                "Width": 384,
+                "Height": 32,
+                "Type": "TextArea",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              },
+              {
+                "Pressed": "stop_disabled.png",
+                "Released": "stop.png",
+                "Alpha": 255,
+                "Name": "stopBtnAlarm",
+                "X": 536,
+                "Y": 98,
+                "Width": 96,
+                "Height": 96,
+                "Type": "Button",
+                "Visible": true,
+                "Draggable": false,
+                "Clickable": false,
+                "Fadeable": false,
+                "Moveable": false
+              }
+            ],
+            "FileName": "miss_logo_640px.png",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "ModalX": 0,
+            "ModalY": 139,
+            "ModalWidth": 640,
+            "ModalHeight": 202,
+            "ContX": 0,
+            "ContY": 0,
+            "Alpha": 192,
+            "Name": "alarmWindow",
+            "X": 0,
+            "Y": 0,
+            "Width": 640,
+            "Height": 480,
+            "Type": "ModalWindow",
+            "Visible": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,

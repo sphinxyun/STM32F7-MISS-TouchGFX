@@ -7,7 +7,7 @@
 
 #include "global.h"
 
-TaskHandle_t RegulationThreadId = 0;
+TaskHandle_t RegulationTaskId = 0;
 
 QueueHandle_t xRegulationStatus;
 
@@ -26,9 +26,9 @@ REGULATION_ErrorTypdef REGULATION_Init(void) {
                 512,
                 NULL,
 				tskIDLE_PRIORITY + 3,
-                &RegulationThreadId);
+                &RegulationTaskId);
 
-	REGULATION_Stop();
+	REGULATION_TaskStop();
 
 	return REGULATION_ERROR_NONE;
 }
@@ -37,22 +37,20 @@ REGULATION_ErrorTypdef REGULATION_DeInit(void) {
 	return REGULATION_ERROR_NONE;
 }
 
-REGULATION_ErrorTypdef REGULATION_Start(void) {
-	if (RegulationThreadId != 0) {
-		vTaskResume(RegulationThreadId);
+REGULATION_ErrorTypdef REGULATION_TaskStart(void) {
+	if (RegulationTaskId != 0) {
+		vTaskResume(RegulationTaskId);
 	}
 
 	PRESSURE_SENSOR_Start();
 	MOTORS_Start();
 
-	StartSpeedMonitoring();
-
 	return REGULATION_ERROR_NONE;
 }
 
-REGULATION_ErrorTypdef REGULATION_Stop(void) {
-	if (RegulationThreadId != 0) {
-		vTaskSuspend(RegulationThreadId);
+REGULATION_ErrorTypdef REGULATION_TaskStop(void) {
+	if (RegulationTaskId != 0) {
+		vTaskSuspend(RegulationTaskId);
 	}
 
 	PRESSURE_SENSOR_Stop();

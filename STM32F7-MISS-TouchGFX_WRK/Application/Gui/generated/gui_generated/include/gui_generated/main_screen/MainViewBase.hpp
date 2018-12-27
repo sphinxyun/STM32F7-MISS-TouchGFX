@@ -90,15 +90,15 @@ protected:
     touchgfx::TextArea textArea3;
     touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > diagBtn;
     touchgfx::TextButtonStyle< touchgfx::IconButtonStyle< touchgfx::TouchButtonTrigger > > levelBtn;
+    touchgfx::TextArea textArea1_1_2_1;
+    touchgfx::TextArea textArea1_1_2_1_1;
+    touchgfx::TextAreaWithOneWildcard actualTemp;
+    touchgfx::TextAreaWithTwoWildcards errorStats;
     touchgfx::ModalWindow alarmWindow;
     touchgfx::Box box2;
     touchgfx::TextArea textArea4;
     touchgfx::Button stopBtnAlarm;
 
-    touchgfx::TextArea textArea1_1_2_1;
-    touchgfx::TextArea textArea1_1_2_1_1;
-    touchgfx::TextAreaWithOneWildcard actualTemp;
-    touchgfx::TextAreaWithTwoWildcards errorStats;
 
     /*
      * Wildcard Buffers
