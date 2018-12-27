@@ -27,17 +27,10 @@ typedef enum {
 } WM_MAIN_DeviceMode;
 
 typedef struct {
-	uint8_t u8PressureMMHG;
-	float fFlowLPM;
-	uint16_t u16FlowRPM;
-} WM_MAIN_Presets;
-
-typedef struct {
 	WM_MAIN_DeviceMode eDevMode;
 
-	REGULATION_RegulatorStatus_t sIrrigationActual;
-
-	WM_MAIN_Presets sIrrigationPresets;
+	REGULATION_IrrPresets_t sIrrigationPresets;
+	REGULATION_IrrActual_t sIrrigationActual;
 
 	uint32_t u32BrightnessPercent;
 

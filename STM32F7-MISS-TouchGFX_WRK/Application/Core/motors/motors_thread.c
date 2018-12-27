@@ -7,7 +7,7 @@
 #include "task.h"
 #include "queue.h"
 
-TaskHandle_t MotorsThreadId = 0;
+TaskHandle_t MotorsTaskId = 0;
 
 QueueHandle_t xIrrigationMotorSpeedRPM = 0;
 
@@ -20,15 +20,12 @@ MOTORS_ErrorTypdef MOTORS_Init(void) {
                 512,
                 NULL,
 				tskIDLE_PRIORITY + 3,
-                &MotorsThreadId);
-
-//	osThreadDef(osMotors_Thread, Motors_Thread, osPriorityNormal, 0, 512);
-//	MotorsThreadId = osThreadCreate(osThread(osMotors_Thread), NULL);
+                &MotorsTaskId);
 
 	Configure_ENCODER();
 	Configure_PWM();
 
-	MOTORS_Stop();
+	MOTORS_TaskStop();
 
 	return MOTORS_ERROR_NONE;
 }
@@ -37,9 +34,24 @@ MOTORS_ErrorTypdef MOTORS_DeInit(void) {
 	return MOTORS_ERROR_NONE;
 }
 
-MOTORS_ErrorTypdef MOTORS_Start(void) {
-	if (MotorsThreadId != 0) {
-		vTaskResume(MotorsThreadId);
+MOTORS_ErrorTypdef MOTORS_IrrigationStart(uint16_t u16PWM) {
+	IRRIGATION_Start(u16PWM);
+	return MOTORS_ERROR_NONE;
+}
+
+MOTORS_ErrorTypdef MOTORS_IrrigationUpdate(uint16_t u16PWM) {
+	IRRIGATION_UpdateSpeed(u16PWM);
+	return MOTORS_ERROR_NONE;
+}
+
+MOTORS_ErrorTypdef MOTORS_IrrigationStop(void) {
+	IRRIGATION_Stop();
+	return MOTORS_ERROR_NONE;
+}
+
+MOTORS_ErrorTypdef MOTORS_TaskStart(void) {
+	if (MotorsTaskId != 0) {
+		vTaskResume(MotorsTaskId);
 	}
 
 	StartSpeedMonitoring();
@@ -47,9 +59,9 @@ MOTORS_ErrorTypdef MOTORS_Start(void) {
 	return MOTORS_ERROR_NONE;
 }
 
-MOTORS_ErrorTypdef MOTORS_Stop(void) {
-	if (MotorsThreadId != 0) {
-		vTaskSuspend(MotorsThreadId);
+MOTORS_ErrorTypdef MOTORS_TaskStop(void) {
+	if (MotorsTaskId != 0) {
+		vTaskSuspend(MotorsTaskId);
 	}
 
 	return MOTORS_ERROR_NONE;

@@ -5,15 +5,21 @@
 extern "C" {
 #endif
 
-#include "motors/motors_thread.h"
 #include "pressure_sensor/pressure_sensor_thread.h"
 
 typedef struct {
-	float fIrrigationActualSpeedRPM;
-	float fIrrigationActualFlowLPM;
+	uint8_t u8PressureMMHG;
 
-	sCarmenData_t sRawPressureSensorData;
-} REGULATION_RegulatorStatus_t;
+	float fFlowLPM;
+	uint16_t u16FlowRPM;
+} REGULATION_IrrPresets_t;
+
+typedef struct {
+	sCarmenData_t sPressureData;
+
+	float fFlowLPM;
+	float fFlowRPM;
+} REGULATION_IrrActual_t;
 
 typedef enum {
 	REGULATION_ERROR_NONE = 0
@@ -24,6 +30,10 @@ REGULATION_ErrorTypdef REGULATION_DeInit(void);
 
 REGULATION_ErrorTypdef REGULATION_TaskStart(void);
 REGULATION_ErrorTypdef REGULATION_TaskStop(void);
+
+REGULATION_ErrorTypdef REGULATION_Start(uint16_t u16SpeedRPM);
+REGULATION_ErrorTypdef REGULATION_Update(uint16_t u16SpeedRPM);
+REGULATION_ErrorTypdef REGULATION_Stop(void);
 
 #ifdef __cplusplus
 }

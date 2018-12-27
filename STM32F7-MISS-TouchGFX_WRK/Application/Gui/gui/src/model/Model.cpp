@@ -55,17 +55,17 @@ void Model::tick() {
 
 		modelListener->brightnessValueUpdate(guiStatus->status.u32BrightnessPercent);
 
-		modelListener->actualPressureMMHGUpdate(guiStatus->status.sIrrigationActual.sRawPressureSensorData.fPressureMMHG);
-		modelListener->actualFlowLPMUpdate(guiStatus->status.sIrrigationActual.fIrrigationActualFlowLPM);
-		modelListener->actualFlowRPMUpdate(guiStatus->status.sIrrigationActual.fIrrigationActualSpeedRPM);
+		modelListener->actualPressureMMHGUpdate(guiStatus->status.sIrrigationActual.sPressureData.fPressureMMHG);
+		modelListener->actualFlowLPMUpdate(guiStatus->status.sIrrigationActual.fFlowLPM);
+		modelListener->actualFlowRPMUpdate(guiStatus->status.sIrrigationActual.fFlowRPM);
 
 		modelListener->presetPressureMMHGUpdate(guiStatus->status.sIrrigationPresets.u8PressureMMHG);
 		modelListener->presetFlowLPMUpdate(guiStatus->status.sIrrigationPresets.fFlowLPM);
 		modelListener->presetFlowRPMUpdate(guiStatus->status.sIrrigationPresets.u16FlowRPM);
 
-		modelListener->updateTemp(guiStatus->status.sIrrigationActual.sRawPressureSensorData.fTemperatureC);
-		modelListener->updateCarmenErrStats(guiStatus->status.sIrrigationActual.sRawPressureSensorData.sErrorStats.u32Valid,
-				guiStatus->status.sIrrigationActual.sRawPressureSensorData.sErrorStats.u32ErrCRC, 3, 4);
+		modelListener->updateTemp(guiStatus->status.sIrrigationActual.sPressureData.fTemperatureC);
+		modelListener->updateCarmenErrStats(guiStatus->status.sIrrigationActual.sPressureData.sErrorStats.u32Valid,
+				guiStatus->status.sIrrigationActual.sPressureData.sErrorStats.u32ErrCRC, 3, 4);
 
 		if (m_guiStatus.u32AlarmFlags != guiStatus->status.u32AlarmFlags) {
 			if (guiStatus->status.u32AlarmFlags) {

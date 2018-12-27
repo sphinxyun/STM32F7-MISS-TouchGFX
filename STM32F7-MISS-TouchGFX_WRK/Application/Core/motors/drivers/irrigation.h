@@ -6,9 +6,9 @@
 void Configure_ENCODER(void);
 void Configure_PWM(void);
 
-void MOTOR_Start(uint16_t u16PWM);
-void MOTOR_UpdateSpeed(uint16_t u16PWM);
-void MOTOR_Stop(void);
+void IRRIGATION_Start(uint16_t u16PWM);
+void IRRIGATION_UpdateSpeed(uint16_t u16PWM);
+void IRRIGATION_Stop(void);
 
 void StartSpeedMonitoring(void);
 

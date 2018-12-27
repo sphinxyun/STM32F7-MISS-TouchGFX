@@ -1,6 +1,9 @@
 #include "../state_machine/state_machine.h"
 #include "settings/settings_app.h"
 
+#include "debug.h"
+#include "debug_uart.h"
+
 TaskHandle_t StateMachineThreadId = 0;
 
 QueueHandle_t xGuiActions;
@@ -124,7 +127,7 @@ static void StateMachine_Thread(void * argument) {
 
 	WM_MAIN_GuiPool* guiStatus = get_struct();
 
-	WM_MAIN_Presets sIrrigationPresets;
+	REGULATION_IrrPresets_t sIrrigationPresets;
 
 	sIrrigationPresets.u8PressureMMHG = set->u32IrrigationPressureMMHG;
 	sIrrigationPresets.u16FlowRPM = set->u16IrrigationFlowRPM;
@@ -151,12 +154,11 @@ static void StateMachine_Thread(void * argument) {
 			if (action == WM_GUI_LOADED) {
 				TOUCHGFT_SetBacklight(SETTINGS_GetBrightness());
 			} else if (action == WM_MAIN_START_ACTION) {
-				MOTOR_Start(sIrrigationPresets.u16FlowRPM);
+				REGULATION_Start(sIrrigationPresets.u16FlowRPM);
 
 				DEBUG_SendTextFrame("WM_MAIN_START_ACTION");
 			} else if (action == WM_MAIN_STOP_ACTION) {
-//				REGULATION_Stop();
-				MOTOR_Stop();
+				REGULATION_Stop();
 
 				DEBUG_SendTextFrame("WM_MAIN_STOP_ACTION");
 			} else if (action == WM_MAIN_INCREASE_BRIGHTNESS) {
@@ -189,7 +191,7 @@ static void StateMachine_Thread(void * argument) {
 				} else
 					sIrrigationPresets.u16FlowRPM += set->u16IrrigationFlowRPMIncValue;
 
-				MOTOR_UpdateSpeed(sIrrigationPresets.u16FlowRPM);
+				REGULATION_Update(sIrrigationPresets.u16FlowRPM);
 
 				DEBUG_SendTextFrame("WM_MAIN_INCREASE_IRRIGATION_FLOW: %d, %x", sIrrigationPresets.u16FlowRPM, u32BtnFlags);
 			} else if (action == WM_MAIN_DECREASE_IRRIGATION_FLOW) {
@@ -199,7 +201,7 @@ static void StateMachine_Thread(void * argument) {
 				} else
 					sIrrigationPresets.u16FlowRPM -= set->u16IrrigationFlowRPMIncValue;
 
-				MOTOR_UpdateSpeed(sIrrigationPresets.u16FlowRPM);
+				REGULATION_Update(sIrrigationPresets.u16FlowRPM);
 
 				DEBUG_SendTextFrame("WM_MAIN_DECREASE_IRRIGATION_FLOW: %d, %x", sIrrigationPresets.u16FlowRPM, u32BtnFlags);
 			}
@@ -226,12 +228,12 @@ static void StateMachine_Thread(void * argument) {
 		}
 
 		if (xRegulationStatus && xQueueReceive(xRegulationStatus, &guiStatus->status.sIrrigationActual, 50)) {
-			if (guiStatus->status.sIrrigationActual.sRawPressureSensorData.fPressureMMHG < 0)
-				guiStatus->status.sIrrigationActual.sRawPressureSensorData.fPressureMMHG = 0;
+			if (guiStatus->status.sIrrigationActual.sPressureData.fPressureMMHG < 0)
+				guiStatus->status.sIrrigationActual.sPressureData.fPressureMMHG = 0;
 //			DEBUG_SendTextFrame("Main_Thread PRESSURE: %f", guiStatus.sIrrigationActual.fIrrigationActualPressureMMHG);
 //			DEBUG_SendTextFrame("Main_Thread SPEED   : %f", guiStatus.sIrrigationActual.fIrrigationActualSpeedRPM);
 			static int iAlCnt = 0;
-			if (guiStatus->status.sIrrigationActual.sRawPressureSensorData.fPressureMMHG > guiStatus->status.sIrrigationPresets.u8PressureMMHG + 5) {
+			if (guiStatus->status.sIrrigationActual.sPressureData.fPressureMMHG > guiStatus->status.sIrrigationPresets.u8PressureMMHG + 5) {
 				iAlCnt++;
 				if (iAlCnt > 10) {
 					guiStatus->status.u32AlarmFlags = 1;

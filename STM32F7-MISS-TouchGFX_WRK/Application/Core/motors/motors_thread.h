@@ -11,17 +11,15 @@ typedef enum {
 	MOTORS_ERROR_NONE = 0
 } MOTORS_ErrorTypdef;
 
-//typedef enum {
-//	WM_MAIN_STOP = 0,
-//	WM_MAIN_START,
-//	WM_MAIN_ERROR,
-//} WM_MAIN_StateTypdef;
-
 MOTORS_ErrorTypdef MOTORS_Init(void);
 MOTORS_ErrorTypdef MOTORS_DeInit(void);
 
-MOTORS_ErrorTypdef MOTORS_Start(void);
-MOTORS_ErrorTypdef MOTORS_Stop(void);
+MOTORS_ErrorTypdef MOTORS_TaskStart(void);
+MOTORS_ErrorTypdef MOTORS_TaskStop(void);
+
+MOTORS_ErrorTypdef MOTORS_IrrigationStart(uint16_t u16PWM);
+MOTORS_ErrorTypdef MOTORS_IrrigationUpdate(uint16_t u16PWM);
+MOTORS_ErrorTypdef MOTORS_IrrigationStop(void);
 
 #ifdef __cplusplus
 }

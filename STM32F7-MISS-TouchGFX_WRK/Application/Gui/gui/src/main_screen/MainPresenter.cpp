@@ -7,9 +7,9 @@ MainPresenter::MainPresenter(MainView& v)
 }
 
 void MainPresenter::activate() {
-	view.actualPressureMMHGUpdate(model->getGuiStatus().sIrrigationActual.sRawPressureSensorData.fPressureMMHG);
-	view.actualFlowLPMUpdate(model->getGuiStatus().sIrrigationActual.fIrrigationActualFlowLPM);
-	view.actualFlowRPMUpdate(model->getGuiStatus().sIrrigationActual.fIrrigationActualSpeedRPM);
+	view.actualPressureMMHGUpdate(model->getGuiStatus().sIrrigationActual.sPressureData.fPressureMMHG);
+	view.actualFlowLPMUpdate(model->getGuiStatus().sIrrigationActual.fFlowLPM);
+	view.actualFlowRPMUpdate(model->getGuiStatus().sIrrigationActual.fFlowRPM);
 
 	view.presetPressureMMHGUpdate(model->getGuiStatus().sIrrigationPresets.u8PressureMMHG);
 	view.presetFlowLPMUpdate(model->getGuiStatus().sIrrigationPresets.fFlowLPM);

@@ -11,7 +11,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-extern TaskHandle_t MotorsThreadId;
+extern TaskHandle_t MotorsTaskId;
 
 
 TIM_HandleTypeDef    PWM_TimHandle;
@@ -55,7 +55,7 @@ void TIM3_IRQHandler(void) {
 
 	if (++i >= 5) {
 		i = 0;
-		xTaskNotifyFromISR( MotorsThreadId, i32Speed, eSetValueWithOverwrite, &xHigherPriorityTaskWoken );
+		xTaskNotifyFromISR( MotorsTaskId, i32Speed, eSetValueWithOverwrite, &xHigherPriorityTaskWoken );
 		portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
 	}
 }
@@ -251,7 +251,7 @@ void Configure_PWM(void) {
 	}
 }
 
-void MOTOR_Start(uint16_t u16PWM) {
+void IRRIGATION_Start(uint16_t u16PWM) {
 	TIM5->CNT = 0;
 
 	i32SpeedSum = 0;
@@ -260,17 +260,17 @@ void MOTOR_Start(uint16_t u16PWM) {
 	u16SpeedIdx = 0;
 
 	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_RESET);
+
 	if (u16PWM <= 5399)
 		__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, u16PWM);
 }
 
-void MOTOR_UpdateSpeed(uint16_t u16PWM) {
+void IRRIGATION_UpdateSpeed(uint16_t u16PWM) {
 	if (u16PWM <= 5399)
 		__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, u16PWM);
 }
 
-void MOTOR_Stop(void) {
+void IRRIGATION_Stop(void) {
 	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_SET);
 	__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, 0);
 }
-
