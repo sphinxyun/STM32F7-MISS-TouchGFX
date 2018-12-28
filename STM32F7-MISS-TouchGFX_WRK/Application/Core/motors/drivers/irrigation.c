@@ -1,6 +1,6 @@
 #include "irrigation.h"
 
-//#include "stm32f7xx.h"
+#include "stm32f7xx_hal_cortex.h"
 #include "stm32f7xx_hal_dma.h"
 #include "stm32f7xx_hal_gpio.h"
 #include "stm32f7xx_hal_rcc.h"
@@ -34,6 +34,12 @@ int32_t i32SpeedBuff[AVG_BUFFER_SIZE];
 uint16_t u16SpeedIdx = 0;
 
 volatile static int32_t i32Speed = 0;
+
+#define DISABLE_IRRIGATION_MOTOR_DRIVER		HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_SET)
+#define ENABLE_IRRIGATION_MOTOR_DRIVER		HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_RESET)
+
+#define IRRIGATION_MOTOR_FORWARD_DIR		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET)
+#define IRRIGATION_MOTOR_BACKWARD_DIR		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET)
 
 void TIM3_IRQHandler(void) {
 	HAL_TIM_IRQHandler(&SPEED_TimerHandle);
@@ -160,6 +166,17 @@ void Configure_PWM(void) {
 	GPIO_InitTypeDef   GPIO_InitStruct;
 	TIM_MasterConfigTypeDef sMasterConfig;
 
+	//DISABLE OUTPUT:
+	__HAL_RCC_GPIOG_CLK_ENABLE();
+
+	GPIO_InitStruct.Pin = GPIO_PIN_7;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+	DISABLE_IRRIGATION_MOTOR_DRIVER;
+
 	/*
 	 TIM12 input clock (TIM12CLK) is same as 2x APB1 clock (PCLK1), because:
 	  - APB1 Prescaler is set to 4 (check SystemClock_Config),
@@ -196,17 +213,7 @@ void Configure_PWM(void) {
 	GPIO_InitStruct.Alternate = GPIO_AF9_TIM12;
 	HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
 
-	//DISABLE
-	__HAL_RCC_GPIOG_CLK_ENABLE();
-
-	GPIO_InitStruct.Pin = GPIO_PIN_7;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_PULLUP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_RESET); //RE
-
-	//DIR
+	//DIRECTION OUTPUT:
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 
 	GPIO_InitStruct.Pin = GPIO_PIN_4;
@@ -214,7 +221,8 @@ void Configure_PWM(void) {
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+
+	IRRIGATION_MOTOR_FORWARD_DIR;
 
 	if (HAL_TIM_PWM_Init(&PWM_TimHandle) != HAL_OK) {
 		/* Initialization Error */
@@ -251,7 +259,7 @@ void Configure_PWM(void) {
 	}
 }
 
-void IRRIGATION_Start(uint16_t u16PWM) {
+void IRRIGATION_Start(int16_t i16PWM) {
 	TIM5->CNT = 0;
 
 	i32SpeedSum = 0;
@@ -259,18 +267,33 @@ void IRRIGATION_Start(uint16_t u16PWM) {
 		i32SpeedBuff[i] = 0;
 	u16SpeedIdx = 0;
 
-	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_RESET);
+	if (ABS(i16PWM) <= 5399) {
 
-	if (u16PWM <= 5399)
-		__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, u16PWM);
+		if (i16PWM >= 0)
+			IRRIGATION_MOTOR_FORWARD_DIR;
+		else
+			IRRIGATION_MOTOR_BACKWARD_DIR;
+
+		__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, ABS(i16PWM));
+	}
+
+	ENABLE_IRRIGATION_MOTOR_DRIVER;
 }
 
-void IRRIGATION_UpdateSpeed(uint16_t u16PWM) {
-	if (u16PWM <= 5399)
-		__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, u16PWM);
+void IRRIGATION_UpdateSpeed(int16_t i16PWM) {
+	if (ABS(i16PWM) <= 5399) {
+
+		if (i16PWM >= 0)
+			IRRIGATION_MOTOR_FORWARD_DIR;
+		else
+			IRRIGATION_MOTOR_BACKWARD_DIR;
+
+		__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, ABS(i16PWM));
+	}
 }
 
 void IRRIGATION_Stop(void) {
-	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_SET);
+	DISABLE_IRRIGATION_MOTOR_DRIVER;
+
 	__HAL_TIM_SET_COMPARE(&PWM_TimHandle, TIM_CHANNEL_1, 0);
 }

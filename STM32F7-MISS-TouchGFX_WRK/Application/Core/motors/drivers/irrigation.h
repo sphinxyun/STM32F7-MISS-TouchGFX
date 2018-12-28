@@ -6,8 +6,8 @@
 void Configure_ENCODER(void);
 void Configure_PWM(void);
 
-void IRRIGATION_Start(uint16_t u16PWM);
-void IRRIGATION_UpdateSpeed(uint16_t u16PWM);
+void IRRIGATION_Start(int16_t i16PWM);
+void IRRIGATION_UpdateSpeed(int16_t i16PWM);
 void IRRIGATION_Stop(void);
 
 void StartSpeedMonitoring(void);
