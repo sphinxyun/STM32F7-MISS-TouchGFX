@@ -27,13 +27,13 @@ TIM_OC_InitTypeDef sPWMConfig;
 
 //volatile static uint32_t spd = 0;
 
-#define AVG_BUFFER_SIZE	5
+#define AVG_BUFFER_SIZE	10
 
-int32_t i32SpeedSum;
-int32_t i32SpeedBuff[AVG_BUFFER_SIZE];
-uint16_t u16SpeedIdx = 0;
+volatile static int32_t i32SpeedSum;
+volatile static int32_t i32SpeedBuff[AVG_BUFFER_SIZE];
+volatile static uint16_t u16SpeedIdx = 0;
 
-volatile static int32_t i32Speed = 0;
+//volatile static int32_t i32Speed = 0;
 
 #define DISABLE_IRRIGATION_MOTOR_DRIVER		HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_SET)
 #define ENABLE_IRRIGATION_MOTOR_DRIVER		HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7, GPIO_PIN_RESET)
@@ -48,23 +48,35 @@ void TIM3_IRQHandler(void) {
 //	static int i = 0;
 
 	uint32_t temp = TIM5->CNT;
+	uint32_t pcTemp = pulse_count;
+
 	int32_t speed_pulse = temp - pulse_count;
-	if (speed_pulse > 1000) speed_pulse = -(ENCODER_MAX_PULSES + 1 - temp + pulse_count);
-	if (speed_pulse < -1000) speed_pulse = ENCODER_MAX_PULSES + 1 - pulse_count + temp;
-//	int32_t speed_pulse = (temp >= pulse_count) ? (temp - pulse_count) : (ENCODER_MAX_PULSES+1 - pulse_count + temp);
+	if (speed_pulse > 1500) speed_pulse = -(ENCODER_MAX_PULSES + 1 - temp + pulse_count);
+	if (speed_pulse < -1500) speed_pulse = ENCODER_MAX_PULSES + 1 - pulse_count + temp;
+//	speed_pulse = (temp >= pulse_count) ? (temp - pulse_count) : (ENCODER_MAX_PULSES+1 - pulse_count + temp);
+
 	pulse_count = temp;
 
 	i32SpeedSum -= i32SpeedBuff[u16SpeedIdx];
 	i32SpeedBuff[u16SpeedIdx] = speed_pulse;
 	i32SpeedSum += i32SpeedBuff[u16SpeedIdx];
 
+
 	GET_NEXT_BUFF_U16_IDX(u16SpeedIdx, AVG_BUFFER_SIZE);
 
-	i32Speed = i32SpeedSum;
+//	if ((speed_pulse < 0) || (i32SpeedSum < 0)) {
+//		DEBUG_SendTextFrame("i32SpeedSum = %d", i32SpeedSum);
+//		DEBUG_SendTextFrame("  temp = %d", temp);
+//		DEBUG_SendTextFrame("  p_c  = %d", pcTemp);
+//		DEBUG_SendTextFrame("  s_p  = %d", speed_pulse);
+//		DEBUG_SendTextFrame("  buff: %a", i32SpeedBuff, AVG_BUFFER_SIZE);
+//	}
 
-//	if (++i >= 5) {
+//	i32Speed = i32SpeedSum;
+
+//	if (++i >= 2) {
 //		i = 0;
-		xTaskNotifyFromISR( MotorsTaskId, i32Speed, eSetValueWithOverwrite, &xHigherPriorityTaskWoken );
+		xTaskNotifyFromISR( MotorsTaskId, i32SpeedSum, eSetValueWithOverwrite, &xHigherPriorityTaskWoken );
 		portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
 //	}
 }
@@ -116,6 +128,7 @@ void StartSpeedMonitoring(void) {
 	__HAL_RCC_TIM3_CLK_ENABLE();
 
 	TIM5->CNT = 0;
+	pulse_count = 0;
 	i32SpeedSum = 0;
 	for (uint32_t i = 0; i < AVG_BUFFER_SIZE; i++)
 		i32SpeedBuff[i] = 0;
@@ -141,7 +154,7 @@ void StartSpeedMonitoring(void) {
 	 25 ms = 0,025 s -> 40 times per second, so 2000 counts divided by  50 is 40 times per second
 	 */
 	SPEED_TimerHandle.Instance = TIM3;
-	SPEED_TimerHandle.Init.Period = 50 - 1;
+	SPEED_TimerHandle.Init.Period = 25 - 1;
 	SPEED_TimerHandle.Init.Prescaler = 54000;
 	SPEED_TimerHandle.Init.ClockDivision = 0;
 	SPEED_TimerHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -267,12 +280,13 @@ void Configure_PWM(void) {
 }
 
 void IRRIGATION_Start(int16_t i16PWM) {
-	TIM5->CNT = 0;
-
-	i32SpeedSum = 0;
-	for (uint32_t i = 0; i < AVG_BUFFER_SIZE; i++)
-		i32SpeedBuff[i] = 0;
-	u16SpeedIdx = 0;
+//	TIM5->CNT = 0;
+//	pulse_count = 0;
+//
+//	i32SpeedSum = 0;
+//	for (uint32_t i = 0; i < AVG_BUFFER_SIZE; i++)
+//		i32SpeedBuff[i] = 0;
+//	u16SpeedIdx = 0;
 
 	if (ABS(i16PWM) <= 5399) {
 

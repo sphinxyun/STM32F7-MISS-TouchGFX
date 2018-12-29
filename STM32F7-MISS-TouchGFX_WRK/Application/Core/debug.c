@@ -235,6 +235,36 @@ static inline char *convert_x(uint32_t byte) {
 	return ( buffer );
 }
 
+static inline char *convert_i(int32_t num, uint32_t base) {
+	static char Representation[]= "0123456789ABCDEF";
+	static char buffer[50];
+	char *ptr;
+	bool bMinus = num < 0 ? true : false;
+
+	//on purpose:
+	//50 instead of 49
+	ptr = &buffer[50];
+
+	uint32_t u32RepLen = 0;
+
+	num = ABS(num);
+
+	do {
+		*--ptr = Representation[num % base];
+		num /= base;
+		u32RepLen++;
+	} while (num != 0);
+
+	if (bMinus) {
+		*--ptr = '-';
+		u32RepLen++;
+	}
+
+	*--ptr = u32RepLen;
+
+	return (ptr);
+}
+
 static inline char *convert_d(uint32_t num, uint32_t base) {
 	static char Representation[]= "0123456789ABCDEF";
 	static char buffer[50];
@@ -373,6 +403,21 @@ void DEBUG_SendTextFrame(const char* str, ...) {
 				char *ndz = convert_d(x, 16);
 				memcpy(&temp[idx], &ndz[1], ndz[0]);
 				idx += ndz[0];
+				break;
+			}
+
+			case 'a': {
+				int32_t* tbl = va_arg(argp, int32_t *);
+				uint32_t len = va_arg(argp, unsigned int);
+				for (uint8_t i = 0; i < len; i++) {
+					char *ndz = convert_i(tbl[i], 10);
+					memcpy(&temp[idx], &ndz[1], ndz[0]);
+					idx += ndz[0];
+
+					if (i < len-1) {
+						temp[idx] = ' '; idx++;
+					}
+				}
 				break;
 			}
 

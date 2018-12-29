@@ -73,8 +73,8 @@ static void Motors_Thread(void * argument) {
 	float fSpeed_RPM;
 
 	for (;;) {
-		if (xTaskNotifyWait(0x00000000, 0xFFFFFFFF, &i32NotifiedValue, 50)) {
-			fSpeed_RPM = (float)i32NotifiedValue / 250.0 * 60.0;
+		if (xTaskNotifyWait(0x00000000, 0xFFFFFFFF, (uint32_t *)&i32NotifiedValue, 50)) {
+			fSpeed_RPM = i32NotifiedValue; //(float)i32NotifiedValue / 250.0 * 60.0;
 //			DEBUG_SendTextFrame("Motors_Thread: %f RPM (%d spd - x2004)", fSpeed_RPM, ulNotifiedValue);
 
 			xQueueSend( xIrrigationMotorSpeedRPM, ( void * ) &fSpeed_RPM, ( TickType_t ) 0 );

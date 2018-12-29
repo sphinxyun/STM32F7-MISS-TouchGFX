@@ -143,7 +143,7 @@ static void StateMachine_Thread(void * argument) {
 		DEBUG_UART_SysTick();
 
 		if (((xTaskGetTickCount() - xTimeBefore) > 500) && ((xTaskGetTickCount() - xTimeBefore) < 2700)) {
-			DEBUG_SendTextFrame("state change -> eAutoTest");
+//			DEBUG_SendTextFrame("state change -> eAutoTest");
 			device_state = eIdle;
 			bUpdate = true;
 		} else {
