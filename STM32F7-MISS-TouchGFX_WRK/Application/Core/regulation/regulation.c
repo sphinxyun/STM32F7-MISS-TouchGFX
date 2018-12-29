@@ -42,8 +42,8 @@ REGULATION_ErrorTypdef REGULATION_DeInit(void) {
 	return REGULATION_ERROR_NONE;
 }
 
-REGULATION_ErrorTypdef REGULATION_Start(uint16_t u16SpeedRPM) {
-	MOTORS_IrrigationStart(u16SpeedRPM);
+REGULATION_ErrorTypdef REGULATION_Start(int16_t i16SpeedRPM) {
+	MOTORS_IrrigationStart(i16SpeedRPM);
 	return REGULATION_ERROR_NONE;
 }
 
@@ -89,7 +89,7 @@ static void Regulation_Thread(void * argument) {
 
 	for (;;) {
 		REGULATION_IrrPresets_t temp;
-		if (xRegulationActions && xQueueReceive(xRegulationActions, &temp, 50)) {
+		if (xRegulationActions && xQueueReceive(xRegulationActions, &temp, 25)) {
 			if (temp.eRegMode != presetState.eRegMode) {
 				switch (temp.eRegMode) {
 				case eRegIdle:
@@ -97,7 +97,7 @@ static void Regulation_Thread(void * argument) {
 					break;
 
 				case eRegIrrigation:
-					REGULATION_Start(temp.u16FlowRPM);
+					REGULATION_Start(temp.i16FlowRPM);
 					break;
 
 				default:
@@ -107,10 +107,10 @@ static void Regulation_Thread(void * argument) {
 
 			presetState = temp;
 
-			REGULATION_Update(presetState.u16FlowRPM);
+			REGULATION_Update(presetState.i16FlowRPM);
 		}
 
-		if (xIrrigationPressureData && xQueueReceive(xIrrigationPressureData, &sensorData, 50)) {
+		if (xIrrigationPressureData && xQueueReceive(xIrrigationPressureData, &sensorData, 25)) {
 			actualState.sPressureData = sensorData->data;
 			free_sensor_struct(sensorData);
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: %f", status.fIrrigationActualPressureMMHG);
@@ -126,7 +126,7 @@ static void Regulation_Thread(void * argument) {
 //			DEBUG_SendTextFrame("Regulation_Thread SPEED: ---");
 		}
 
-		float fTemp[2] = {presetState.u16FlowRPM, actualState.fFlowRPM};
+		float fTemp[2] = {presetState.i16FlowRPM, actualState.fFlowRPM};
 		DEBUG_SendRpmPidDataFrame(2, fTemp);
 
 		if (bUpdate) {

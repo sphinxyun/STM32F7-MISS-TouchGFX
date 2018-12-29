@@ -17,8 +17,8 @@ MOTORS_ErrorTypdef MOTORS_DeInit(void);
 MOTORS_ErrorTypdef MOTORS_TaskStart(void);
 MOTORS_ErrorTypdef MOTORS_TaskStop(void);
 
-MOTORS_ErrorTypdef MOTORS_IrrigationStart(uint16_t u16PWM);
-MOTORS_ErrorTypdef MOTORS_IrrigationUpdate(uint16_t u16PWM);
+MOTORS_ErrorTypdef MOTORS_IrrigationStart(int16_t i16PWM);
+MOTORS_ErrorTypdef MOTORS_IrrigationUpdate(int16_t i16PWM);
 MOTORS_ErrorTypdef MOTORS_IrrigationStop(void);
 
 #ifdef __cplusplus

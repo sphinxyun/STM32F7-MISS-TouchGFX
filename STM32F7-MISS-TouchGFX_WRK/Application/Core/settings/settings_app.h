@@ -16,10 +16,10 @@ typedef struct {
 	uint32_t u32IrrigationPressureMMHGMaxValue;
 	uint32_t u32IrrigationPressureMMHGIncValue;
 
-	uint16_t u16IrrigationFlowRPM;
-	uint16_t u16IrrigationFlowRPMMinValue;
-	uint16_t u16IrrigationFlowRPMMaxValue;
-	uint16_t u16IrrigationFlowRPMIncValue;
+	int16_t i16IrrigationFlowRPM;
+	int16_t i16IrrigationFlowRPMMinValue;
+	int16_t i16IrrigationFlowRPMMaxValue;
+	int16_t i16IrrigationFlowRPMIncValue;
 
 	float fIrrigationFlowLPM;
 	float fIrrigationFlowLPMMinValue;

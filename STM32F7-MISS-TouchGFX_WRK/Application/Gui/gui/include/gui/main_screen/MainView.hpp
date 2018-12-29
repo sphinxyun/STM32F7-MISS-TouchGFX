@@ -18,7 +18,7 @@ public:
 
     void presetPressureMMHGUpdate(uint8_t fVal);
 	void presetFlowLPMUpdate(float fVal);
-	void presetFlowRPMUpdate(uint16_t fVal);
+	void presetFlowRPMUpdate(int16_t i16Val);
 
     void mcuLoadUpdated(uint8_t mcuLoad);
     void showAlarmMessage(bool bVisible);

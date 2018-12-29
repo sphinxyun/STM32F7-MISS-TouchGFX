@@ -13,7 +13,7 @@ void MainPresenter::activate() {
 
 	view.presetPressureMMHGUpdate(model->getGuiStatus().sIrrigationPresets.u8PressureMMHG);
 	view.presetFlowLPMUpdate(model->getGuiStatus().sIrrigationPresets.fFlowLPM);
-	view.presetFlowRPMUpdate(model->getGuiStatus().sIrrigationPresets.u16FlowRPM);
+	view.presetFlowRPMUpdate(model->getGuiStatus().sIrrigationPresets.i16FlowRPM);
 }
 
 void MainPresenter::deactivate() {
@@ -44,8 +44,8 @@ void MainPresenter::presetFlowLPMUpdate(float fVal) {
 	view.presetFlowLPMUpdate(fVal);
 }
 
-void MainPresenter::presetFlowRPMUpdate(uint16_t u16Val) {
-	view.presetFlowRPMUpdate(u16Val);
+void MainPresenter::presetFlowRPMUpdate(int16_t i16Val) {
+	view.presetFlowRPMUpdate(i16Val);
 }
 
 void MainPresenter::startRegulation() {

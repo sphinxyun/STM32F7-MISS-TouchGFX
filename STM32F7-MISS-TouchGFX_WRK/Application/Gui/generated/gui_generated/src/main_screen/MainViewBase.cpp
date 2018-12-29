@@ -37,12 +37,12 @@ MainViewBase::MainViewBase() :
     textArea1_1.setLinespacing(0);
     textArea1_1.setTypedText(TypedText(T_SINGLEUSEID9));
 
-    textArea1_1_1.setXY(275, 55);
+    textArea1_1_1.setXY(276, 55);
     textArea1_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea1_1_1.setLinespacing(0);
     textArea1_1_1.setTypedText(TypedText(T_SINGLEUSEID10));
 
-    textArea1_1_1_1.setXY(471, 55);
+    textArea1_1_1_1.setPosition(473, 55, 100, 40);
     textArea1_1_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea1_1_1_1.setLinespacing(0);
     textArea1_1_1_1.setTypedText(TypedText(T_SINGLEUSEID11));
@@ -54,14 +54,14 @@ MainViewBase::MainViewBase() :
     actualPressure.setWildcard(actualPressureBuffer);
     actualPressure.setTypedText(TypedText(T_SINGLEUSEID12));
 
-    actualFlowLPM.setPosition(302, 118, 65, 32);
+    actualFlowLPM.setPosition(284, 118, 100, 32);
     actualFlowLPM.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
     actualFlowLPM.setLinespacing(0);
     Unicode::snprintf(actualFlowLPMBuffer, ACTUALFLOWLPM_SIZE, "%s", TypedText(T_SINGLEUSEID15).getText());
     actualFlowLPM.setWildcard(actualFlowLPMBuffer);
     actualFlowLPM.setTypedText(TypedText(T_SINGLEUSEID14));
 
-    actualFlowRPM.setPosition(486, 118, 74, 32);
+    actualFlowRPM.setPosition(473, 118, 100, 32);
     actualFlowRPM.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 0, 0));
     actualFlowRPM.setLinespacing(0);
     Unicode::snprintf(actualFlowRPMBuffer, ACTUALFLOWRPM_SIZE, "%s", TypedText(T_SINGLEUSEID17).getText());
@@ -106,7 +106,7 @@ MainViewBase::MainViewBase() :
     presetFlowLPM.resizeToCurrentText();
     presetFlowLPM.setTypedText(TypedText(T_SINGLEUSEID26));
 
-    presetFlowRPM.setPosition(486, 253, 74, 32);
+    presetFlowRPM.setPosition(478, 253, 90, 32);
     presetFlowRPM.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 255, 0));
     presetFlowRPM.setLinespacing(0);
     Unicode::snprintf(presetFlowRPMBuffer, PRESETFLOWRPM_SIZE, "%s", TypedText(T_SINGLEUSEID29).getText());

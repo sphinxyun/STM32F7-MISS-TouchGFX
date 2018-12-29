@@ -106,8 +106,8 @@ void MainView::presetFlowLPMUpdate(float fVal) {
 	presetFlowLPM.invalidate();
 }
 
-void MainView::presetFlowRPMUpdate(uint16_t fVal) {
-	Unicode::snprintf(presetFlowRPMBuffer, PRESETFLOWRPM_SIZE, "%d", (int)fVal);
+void MainView::presetFlowRPMUpdate(int16_t i16Val) {
+	Unicode::snprintf(presetFlowRPMBuffer, PRESETFLOWRPM_SIZE, "%d", (int)i16Val);
 	presetFlowRPM.setWildcard(presetFlowRPMBuffer);
 
 	presetFlowRPM.invalidate();

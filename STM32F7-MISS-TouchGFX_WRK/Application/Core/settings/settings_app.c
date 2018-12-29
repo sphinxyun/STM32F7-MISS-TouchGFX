@@ -30,10 +30,10 @@ SETTINGS_ErrorTypdef SETTINGS_Init(void) {
 	ProgramSettings.u32IrrigationPressureMMHGMaxValue = 150;
 	ProgramSettings.u32IrrigationPressureMMHGIncValue = 5;
 
-	ProgramSettings.u16IrrigationFlowRPM = 2000;
-	ProgramSettings.u16IrrigationFlowRPMMinValue = 1500;
-	ProgramSettings.u16IrrigationFlowRPMMaxValue = 5399;
-	ProgramSettings.u16IrrigationFlowRPMIncValue = 250;
+	ProgramSettings.i16IrrigationFlowRPM = 1500;
+	ProgramSettings.i16IrrigationFlowRPMMinValue = -5399;
+	ProgramSettings.i16IrrigationFlowRPMMaxValue = 5399;
+	ProgramSettings.i16IrrigationFlowRPMIncValue = 250;
 
 	ProgramSettings.fIrrigationFlowLPM = 0.5;
 	ProgramSettings.fIrrigationFlowLPMMinValue = 0.1;

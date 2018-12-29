@@ -34,7 +34,7 @@ public:
 
     virtual void presetPressureMMHGUpdate(uint8_t fVal) {}
 	virtual void presetFlowLPMUpdate(float fVal) {}
-	virtual void presetFlowRPMUpdate(uint16_t fVal) {}
+	virtual void presetFlowRPMUpdate(int16_t i16Val) {}
 
     virtual void brightnessValueUpdate(uint32_t u32Val) {}
 

@@ -61,7 +61,7 @@ void Model::tick() {
 
 		modelListener->presetPressureMMHGUpdate(guiStatus->status.sIrrigationPresets.u8PressureMMHG);
 		modelListener->presetFlowLPMUpdate(guiStatus->status.sIrrigationPresets.fFlowLPM);
-		modelListener->presetFlowRPMUpdate(guiStatus->status.sIrrigationPresets.u16FlowRPM);
+		modelListener->presetFlowRPMUpdate(guiStatus->status.sIrrigationPresets.i16FlowRPM);
 
 		modelListener->updateTemp(guiStatus->status.sIrrigationActual.sPressureData.fTemperatureC);
 		modelListener->updateCarmenErrStats(guiStatus->status.sIrrigationActual.sPressureData.sErrorStats.u32Valid,

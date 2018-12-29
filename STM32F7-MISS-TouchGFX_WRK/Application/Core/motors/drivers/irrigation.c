@@ -27,7 +27,7 @@ TIM_OC_InitTypeDef sPWMConfig;
 
 //volatile static uint32_t spd = 0;
 
-#define AVG_BUFFER_SIZE	20
+#define AVG_BUFFER_SIZE	5
 
 int32_t i32SpeedSum;
 int32_t i32SpeedBuff[AVG_BUFFER_SIZE];
@@ -45,10 +45,13 @@ void TIM3_IRQHandler(void) {
 	HAL_TIM_IRQHandler(&SPEED_TimerHandle);
 
 	BaseType_t xHigherPriorityTaskWoken;
-	static int i = 0;
+//	static int i = 0;
 
 	uint32_t temp = TIM5->CNT;
-	uint32_t speed_pulse = (temp >= pulse_count) ? (temp - pulse_count) : (ENCODER_MAX_PULSES+1 - pulse_count + temp);
+	int32_t speed_pulse = temp - pulse_count;
+	if (speed_pulse > 1000) speed_pulse = -(ENCODER_MAX_PULSES + 1 - temp + pulse_count);
+	if (speed_pulse < -1000) speed_pulse = ENCODER_MAX_PULSES + 1 - pulse_count + temp;
+//	int32_t speed_pulse = (temp >= pulse_count) ? (temp - pulse_count) : (ENCODER_MAX_PULSES+1 - pulse_count + temp);
 	pulse_count = temp;
 
 	i32SpeedSum -= i32SpeedBuff[u16SpeedIdx];
@@ -59,11 +62,11 @@ void TIM3_IRQHandler(void) {
 
 	i32Speed = i32SpeedSum;
 
-	if (++i >= 5) {
-		i = 0;
+//	if (++i >= 5) {
+//		i = 0;
 		xTaskNotifyFromISR( MotorsTaskId, i32Speed, eSetValueWithOverwrite, &xHigherPriorityTaskWoken );
 		portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
-	}
+//	}
 }
 
 void Configure_ENCODER(void) {
@@ -129,12 +132,16 @@ void StartSpeedMonitoring(void) {
 	 1200 RPM / 60 s = 20 RPS (revolutions pre second) - timer must be called at least that often
 	 to avoid problems with lost revolutions 20 times per second = 1/20 = every 50 ms
 
+	 In order to detect direction in which the motor was moving (when 0-2003 transition is made
+	 in the reverse direction - for eg. 45 -> 1998) this must be increased x2, every 25 ms TIM3 is triggered
 
 	 We configure measurement period to be 20 Hz
 	 108 MHz / 54000 = 2000 counts - prescaller equal to 54000 is needed
+	 50 ms = 0,050 s -> 20 times per second, so 2000 counts divided by 100 is 20 times per second
+	 25 ms = 0,025 s -> 40 times per second, so 2000 counts divided by  50 is 40 times per second
 	 */
 	SPEED_TimerHandle.Instance = TIM3;
-	SPEED_TimerHandle.Init.Period = 100 - 1;
+	SPEED_TimerHandle.Init.Period = 50 - 1;
 	SPEED_TimerHandle.Init.Prescaler = 54000;
 	SPEED_TimerHandle.Init.ClockDivision = 0;
 	SPEED_TimerHandle.Init.CounterMode = TIM_COUNTERMODE_UP;

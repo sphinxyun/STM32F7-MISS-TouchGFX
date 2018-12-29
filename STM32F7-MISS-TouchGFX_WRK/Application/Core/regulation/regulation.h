@@ -18,7 +18,7 @@ typedef struct {
 	uint8_t u8PressureMMHG;
 
 	float fFlowLPM;
-	uint16_t u16FlowRPM;
+	int16_t i16FlowRPM;
 } REGULATION_IrrPresets_t;
 
 typedef struct {
@@ -37,10 +37,6 @@ REGULATION_ErrorTypdef REGULATION_DeInit(void);
 
 REGULATION_ErrorTypdef REGULATION_TaskStart(void);
 REGULATION_ErrorTypdef REGULATION_TaskStop(void);
-
-//REGULATION_ErrorTypdef REGULATION_Start(uint16_t u16SpeedRPM);
-//REGULATION_ErrorTypdef REGULATION_Update(uint16_t u16SpeedRPM);
-//REGULATION_ErrorTypdef REGULATION_Stop(void);
 
 #ifdef __cplusplus
 }

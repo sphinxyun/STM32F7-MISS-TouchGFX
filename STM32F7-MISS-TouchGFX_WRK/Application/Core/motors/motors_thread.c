@@ -34,13 +34,13 @@ MOTORS_ErrorTypdef MOTORS_DeInit(void) {
 	return MOTORS_ERROR_NONE;
 }
 
-MOTORS_ErrorTypdef MOTORS_IrrigationStart(uint16_t u16PWM) {
-	IRRIGATION_Start(u16PWM);
+MOTORS_ErrorTypdef MOTORS_IrrigationStart(int16_t i16PWM) {
+	IRRIGATION_Start(i16PWM);
 	return MOTORS_ERROR_NONE;
 }
 
-MOTORS_ErrorTypdef MOTORS_IrrigationUpdate(uint16_t u16PWM) {
-	IRRIGATION_UpdateSpeed(u16PWM);
+MOTORS_ErrorTypdef MOTORS_IrrigationUpdate(int16_t i16PWM) {
+	IRRIGATION_UpdateSpeed(i16PWM);
 	return MOTORS_ERROR_NONE;
 }
 
@@ -68,13 +68,13 @@ MOTORS_ErrorTypdef MOTORS_TaskStop(void) {
 }
 
 static void Motors_Thread(void * argument) {
-	uint32_t ulNotifiedValue;
+	int32_t i32NotifiedValue;
 
 	float fSpeed_RPM;
 
 	for (;;) {
-		if (xTaskNotifyWait(0x00000000, 0xFFFFFFFF, &ulNotifiedValue, 50)) {
-			fSpeed_RPM = (float)ulNotifiedValue / 2000.0 * 60.0;
+		if (xTaskNotifyWait(0x00000000, 0xFFFFFFFF, &i32NotifiedValue, 50)) {
+			fSpeed_RPM = (float)i32NotifiedValue / 250.0 * 60.0;
 //			DEBUG_SendTextFrame("Motors_Thread: %f RPM (%d spd - x2004)", fSpeed_RPM, ulNotifiedValue);
 
 			xQueueSend( xIrrigationMotorSpeedRPM, ( void * ) &fSpeed_RPM, ( TickType_t ) 0 );
