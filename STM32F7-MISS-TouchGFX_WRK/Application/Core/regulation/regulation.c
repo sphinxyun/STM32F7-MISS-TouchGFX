@@ -80,20 +80,38 @@ REGULATION_ErrorTypdef REGULATION_TaskStop(void) {
 }
 
 static void Regulation_Thread(void * argument) {
-	REGULATION_IrrActual_t status;
-	REGULATION_IrrPresets_t presets;
+	REGULATION_IrrActual_t actualState;
+	REGULATION_IrrPresets_t presetState;
 
 	sCarmenDataPool_t *sensorData;
 
 	bool bUpdate = false;
 
 	for (;;) {
-		if (xRegulationActions && xQueueReceive(xRegulationActions, &presets, 50)) {
-			REGULATION_Update(presets.u16FlowRPM);
+		REGULATION_IrrPresets_t temp;
+		if (xRegulationActions && xQueueReceive(xRegulationActions, &temp, 50)) {
+			if (temp.eRegMode != presetState.eRegMode) {
+				switch (temp.eRegMode) {
+				case eRegIdle:
+					REGULATION_Stop();
+					break;
+
+				case eRegIrrigation:
+					REGULATION_Start(temp.u16FlowRPM);
+					break;
+
+				default:
+					break;
+				}
+			}
+
+			presetState = temp;
+
+			REGULATION_Update(presetState.u16FlowRPM);
 		}
 
 		if (xIrrigationPressureData && xQueueReceive(xIrrigationPressureData, &sensorData, 50)) {
-			status.sPressureData = sensorData->data;
+			actualState.sPressureData = sensorData->data;
 			free_sensor_struct(sensorData);
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: %f", status.fIrrigationActualPressureMMHG);
 			bUpdate = true;
@@ -101,16 +119,19 @@ static void Regulation_Thread(void * argument) {
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: ---");
 		}
 
-		if (xIrrigationMotorSpeedRPM && xQueueReceive(xIrrigationMotorSpeedRPM, &status.fFlowRPM, 50)) {
+		if (xIrrigationMotorSpeedRPM && xQueueReceive(xIrrigationMotorSpeedRPM, &actualState.fFlowRPM, 50)) {
 //			DEBUG_SendTextFrame("Regulation_Thread SPEED: %f", status.fIrrigationActualSpeedRPM);
 			bUpdate = true;
 		} else {
 //			DEBUG_SendTextFrame("Regulation_Thread SPEED: ---");
 		}
 
+		float fTemp[2] = {presetState.u16FlowRPM, actualState.fFlowRPM};
+		DEBUG_SendRpmPidDataFrame(2, fTemp);
+
 		if (bUpdate) {
-			status.fFlowLPM = FCE_fIrrGetFlowCoeff(status.fFlowRPM) * status.fFlowRPM;
-			xQueueSend( xRegulationStatus, ( void * ) &status, ( TickType_t ) 0 );
+			actualState.fFlowLPM = FCE_fIrrGetFlowCoeff(actualState.fFlowRPM) * actualState.fFlowRPM;
+			xQueueSend( xRegulationStatus, ( void * ) &actualState, ( TickType_t ) 0 );
 		}
 	}
 }

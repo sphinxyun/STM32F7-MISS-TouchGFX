@@ -7,7 +7,14 @@ extern "C" {
 
 #include "pressure_sensor/pressure_sensor_thread.h"
 
+typedef enum {
+	eRegIdle = 0,
+	eRegIrrigation
+} REGULATION_Mode_t;
+
 typedef struct {
+	REGULATION_Mode_t eRegMode;
+
 	uint8_t u8PressureMMHG;
 
 	float fFlowLPM;

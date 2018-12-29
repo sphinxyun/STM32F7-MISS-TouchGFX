@@ -130,6 +130,7 @@ static void StateMachine_Thread(void * argument) {
 
 	REGULATION_IrrPresets_t sIrrigationPresets;
 
+	sIrrigationPresets.eRegMode = eRegIdle;
 	sIrrigationPresets.u8PressureMMHG = set->u32IrrigationPressureMMHG;
 	sIrrigationPresets.u16FlowRPM = set->u16IrrigationFlowRPM;
 	sIrrigationPresets.fFlowLPM = set->fIrrigationFlowLPM;
@@ -155,19 +156,17 @@ static void StateMachine_Thread(void * argument) {
 			if (action == WM_GUI_LOADED) {
 				TOUCHGFT_SetBacklight(SETTINGS_GetBrightness());
 			} else if (action == WM_MAIN_START_ACTION) {
-				REGULATION_Start(sIrrigationPresets.u16FlowRPM);
-
-				DEBUG_SendTextFrame("WM_MAIN_START_ACTION");
+				sIrrigationPresets.eRegMode = eRegIrrigation;
+//				DEBUG_SendTextFrame("WM_MAIN_START_ACTION");
 			} else if (action == WM_MAIN_STOP_ACTION) {
-				REGULATION_Stop();
-
-				DEBUG_SendTextFrame("WM_MAIN_STOP_ACTION");
+				sIrrigationPresets.eRegMode = eRegIdle;
+//				DEBUG_SendTextFrame("WM_MAIN_STOP_ACTION");
 			} else if (action == WM_MAIN_INCREASE_BRIGHTNESS) {
 				SETTINGS_IncBrightness();
-				DEBUG_SendTextFrame("WM_MAIN_INCREASE_BRIGHTNESS");
+//				DEBUG_SendTextFrame("WM_MAIN_INCREASE_BRIGHTNESS");
 			} else if (action == WM_MAIN_DECREASE_BRIGHTNESS) {
 				SETTINGS_DecBrightness();
-				DEBUG_SendTextFrame("WM_MAIN_DECREASE_BRIGHTNESS");
+//				DEBUG_SendTextFrame("WM_MAIN_DECREASE_BRIGHTNESS");
 			} else if (action == WM_MAIN_INCREASE_IRRIGATION_PRESSURE) {
 				const SETTINGS_ProgramSettingsTypedef *set = SETTINGS_Get();
 				if ((sIrrigationPresets.u8PressureMMHG + set->u32IrrigationPressureMMHGIncValue) >= set->u32IrrigationPressureMMHGMaxValue) {
@@ -252,7 +251,7 @@ static void StateMachine_Thread(void * argument) {
 			guiStatus->status.u32ButtonFlags = u32BtnFlags;
 			guiStatus->status.u32BrightnessPercent = SETTINGS_GetBrightness();
 
-			DEBUG_SendTextFrame("StateMachine_Thread: xGuiStatus SEND");
+//			DEBUG_SendTextFrame("StateMachine_Thread: xGuiStatus SEND");
 
 			xQueueSend( xGuiStatus, ( void * ) &guiStatus, ( TickType_t ) 0 );
 

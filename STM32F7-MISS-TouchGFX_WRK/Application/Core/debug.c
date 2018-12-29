@@ -14,8 +14,10 @@
 #define START1 	0xAA
 #define START2 	0x55
 
-#define BINARY_DEBUG_DATA_COMMAND	'g'
+#define BINARY_DEBUG_DATA_COMMAND	'd'
 #define TEXT_DEBUG_DATA_COMMAND		't'
+
+#define RPM_PID_DEBUG_DATA_COMMAND	'p'
 
 uint8_t u8FrmCnt;
 
@@ -414,6 +416,42 @@ void DEBUG_SendTextFrame(const char* str, ...) {
 	u8Frame[5] = (u16LengthInBytes >> 0) & 0x00FF;
 
 	memcpy(&u8Frame[6], temp, u16LengthInBytes);
+
+	uint32_t crc_result = crc32(&u8Frame[2], 4 + u16LengthInBytes);
+
+	u8Frame[6 + u16LengthInBytes + 0] = (crc_result & 0xff000000) >> 24;
+	u8Frame[6 + u16LengthInBytes + 1] = (crc_result & 0x00ff0000) >> 16;
+	u8Frame[6 + u16LengthInBytes + 2] = (crc_result & 0x0000ff00) >> 8;
+	u8Frame[6 + u16LengthInBytes + 3] = (crc_result & 0x000000ff) >> 0;
+
+	uint16_t u16BytesSent;
+	DEBUG_UART_SendData(u8Frame, 2 + 4 + u16LengthInBytes + 4, &u16BytesSent);
+}
+
+void DEBUG_SendRpmPidDataFrame(const uint8_t u8NoOfItems, const float *pfData) {
+	uint16_t u16LengthInBytes = 1 + 4 * u8NoOfItems;
+
+	uint8_t u8Frame[265];
+	u8Frame[0] = START1;
+	u8Frame[1] = START2;
+
+	u8Frame[2] = RPM_PID_DEBUG_DATA_COMMAND;
+
+	//frame no
+	u8Frame[3] = u8FrmCnt;
+	//omit frame number zero in normal frame tx mode - frames with zero are special :-)
+	if (++u8FrmCnt == 0) {
+		u8FrmCnt = 1;
+	}
+
+	u8Frame[4] = (u16LengthInBytes >> 8) & 0x00FF;
+	u8Frame[5] = (u16LengthInBytes >> 0) & 0x00FF;
+
+	u8Frame[6] = u8NoOfItems;
+
+	for (int i = 0; i < u8NoOfItems; i++) {
+		memcpy(&u8Frame[6 + 1 + i * 4], &pfData[i], 4);
+	}
 
 	uint32_t crc_result = crc32(&u8Frame[2], 4 + u16LengthInBytes);
 
