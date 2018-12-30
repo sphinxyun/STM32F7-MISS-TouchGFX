@@ -9,7 +9,7 @@
 #include "stm32f7xx_ll_rcc.h"
 #include "stm32f7xx_ll_bus.h"
 
-#define DEBUG_PRESSURE_SENSOR_THREAD_LL		0
+#define DEBUG_PRESSURE_SENSOR_THREAD_LL		1
 #define DEBUG_PRESSURE_SENSOR_THREAD_HL		1
 
 static TaskHandle_t PressureSensorHandlerThreadId = 0;
@@ -38,8 +38,8 @@ void DMA2_Stream1_IRQHandler(void) {
     	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-    	DEBUG_SendTextFrame("\n\n");
-    	DEBUG_SendTextFrame("UART6_DMA_TC   HISR: %x | LISR: %x", DMA2->HISR, DMA2->LISR);
+    	DEBUG_SendTextFrame("\n");
+//    	DEBUG_SendTextFrame("UART6_DMA_TC   HISR: %x | LISR: %x", DMA2->HISR, DMA2->LISR);
 #endif
 
     	if (LL_DMA_GetCurrentTargetMem(DMA2, LL_DMA_STREAM_1) == LL_DMA_CURRENTTARGETMEM0) {
@@ -57,8 +57,8 @@ void DMA2_Stream1_IRQHandler(void) {
 
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-    		if (xHigherPriorityTaskWoken)
-    			DEBUG_SendTextFrame("xHigherPriorityTaskWoken");
+//    		if (xHigherPriorityTaskWoken)
+//    			DEBUG_SendTextFrame("xHigherPriorityTaskWoken");
 #endif
     	} else {
 
@@ -74,8 +74,8 @@ void DMA2_Stream1_IRQHandler(void) {
     		}
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-    		if (xHigherPriorityTaskWoken)
-    		    DEBUG_SendTextFrame("xHigherPriorityTaskWoken");
+//    		if (xHigherPriorityTaskWoken)
+//    		    DEBUG_SendTextFrame("xHigherPriorityTaskWoken");
 #endif
     	}
 
@@ -283,6 +283,9 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 
 	uint32_t ulNotifiedValue = 0;
 
+	uint8_t u8CarmenData[13];
+	uint8_t u8CarmenLen = 0;
+
 	for (;;) {
 		if (xTaskNotifyWait(0x00000000, 0xFFFFFFFF, &ulNotifiedValue, 1000)) {
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
@@ -299,27 +302,49 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 				uStatusSum.u8Stat[i] = 0;
 
 			size_t idx = 0;
-			while (idx < DMA_RX_BUFFER_SIZE) {
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
+			while (idx < DMA_RX_BUFFER_SIZE) {
 				if (idx % 13 == 0) {
 					if (idx / 13 <= 9)
-						DEBUG_SendTextFrame(" %d: %t", idx / 13, &pRxBuffer[idx], 13);
+						DEBUG_SendTextFrame("    %d: %t", idx / 13, &pRxBuffer[idx], 13);
 					else
-						DEBUG_SendTextFrame( "%d: %t", idx / 13, &pRxBuffer[idx], 13);
+						DEBUG_SendTextFrame( "   %d: %t", idx / 13, &pRxBuffer[idx], 13);
 				}
+				idx++;
+			}
+
+			idx = 0;
 #endif
+
+			while (idx < DMA_RX_BUFFER_SIZE) {
+				if ((idx == 0) && (u8CarmenLen != 0)) {
+					memcpy(&u8CarmenData[u8CarmenLen], &pRxBuffer[idx], 13 - u8CarmenLen);
+//					idx += (13 - u8CarmenLen);
+//					u8CarmenLen = 0;
+					pRxBuffer = u8CarmenData;
+				}
 
 				if (pRxBuffer[idx] == 0x35) {
-					uint16_t *pu16RxedCrc = (uint16_t *)&pRxBuffer[idx + 11];
-					uint16_t u16CompCRC = CalculateCarmenCRC16(0xFFFF, &pRxBuffer[idx], 11);
-
-					if (u16CompCRC == *pu16RxedCrc) {
+					//check if this is a whole frame in this buffer or if it is divided
+					//between two buffers (this and next)...
+					if (idx + 13 > DMA_RX_BUFFER_SIZE) {
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-						DEBUG_SendTextFrame("CARMEN FRAME CRC OK!!!");
+						DEBUG_SendTextFrame("CARMEN FRAME - PARTIAL, only %d bytes in this buffer...", DMA_RX_BUFFER_SIZE - idx);
+						//copy data from this buffer - will be joined with remaining bytes in the beginning of next buffer
+						memcpy(u8CarmenData, &pRxBuffer[idx], DMA_RX_BUFFER_SIZE - idx);
+						u8CarmenLen = DMA_RX_BUFFER_SIZE - idx;
+						idx = DMA_RX_BUFFER_SIZE;
+#endif
+					} else {
+						uint16_t *pu16RxedCrc = (uint16_t *)&pRxBuffer[idx + 11];
+						uint16_t u16CompCRC = CalculateCarmenCRC16(0xFFFF, &pRxBuffer[idx], 11);
+
+						if (u16CompCRC == *pu16RxedCrc) {
+#if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
+							DEBUG_SendTextFrame("CARMEN FRAME CRC OK!!!");
 #endif
 
-						//parse rxed frame:
-						if (pRxBuffer[idx] == 0x35) {
+							//parse rxed frame:
 							int32_t i32Digout_1 = (((uint32_t)pRxBuffer[idx + 3]) << 16) | (((uint32_t)pRxBuffer[idx + 2]) << 8) | (((uint32_t)pRxBuffer[idx + 1]) << 0);
 							if (i32Digout_1 & 0x00800000) i32Digout_1 |= 0xFF000000;
 							i32BufferPressSum += i32Digout_1;
@@ -337,33 +362,38 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 							u32BufferFrmeCnt++;
 							u32ValidFrames++;
 						} else {
-							u32ErrorsUNK++;
-						}
-					} else {
-						u32ErrorsCRC++;
+							u32ErrorsCRC++;
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-						DEBUG_SendTextFrame("CARMEN FRAME CRC ERROR ( idx = %d ):", idx);
-						DEBUG_SendTextFrame("  buffer_A: %s", (pRxBuffer == UART6_DMA_RX_Buffer_A) ? "T" : "F");
-						DEBUG_SendTextFrame("  buffer_B: %s", (pRxBuffer == UART6_DMA_RX_Buffer_B) ? "T" : "F");
+							DEBUG_SendTextFrame("CARMEN FRAME CRC ERROR ( idx = %d ):", idx);
+							DEBUG_SendTextFrame("  buffer_A: %s", (pRxBuffer == UART6_DMA_RX_Buffer_A) ? "T" : "F");
+							DEBUG_SendTextFrame("  buffer_B: %s", (pRxBuffer == UART6_DMA_RX_Buffer_B) ? "T" : "F");
 
-						DEBUG_SendTextFrame("  cmd:      %x", pRxBuffer[idx]);
-						DEBUG_SendTextFrame("  payload:  %t", &pRxBuffer[idx+1], 10);
-						uint16_t *pu16RxedCrc = (uint16_t *)&pRxBuffer[idx+11];
-						DEBUG_SendTextFrame("  crc rxed: %x", *pu16RxedCrc);
-						DEBUG_SendTextFrame("  crc comp: %x", u16CompCRC);
+							DEBUG_SendTextFrame("  cmd:      %x", pRxBuffer[idx]);
+							DEBUG_SendTextFrame("  payload:  %t", &pRxBuffer[idx+1], 10);
+							uint16_t *pu16RxedCrc = (uint16_t *)&pRxBuffer[idx+11];
+							DEBUG_SendTextFrame("  crc rxed: %x", *pu16RxedCrc);
+							DEBUG_SendTextFrame("  crc comp: %x", u16CompCRC);
 #endif
-					}
+						}
 
-					idx += 13;
+						if ((idx == 0) && (u8CarmenLen != 0)) {
+							idx += (13 - u8CarmenLen);
+							u8CarmenLen = 0;
+						} else {
+							idx += 13;
+						}
+
+						pRxBuffer = (uint8_t *)ulNotifiedValue;
+					}
 				} else {
 					u32ErrorsSOF++;
 
 					idx++;
 
-#if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-					DEBUG_SendTextFrame("CARMEN FRAME SOF ERROR!!!");
-#endif
+//#if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
+//					DEBUG_SendTextFrame("CARMEN FRAME SOF ERROR!!!");
+//#endif
 				}
 			}
 
