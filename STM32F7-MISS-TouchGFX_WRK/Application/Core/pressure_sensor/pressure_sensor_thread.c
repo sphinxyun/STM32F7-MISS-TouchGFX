@@ -9,8 +9,12 @@
 #include "stm32f7xx_ll_rcc.h"
 #include "stm32f7xx_ll_bus.h"
 
-#define DEBUG_PRESSURE_SENSOR_THREAD_LL		1
-#define DEBUG_PRESSURE_SENSOR_THREAD_HL		1
+#define DEBUG_PRESSURE_SENSOR_THREAD_LL		0
+#define DEBUG_PRESSURE_SENSOR_THREAD_HL		0
+
+#if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1 || DEBUG_PRESSURE_SENSOR_THREAD_HL == 1)
+#include "debug.h"
+#endif
 
 static TaskHandle_t PressureSensorHandlerThreadId = 0;
 
@@ -319,8 +323,8 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 			while (idx < DMA_RX_BUFFER_SIZE) {
 				if ((idx == 0) && (u8CarmenLen != 0)) {
 					memcpy(&u8CarmenData[u8CarmenLen], &pRxBuffer[idx], 13 - u8CarmenLen);
-//					idx += (13 - u8CarmenLen);
-//					u8CarmenLen = 0;
+					//temporarily change the address of the rx buffer - this will be corrected
+					//in the very end of the while loop (when idx is increased)
 					pRxBuffer = u8CarmenData;
 				}
 
@@ -330,11 +334,12 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 					if (idx + 13 > DMA_RX_BUFFER_SIZE) {
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
 						DEBUG_SendTextFrame("CARMEN FRAME - PARTIAL, only %d bytes in this buffer...", DMA_RX_BUFFER_SIZE - idx);
-						//copy data from this buffer - will be joined with remaining bytes in the beginning of next buffer
+#endif
+						//copy data from this buffer to temporary location...
+						//they will be joined with remaining bytes in the beginning of next buffer asap
 						memcpy(u8CarmenData, &pRxBuffer[idx], DMA_RX_BUFFER_SIZE - idx);
 						u8CarmenLen = DMA_RX_BUFFER_SIZE - idx;
 						idx = DMA_RX_BUFFER_SIZE;
-#endif
 					} else {
 						uint16_t *pu16RxedCrc = (uint16_t *)&pRxBuffer[idx + 11];
 						uint16_t u16CompCRC = CalculateCarmenCRC16(0xFFFF, &pRxBuffer[idx], 11);
@@ -377,23 +382,22 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 #endif
 						}
 
+						//this frame was divided into two buffers (its beginning and end were in
+						//consecutive buffers - idx must be increased by only a fraction of frame
+						//length and pRxBuffer pointer must be corrected to point onto DMA buffer
 						if ((idx == 0) && (u8CarmenLen != 0)) {
 							idx += (13 - u8CarmenLen);
 							u8CarmenLen = 0;
+							pRxBuffer = (uint8_t *)ulNotifiedValue;
 						} else {
+							//regular operation - each time idx is increased by the whole frame length
 							idx += 13;
 						}
-
-						pRxBuffer = (uint8_t *)ulNotifiedValue;
 					}
 				} else {
 					u32ErrorsSOF++;
 
 					idx++;
-
-//#if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-//					DEBUG_SendTextFrame("CARMEN FRAME SOF ERROR!!!");
-//#endif
 				}
 			}
 
@@ -417,7 +421,10 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 			sData = get_sensor_struct();
 
 			if (sData == NULL) {
+#if (DEBUG_PRESSURE_SENSOR_THREAD_HL == 1)
 				DEBUG_SendTextFrame("PressureAnalysis_Thread: get_sensor_struct ERROR");
+#endif
+				while (1) {};
 			}
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
@@ -429,6 +436,7 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 			DEBUG_SendTextFrame("           DMA MEM : %x", LL_DMA_GetCurrentTargetMem(DMA2, LL_DMA_STREAM_1));
 #endif
 		} else {
+			///TODO: RESET DMA & THREAD STATE HERE!!!
 #if (DEBUG_PRESSURE_SENSOR_THREAD_HL == 1)
 			DEBUG_SendTextFrame("Pressure - NO DATA FROM SENSOR!!!!");
 #endif
