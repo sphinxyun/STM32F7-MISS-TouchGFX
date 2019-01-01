@@ -7,6 +7,7 @@
 #include "task.h"
 #include "queue.h"
 
+#include "debug.h"
 #include "global.h"
 
 TaskHandle_t RegulationTaskId = 0;
@@ -88,6 +89,14 @@ static void Regulation_Thread(void * argument) {
 	bool bUpdate = false;
 
 	for (;;) {
+		LED0_TOGGLE;
+		LED3_TOGGLE;
+		AD_SIG_0_TOGGLE;
+		AD_SIG_1_TOGGLE;
+		AD_SIG_2_TOGGLE;
+		AD_SIG_3_TOGGLE;
+		AD_SIG_4_TOGGLE;
+
 		REGULATION_IrrPresets_t temp;
 		if (xRegulationActions && xQueueReceive(xRegulationActions, &temp, 25)) {
 			if (temp.eRegMode != presetState.eRegMode) {

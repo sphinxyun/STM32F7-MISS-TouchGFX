@@ -450,6 +450,8 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 			DEBUG_SendTextFrame("           DMA MEM : %x", LL_DMA_GetCurrentTargetMem(DMA2, LL_DMA_STREAM_1));
 #endif
 		} else {
+			u8CarmenLen = 0;
+
 			///TODO: RESET DMA & THREAD STATE HERE!!!
 #if (DEBUG_PRESSURE_SENSOR_THREAD_HL == 1)
 			DEBUG_SendTextFrame("Pressure - NO DATA FROM SENSOR!!!!");

@@ -43,8 +43,38 @@ static inline uint32_t reverse(uint32_t x);
 static inline uint32_t crc32(const uint8_t *frame, uint16_t length);
 
 void DEBUG_Init(void) {
+	GPIO_InitTypeDef GPIO_InitStruct;
+
 	DEBUG_UART_Init();
 	DEBUG_ResetCommunication();
+
+	//AD_SIG_0, 1, 2, 3, 4, LED0 & LED3
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOD_CLK_ENABLE();
+	__HAL_RCC_GPIOE_CLK_ENABLE();
+	__HAL_RCC_GPIOH_CLK_ENABLE();
+
+	GPIO_InitStruct.Pin = GPIO_PIN_9 | GPIO_PIN_12 | GPIO_PIN_14;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
+	AD_SIG_0_SET_LOW;
+	LED0_SET_LOW;
+	LED3_SET_LOW;
+
+	GPIO_InitStruct.Pin = GPIO_PIN_3;
+	HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+	AD_SIG_1_SET_LOW;
+
+	GPIO_InitStruct.Pin = GPIO_PIN_5 | GPIO_PIN_6;
+	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+	AD_SIG_2_SET_LOW;
+	AD_SIG_3_SET_LOW;
+
+	GPIO_InitStruct.Pin = GPIO_PIN_4;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+	AD_SIG_4_SET_LOW;
 }
 
 void DEBUG_ResetCommunication(void) {

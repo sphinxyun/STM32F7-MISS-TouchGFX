@@ -150,8 +150,9 @@ void StartSpeedMonitoring(void) {
 
 	 We configure measurement period to be 20 Hz
 	 108 MHz / 54000 = 2000 counts - prescaller equal to 54000 is needed
-	 50 ms = 0,050 s -> 20 times per second, so 2000 counts divided by 100 is 20 times per second
-	 25 ms = 0,025 s -> 40 times per second, so 2000 counts divided by  50 is 40 times per second
+	 50 ms   = 0,050 s  -> 20 times per second, so 2000 counts divided by 100 is 20 times per second
+	 25 ms   = 0,025 s  -> 40 times per second, so 2000 counts divided by  50 is 40 times per second
+	 12,5 ms = 0,0125 s -> 80 times per second, so 2000 counts divided by  25 is 80 times per second
 	 */
 	SPEED_TimerHandle.Instance = TIM3;
 	SPEED_TimerHandle.Init.Period = 25 - 1;
