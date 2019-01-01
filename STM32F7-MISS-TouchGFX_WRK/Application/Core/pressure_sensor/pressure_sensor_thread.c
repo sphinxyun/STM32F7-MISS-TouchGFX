@@ -9,7 +9,7 @@
 #include "stm32f7xx_ll_rcc.h"
 #include "stm32f7xx_ll_bus.h"
 
-#define DEBUG_PRESSURE_SENSOR_THREAD_LL		0
+#define DEBUG_PRESSURE_SENSOR_THREAD_LL		1
 #define DEBUG_PRESSURE_SENSOR_THREAD_HL		0
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1 || DEBUG_PRESSURE_SENSOR_THREAD_HL == 1)
@@ -27,8 +27,8 @@ QueueHandle_t xIrrigationPressureData = 0;
 LL_USART_InitTypeDef USART6_InitStruct;
 LL_DMA_InitTypeDef DMA_USART6_RX_InitStruct;
 
-#define DMA_RX_BUFFER_DIV		3
-#define DMA_RX_BUFFER_CHK		8
+#define DMA_RX_BUFFER_DIV		4
+#define DMA_RX_BUFFER_CHK		16
 #define DMA_RX_BUFFER_SIZE		(DMA_RX_BUFFER_CHK * 13)
 volatile uint8_t UART6_DMA_RX_Buffer_A[DMA_RX_BUFFER_SIZE];
 volatile uint8_t UART6_DMA_RX_Buffer_B[DMA_RX_BUFFER_SIZE];
@@ -298,7 +298,7 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 
 			uint8_t *pRxBuffer = (uint8_t *)ulNotifiedValue;
 
-			uint32_t u32BufferFrmeCnt = 0;
+			uint32_t u32BufferFrmCnt = 0;
 			int32_t i32BufferPressSum = 0;
 			int32_t i32BufferTempSum = 0;
 			uCarmentStatusReg_t uStatusSum;
@@ -346,7 +346,7 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 
 						if (u16CompCRC == *pu16RxedCrc) {
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-							DEBUG_SendTextFrame("CARMEN FRAME CRC OK!!!");
+//							DEBUG_SendTextFrame("CARMEN FRAME CRC OK!!!");
 #endif
 
 							//parse rxed frame:
@@ -364,8 +364,21 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 							for (int i = 0; i < 3; i++)
 								uStatusSum.u8Stat[i] |= uStatus.u8Stat[i];
 
-							u32BufferFrmeCnt++;
+							u32BufferFrmCnt++;
 							u32ValidFrames++;
+
+							if ((idx == 0) && (u8CarmenLen != 0)) {
+								//this frame was divided into two buffers (its beginning and end were in
+								//consecutive buffers - idx must be increased by only a fraction of frame
+								//length and pRxBuffer pointer must be corrected to point onto DMA buffer
+
+								idx += (13 - u8CarmenLen);
+								u8CarmenLen = 0;
+								pRxBuffer = (uint8_t *)ulNotifiedValue;
+							} else {
+								//regular operation - each time idx is increased by the whole frame length
+								idx += 13;
+							}
 						} else {
 							u32ErrorsCRC++;
 
@@ -380,18 +393,19 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 							DEBUG_SendTextFrame("  crc rxed: %x", *pu16RxedCrc);
 							DEBUG_SendTextFrame("  crc comp: %x", u16CompCRC);
 #endif
-						}
 
-						//this frame was divided into two buffers (its beginning and end were in
-						//consecutive buffers - idx must be increased by only a fraction of frame
-						//length and pRxBuffer pointer must be corrected to point onto DMA buffer
-						if ((idx == 0) && (u8CarmenLen != 0)) {
-							idx += (13 - u8CarmenLen);
-							u8CarmenLen = 0;
-							pRxBuffer = (uint8_t *)ulNotifiedValue;
-						} else {
-							//regular operation - each time idx is increased by the whole frame length
-							idx += 13;
+							if ((idx == 0) && (u8CarmenLen != 0)) {
+								//this frame was divided into two buffers (its beginning and end were in
+								//consecutive buffers - the problem is that in the end, after the frame was assembled
+								//the CRC was not correct...
+								//pRxBuffer pointer must be corrected to point onto DMA buffer but idx is not altered
+								//so regular buffer will be searched from the very beginning
+								u8CarmenLen = 0;
+								pRxBuffer = (uint8_t *)ulNotifiedValue;
+							} else {
+								//regular operation - each time idx is increased by the whole frame length
+								idx += 13;
+							}
 						}
 					}
 				} else {
@@ -401,12 +415,12 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 				}
 			}
 
-			if (u32BufferFrmeCnt == DMA_RX_BUFFER_CHK) {
+			if (u32BufferFrmCnt == DMA_RX_BUFFER_CHK) {
 				sData->data.fPressureMMHG = ((float)(i32BufferPressSum >> DMA_RX_BUFFER_DIV) / 16777216.0) / 0.25 * 2* 750.06;
 				sData->data.fTemperatureC = ((float)(i32BufferTempSum >> DMA_RX_BUFFER_DIV) / 65536.0) / 0.454545 * 100 + 25;
 			} else {
-				sData->data.fPressureMMHG = ((float)(i32BufferPressSum / (float)u32BufferFrmeCnt) / 16777216.0) / 0.25 * 2* 750.06;
-				sData->data.fTemperatureC = ((float)(i32BufferTempSum / (float)u32BufferFrmeCnt) / 65536.0) / 0.454545 * 100 + 25;
+				sData->data.fPressureMMHG = ((float)(i32BufferPressSum / (float)u32BufferFrmCnt) / 16777216.0) / 0.25 * 2* 750.06;
+				sData->data.fTemperatureC = ((float)(i32BufferTempSum / (float)u32BufferFrmCnt) / 65536.0) / 0.454545 * 100 + 25;
 			}
 
 			memcpy(&sData->data.uStatus.u8Stat[0], &uStatusSum.u8Stat[0], 3);
