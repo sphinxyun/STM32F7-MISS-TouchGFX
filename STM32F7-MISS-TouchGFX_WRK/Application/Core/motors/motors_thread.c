@@ -7,6 +7,8 @@
 #include "task.h"
 #include "queue.h"
 
+#include "debug.h"
+
 TaskHandle_t MotorsTaskId = 0;
 
 QueueHandle_t xIrrigationMotorSpeedRPM = 0;
@@ -74,8 +76,10 @@ static void Motors_Thread(void * argument) {
 
 	for (;;) {
 		if (xTaskNotifyWait(0x00000000, 0xFFFFFFFF, (uint32_t *)&i32NotifiedValue, 50)) {
+			//1200 (max assumed rpms) / 60 (seconds) / (1 / 0.0125) (sampling freq = 80Hz)
 			fSpeed_RPM = (float)i32NotifiedValue / 250.0 * 60.0;
 //			DEBUG_SendTextFrame("Motors_Thread: %f RPM (%d spd - x2004)", fSpeed_RPM, ulNotifiedValue);
+			AD_SIG_2_TOGGLE;
 
 			xQueueSend( xIrrigationMotorSpeedRPM, ( void * ) &fSpeed_RPM, ( TickType_t ) 0 );
 		} else {

@@ -27,8 +27,8 @@ QueueHandle_t xIrrigationPressureData = 0;
 LL_USART_InitTypeDef USART6_InitStruct;
 LL_DMA_InitTypeDef DMA_USART6_RX_InitStruct;
 
-#define DMA_RX_BUFFER_DIV		4
-#define DMA_RX_BUFFER_CHK		16
+#define DMA_RX_BUFFER_DIV		3
+#define DMA_RX_BUFFER_CHK		8
 #define DMA_RX_BUFFER_SIZE		(DMA_RX_BUFFER_CHK * 13)
 volatile uint8_t UART6_DMA_RX_Buffer_A[DMA_RX_BUFFER_SIZE];
 volatile uint8_t UART6_DMA_RX_Buffer_B[DMA_RX_BUFFER_SIZE];
@@ -49,7 +49,7 @@ void DMA2_Stream1_IRQHandler(void) {
     	if (LL_DMA_GetCurrentTargetMem(DMA2, LL_DMA_STREAM_1) == LL_DMA_CURRENTTARGETMEM0) {
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-        	DEBUG_SendTextFrame("      BUFFERS: fill: %x | proc: %x", UART6_DMA_RX_Buffer_A, UART6_DMA_RX_Buffer_B);
+        	DEBUG_SendTextFrame("BUFFERS: fill: %x | proc: %x", UART6_DMA_RX_Buffer_A, UART6_DMA_RX_Buffer_B);
 #endif
 
     		// current target buffer A (read buffer B)
@@ -67,7 +67,7 @@ void DMA2_Stream1_IRQHandler(void) {
     	} else {
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
-        	DEBUG_SendTextFrame("      BUFFERS: fill: %x | proc: %x", UART6_DMA_RX_Buffer_B, UART6_DMA_RX_Buffer_A);
+        	DEBUG_SendTextFrame("BUFFERS: fill: %x | proc: %x", UART6_DMA_RX_Buffer_B, UART6_DMA_RX_Buffer_A);
 #endif
 
     		// current target buffer B (read buffer A)
@@ -431,6 +431,7 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 			sData->data.sErrorStats.u32ErrUNK = u32ErrorsUNK;
 
 			xQueueSend( xIrrigationPressureData, ( void * ) &sData, ( TickType_t ) 0 );
+			AD_SIG_0_TOGGLE;
 
 			sData = get_sensor_struct();
 
@@ -443,11 +444,11 @@ static void PressureAnalysis_Thread(void * pvParameters ) {
 
 #if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1)
 			DEBUG_SendTextFrame("Pressure - STOP PROCESSING (%x)", ulNotifiedValue);
-			DEBUG_SendTextFrame("           DMA NDTR: %d", DMA2_Stream1->NDTR);
-			DEBUG_SendTextFrame("           DMA M0AR: %x", DMA2_Stream1->M0AR);
-			DEBUG_SendTextFrame("           DMA M1AR: %x", DMA2_Stream1->M1AR);
-			DEBUG_SendTextFrame("           DMA CR  : %x", DMA2_Stream1->CR);
-			DEBUG_SendTextFrame("           DMA MEM : %x", LL_DMA_GetCurrentTargetMem(DMA2, LL_DMA_STREAM_1));
+//			DEBUG_SendTextFrame("           DMA NDTR: %d", DMA2_Stream1->NDTR);
+//			DEBUG_SendTextFrame("           DMA M0AR: %x", DMA2_Stream1->M0AR);
+//			DEBUG_SendTextFrame("           DMA M1AR: %x", DMA2_Stream1->M1AR);
+//			DEBUG_SendTextFrame("           DMA CR  : %x", DMA2_Stream1->CR);
+//			DEBUG_SendTextFrame("           DMA MEM : %x", LL_DMA_GetCurrentTargetMem(DMA2, LL_DMA_STREAM_1));
 #endif
 		} else {
 			u8CarmenLen = 0;

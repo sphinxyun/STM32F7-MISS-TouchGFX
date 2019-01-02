@@ -89,16 +89,11 @@ static void Regulation_Thread(void * argument) {
 	bool bUpdate = false;
 
 	for (;;) {
-		LED0_TOGGLE;
-		LED3_TOGGLE;
-		AD_SIG_0_TOGGLE;
-		AD_SIG_1_TOGGLE;
-		AD_SIG_2_TOGGLE;
 		AD_SIG_3_TOGGLE;
-		AD_SIG_4_TOGGLE;
 
 		REGULATION_IrrPresets_t temp;
-		if (xRegulationActions && xQueueReceive(xRegulationActions, &temp, 25)) {
+		//do not wait for action queue events
+		if (xRegulationActions && xQueueReceive(xRegulationActions, &temp, 0)) {
 			if (temp.eRegMode != presetState.eRegMode) {
 				switch (temp.eRegMode) {
 				case eRegIdle:
@@ -119,7 +114,7 @@ static void Regulation_Thread(void * argument) {
 			REGULATION_Update(presetState.i16FlowRPM);
 		}
 
-		if (xIrrigationPressureData && xQueueReceive(xIrrigationPressureData, &sensorData, 25)) {
+		if (xIrrigationPressureData && xQueueReceive(xIrrigationPressureData, &sensorData, 15)) {
 			actualState.sPressureData = sensorData->data;
 			free_sensor_struct(sensorData);
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: %f", status.fIrrigationActualPressureMMHG);
@@ -128,7 +123,7 @@ static void Regulation_Thread(void * argument) {
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: ---");
 		}
 
-		if (xIrrigationMotorSpeedRPM && xQueueReceive(xIrrigationMotorSpeedRPM, &actualState.fFlowRPM, 50)) {
+		if (xIrrigationMotorSpeedRPM && xQueueReceive(xIrrigationMotorSpeedRPM, &actualState.fFlowRPM, 15)) {
 //			DEBUG_SendTextFrame("Regulation_Thread SPEED: %f", status.fIrrigationActualSpeedRPM);
 			bUpdate = true;
 		} else {

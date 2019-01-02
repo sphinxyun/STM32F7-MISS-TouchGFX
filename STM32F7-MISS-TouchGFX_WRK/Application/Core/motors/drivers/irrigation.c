@@ -6,6 +6,7 @@
 #include "stm32f7xx_hal_rcc.h"
 #include "stm32f7xx_hal_tim.h"
 
+#include "debug.h"
 #include "global.h"
 
 #include "FreeRTOS.h"
@@ -45,7 +46,6 @@ void TIM3_IRQHandler(void) {
 	HAL_TIM_IRQHandler(&SPEED_TimerHandle);
 
 	BaseType_t xHigherPriorityTaskWoken;
-//	static int i = 0;
 
 	uint32_t temp = TIM5->CNT;
 	uint32_t pcTemp = pulse_count;
@@ -53,7 +53,6 @@ void TIM3_IRQHandler(void) {
 	int32_t speed_pulse = temp - pulse_count;
 	if (speed_pulse > 1500) speed_pulse = -(ENCODER_MAX_PULSES + 1 - temp + pulse_count);
 	if (speed_pulse < -1500) speed_pulse = ENCODER_MAX_PULSES + 1 - pulse_count + temp;
-//	speed_pulse = (temp >= pulse_count) ? (temp - pulse_count) : (ENCODER_MAX_PULSES+1 - pulse_count + temp);
 
 	pulse_count = temp;
 
@@ -61,19 +60,11 @@ void TIM3_IRQHandler(void) {
 	i32SpeedBuff[u16SpeedIdx] = speed_pulse;
 	i32SpeedSum += i32SpeedBuff[u16SpeedIdx];
 
-
 	GET_NEXT_BUFF_U16_IDX(u16SpeedIdx, AVG_BUFFER_SIZE);
 
-//	if ((speed_pulse < 0) || (i32SpeedSum < 0)) {
-//		DEBUG_SendTextFrame("i32SpeedSum = %d", i32SpeedSum);
-//		DEBUG_SendTextFrame("  temp = %d", temp);
-//		DEBUG_SendTextFrame("  p_c  = %d", pcTemp);
-//		DEBUG_SendTextFrame("  s_p  = %d", speed_pulse);
-//		DEBUG_SendTextFrame("  buff: %a", i32SpeedBuff, AVG_BUFFER_SIZE);
-//	}
+	AD_SIG_1_TOGGLE;
 
-//	i32Speed = i32SpeedSum;
-
+//	static int i = 0;
 //	if (++i >= 2) {
 //		i = 0;
 		xTaskNotifyFromISR( MotorsTaskId, i32SpeedSum, eSetValueWithOverwrite, &xHigherPriorityTaskWoken );
@@ -146,7 +137,8 @@ void StartSpeedMonitoring(void) {
 	 to avoid problems with lost revolutions 20 times per second = 1/20 = every 50 ms
 
 	 In order to detect direction in which the motor was moving (when 0-2003 transition is made
-	 in the reverse direction - for eg. 45 -> 1998) this must be increased x2, every 25 ms TIM3 is triggered
+	 in the reverse direction - for eg. 45 -> 1998) this must be increased x2, so TIM3 is triggered every 25 ms
+	 or even higher x4, so TIM3 is triggered every 12,5ms
 
 	 We configure measurement period to be 20 Hz
 	 108 MHz / 54000 = 2000 counts - prescaller equal to 54000 is needed
