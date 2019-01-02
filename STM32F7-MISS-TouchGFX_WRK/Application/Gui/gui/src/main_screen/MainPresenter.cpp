@@ -7,6 +7,8 @@ MainPresenter::MainPresenter(MainView& v)
 }
 
 void MainPresenter::activate() {
+	view.mcuLoadUpdated(model->getMcuLoad());
+
 	view.actualPressureMMHGUpdate(model->getGuiStatus().sIrrigationActual.sPressureData.fPressureMMHG);
 	view.actualFlowLPMUpdate(model->getGuiStatus().sIrrigationActual.fFlowLPM);
 	view.actualFlowRPMUpdate(model->getGuiStatus().sIrrigationActual.fFlowRPM);

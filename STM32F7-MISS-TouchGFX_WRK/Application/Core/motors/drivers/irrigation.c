@@ -130,7 +130,7 @@ void StartSpeedMonitoring(void) {
 	  - APB1 Prescaler is set to 4 (check SystemClock_Config),
 	  - additional x2 multiplier on APB1 Timer Clocks
 
-	 TIM3CLK = 216 MHz (HCLK) / 4 * 2 = 216 MHz (HCLK) / 2 = 108 MHz
+	 TIM3CLK = 200 MHz (HCLK) / 4 * 2 = 200 MHz (HCLK) / 2 = 100 MHz
 
 	 Max. motor RPMs @ 32V (no load) equal to 1170 RPM (~1200 RPM)
 	 1200 RPM / 60 s = 20 RPS (revolutions pre second) - timer must be called at least that often
@@ -141,14 +141,14 @@ void StartSpeedMonitoring(void) {
 	 or even higher x4, so TIM3 is triggered every 12,5ms
 
 	 We configure measurement period to be 20 Hz
-	 108 MHz / 54000 = 2000 counts - prescaller equal to 54000 is needed
+	 100 MHz / 50000 = 2000 counts - prescaller equal to 54000 is needed
 	 50 ms   = 0,050 s  -> 20 times per second, so 2000 counts divided by 100 is 20 times per second
 	 25 ms   = 0,025 s  -> 40 times per second, so 2000 counts divided by  50 is 40 times per second
 	 12,5 ms = 0,0125 s -> 80 times per second, so 2000 counts divided by  25 is 80 times per second
 	 */
 	SPEED_TimerHandle.Instance = TIM3;
 	SPEED_TimerHandle.Init.Period = 25 - 1;
-	SPEED_TimerHandle.Init.Prescaler = 54000;
+	SPEED_TimerHandle.Init.Prescaler = 50000;
 	SPEED_TimerHandle.Init.ClockDivision = 0;
 	SPEED_TimerHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
 	SPEED_TimerHandle.Init.RepetitionCounter = 0;
@@ -195,22 +195,22 @@ void Configure_PWM(void) {
 	  - APB1 Prescaler is set to 4 (check SystemClock_Config),
 	  - additional x2 multiplier on APB1 Timer Clocks
 
-	 TIM12CLK = 216 MHz (HCLK) / 4 * 2 = 216 MHz (HCLK) / 2 = 108 MHz
+	 TIM12CLK = 200 MHz (HCLK) / 4 * 2 = 200 MHz (HCLK) / 2 = 100 MHz
 
 	 We configure PWM Output Frequency to be equal to 20 kHz:
-	 108 MHz / 20 kHz = 5400 counts - no prescaller is needed - TIM12CLK will not be prescalled
-	 We need (108 MHz / 20 kHz) - 1 = 5400 - 1 = 5399 counts to get proper TIM12 period.
+	 100 MHz / 20 kHz = 5000 counts - no prescaller is needed - TIM12CLK will not be prescalled
+	 We need (100 MHz / 20 kHz) - 1 = 5000 - 1 = 4999 counts to get proper TIM12 period.
 
 	 And so:
 	  -    0 counts =   0% PWM
-	  - 2700 counts =  50% PWM
-	  - 5400 counts = 100% PWM
+	  - 2500 counts =  50% PWM
+	  - 5000 counts = 100% PWM
 	 */
 
 	PWM_TimHandle.Instance = TIM12;
 	PWM_TimHandle.Init.Prescaler = 0;
 	PWM_TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
-	PWM_TimHandle.Init.Period = 5400 - 1; //PERIOD_VALUE;
+	PWM_TimHandle.Init.Period = 5000 - 1;
 	PWM_TimHandle.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	PWM_TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
@@ -281,7 +281,7 @@ void IRRIGATION_Start(int16_t i16PWM) {
 //		i32SpeedBuff[i] = 0;
 //	u16SpeedIdx = 0;
 
-	if (ABS(i16PWM) <= 5399) {
+	if (ABS(i16PWM) <= 4999) {
 
 		if (i16PWM >= 0)
 			IRRIGATION_MOTOR_FORWARD_DIR;
@@ -295,7 +295,7 @@ void IRRIGATION_Start(int16_t i16PWM) {
 }
 
 void IRRIGATION_UpdateSpeed(int16_t i16PWM) {
-	if (ABS(i16PWM) <= 5399) {
+	if (ABS(i16PWM) <= 4999) {
 
 		if (i16PWM >= 0)
 			IRRIGATION_MOTOR_FORWARD_DIR;
