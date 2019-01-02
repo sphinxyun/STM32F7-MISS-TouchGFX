@@ -46,6 +46,8 @@ void COMM_ProcessRxedData(void);
 void DEBUG_SendDataFrame(const char* cName, const uint8_t u8NoOfRows, const uint8_t u8NoOfCols, const float *pfData);
 void DEBUG_SendTextFrame(const char* str, ...);
 
+void DEBUG_SendRpmPidDataFrame(const uint8_t u8NoOfItems, const float *pfData);
+
 #ifdef __cplusplus
 }
 #endif

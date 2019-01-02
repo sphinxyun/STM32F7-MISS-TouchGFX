@@ -9,12 +9,12 @@
 #include "stm32f7xx_ll_rcc.h"
 #include "stm32f7xx_ll_bus.h"
 
-#define DEBUG_PRESSURE_SENSOR_THREAD_LL		1
+#define DEBUG_PRESSURE_SENSOR_THREAD_LL		0
 #define DEBUG_PRESSURE_SENSOR_THREAD_HL		0
 
-#if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1 || DEBUG_PRESSURE_SENSOR_THREAD_HL == 1)
+//#if (DEBUG_PRESSURE_SENSOR_THREAD_LL == 1 || DEBUG_PRESSURE_SENSOR_THREAD_HL == 1)
 #include "debug.h"
-#endif
+//#endif
 
 static TaskHandle_t PressureSensorHandlerThreadId = 0;
 
