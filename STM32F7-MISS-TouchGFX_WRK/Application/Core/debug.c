@@ -12,7 +12,7 @@
 #include "task.h"
 #include "queue.h"
 
-#define DEBUG_COMM_MODULE 		0
+#define DEBUG_COMM_MODULE 		1
 
 #define MAX_PAYLOAD_LENGTH	128
 
@@ -43,6 +43,8 @@ typedef struct {
 
 static eProtocolState_t eProtocolState = 0;
 static eProtocolFrame_t sRxedFrame;
+
+static inline void DEBUG_ParseFrame(eProtocolFrame_t *sFrame);
 
 static inline uint32_t reverse(uint32_t x);
 static inline uint32_t crc32(const uint8_t *frame, uint16_t length);
@@ -104,12 +106,123 @@ void DEBUG_ResetCommunication(void) {
 }
 
 void DebugRx_Thread(void * argument) {
+	static uint16_t u16RxedBytesCnt;
+
 	for (;;) {
 		DEBUG_UART_SysTick();
 
-		uint8_t u8RxByte;
-		if (xDebugData && xQueueReceive(xDebugData, &u8RxByte, 25)) {
-			DEBUG_SendTextFrame("rx: %c", u8RxByte);
+		uint8_t u8RxedByte;
+		if (xDebugData && xQueueReceive(xDebugData, &u8RxedByte, 25)) {
+			switch (eProtocolState) {
+			case eCommIdle:
+				if (u8RxedByte == START1)
+					eProtocolState = eCommStart;
+				break;
+
+			case eCommStart:
+				if (u8RxedByte == START2)
+					eProtocolState = eCommCmd;
+				else
+					eProtocolState = eCommIdle;
+				break;
+
+			case eCommCmd:
+				sRxedFrame.u8Cmd = u8RxedByte;
+				eProtocolState = eCommFrmCnt;
+				break;
+
+			case eCommFrmCnt:
+				sRxedFrame.u8FrmCnt = u8RxedByte;
+				eProtocolState = eCommLenHigh;
+				break;
+
+			case eCommLenHigh:
+				sRxedFrame.u8Len_H = u8RxedByte;
+				sRxedFrame.u16Len = u8RxedByte << 8;
+				eProtocolState = eCommLenLow;
+				break;
+
+			case eCommLenLow:
+				sRxedFrame.u8Len_L = u8RxedByte;
+				sRxedFrame.u16Len |= u8RxedByte;
+
+				if (sRxedFrame.u16Len <= MAX_PAYLOAD_LENGTH) {
+					u16RxedBytesCnt = 0;
+
+					//#if (DEBUG_COMM_MODULE == 1)
+					//				UART_vPutString("\n\nHEADER:");
+					//				UART_vPutString("\n  cmd:      ");
+					//				UART_vPutHEX_u8(sRxedFrame.u8Cmd, true);
+					//				UART_vPutString("\n  len:      ");
+					//				UART_vPutHEX_u16(sRxedFrame.u16Len, true);
+					//				UART_vPutString("\n\n");
+					//#endif
+
+					if (sRxedFrame.u16Len != 0) {
+						eProtocolState = eCommPayload;
+					} else {
+						sRxedFrame.u32CRC = 0;
+						eProtocolState = eCommCRC;
+					}
+				} else {
+					//ERROR!!!
+					eProtocolState = eCommIdle;
+				}
+				break;
+
+			case eCommPayload:
+				sRxedFrame.u8Payload[u16RxedBytesCnt++] = u8RxedByte;
+
+				if (u16RxedBytesCnt >= sRxedFrame.u16Len) {
+					u16RxedBytesCnt = 0;
+					sRxedFrame.u32CRC = 0;
+					eProtocolState = eCommCRC;
+				}
+				break;
+
+			case eCommCRC:
+				sRxedFrame.u32CRC <<= 8;
+				sRxedFrame.u32CRC |= u8RxedByte;
+				u16RxedBytesCnt++;
+
+				if (u16RxedBytesCnt >= 4) {
+					uint32_t u32CompCRC = crc32((uint8_t *) &sRxedFrame,
+							sRxedFrame.u16Len + 4);
+
+#if (DEBUG_COMM_MODULE == 1)
+					DEBUG_SendTextFrame("\nFULL FRAME:");
+					DEBUG_SendTextFrame("  cmd:      %x", sRxedFrame.u8Cmd);
+					DEBUG_SendTextFrame("  len:      %d", sRxedFrame.u16Len);
+					if (sRxedFrame.u16Len != 0) {
+						DEBUG_SendTextFrame("  payload:  %t", &sRxedFrame.u8Payload[0], sRxedFrame.u16Len);
+					} else {
+						DEBUG_SendTextFrame("  payload:  ---");
+					}
+					DEBUG_SendTextFrame("  crc rxed: %x", sRxedFrame.u32CRC);
+					DEBUG_SendTextFrame("  crc comp: %x", u32CompCRC);
+#endif
+
+					if (u32CompCRC == sRxedFrame.u32CRC) {
+#if (DEBUG_COMM_MODULE == 1)
+						DEBUG_SendTextFrame("CRC OK!!!");
+#endif
+
+						//parse rxed frame:
+						DEBUG_ParseFrame(&sRxedFrame);
+					} else {
+#if (DEBUG_COMM_MODULE == 1)
+						DEBUG_SendTextFrame("CRC ERROR!!!");
+#endif
+					}
+
+					eProtocolState = eCommIdle;
+				}
+				break;
+
+			default:
+				eProtocolState = eCommIdle;
+				break;
+			}
 		}
 	}
 }
@@ -125,148 +238,11 @@ void DEBUG_SendTextHeader(void) {
 	DEBUG_SendTextFrame("");
 }
 
-static void DEBUG_ParseFrame(eProtocolFrame_t *sFrame) {
+static inline void DEBUG_ParseFrame(eProtocolFrame_t *sFrame) {
 	switch (sFrame->u8Cmd) {
 	default:
-		DEBUG_SendTextFrame("unknown command");
+		DEBUG_SendTextFrame("  unknown command");
 		break;
-	}
-}
-
-void DEBUG_ProcessRxedData(void) {
-	static uint16_t u16RxedBytesCnt;
-	uint8_t u8RxedByte;
-	while (UART_bGetRxByte(&u8RxedByte)) {
-
-#if (DEBUG_COMM_MODULE == 1)
-		UART_vPutString("rxed: ");
-		UART_vPutHEX_u8(u8RxedByte, true);
-		UART_vPutString(" -> ");
-#endif
-
-		switch (eProtocolState) {
-		case eCommIdle:
-			if (u8RxedByte == START1)
-				eProtocolState = eCommStart;
-			break;
-
-		case eCommStart:
-			if (u8RxedByte == START2)
-				eProtocolState = eCommCmd;
-			else
-				eProtocolState = eCommIdle;
-			break;
-
-		case eCommCmd:
-			sRxedFrame.u8Cmd = u8RxedByte;
-			eProtocolState = eCommFrmCnt;
-			break;
-
-		case eCommFrmCnt:
-			sRxedFrame.u8FrmCnt = u8RxedByte;
-			eProtocolState = eCommLenHigh;
-			break;
-
-		case eCommLenHigh:
-			sRxedFrame.u8Len_H = u8RxedByte;
-			sRxedFrame.u16Len = u8RxedByte << 8;
-			eProtocolState = eCommLenLow;
-			break;
-
-		case eCommLenLow:
-			sRxedFrame.u8Len_L = u8RxedByte;
-			sRxedFrame.u16Len |= u8RxedByte;
-
-			if (sRxedFrame.u16Len <= MAX_PAYLOAD_LENGTH) {
-				u16RxedBytesCnt = 0;
-
-//#if (DEBUG_COMM_MODULE == 1)
-//				UART_vPutString("\n\nHEADER:");
-//				UART_vPutString("\n  cmd:      ");
-//				UART_vPutHEX_u8(sRxedFrame.u8Cmd, true);
-//				UART_vPutString("\n  len:      ");
-//				UART_vPutHEX_u16(sRxedFrame.u16Len, true);
-//				UART_vPutString("\n\n");
-//#endif
-
-				if (sRxedFrame.u16Len != 0) {
-					eProtocolState = eCommPayload;
-				} else {
-					sRxedFrame.u32CRC = 0;
-					eProtocolState = eCommCRC;
-				}
-			} else {
-				//ERROR!!!
-				eProtocolState = eCommIdle;
-			}
-			break;
-
-		case eCommPayload:
-			sRxedFrame.u8Payload[u16RxedBytesCnt++] = u8RxedByte;
-
-			if (u16RxedBytesCnt >= sRxedFrame.u16Len) {
-				u16RxedBytesCnt = 0;
-				sRxedFrame.u32CRC = 0;
-				eProtocolState = eCommCRC;
-			}
-			break;
-
-		case eCommCRC:
-			sRxedFrame.u32CRC <<= 8;
-			sRxedFrame.u32CRC |= u8RxedByte;
-			u16RxedBytesCnt++;
-
-			if (u16RxedBytesCnt >= 4) {
-				uint32_t u32CompCRC = crc32((uint8_t *) &sRxedFrame, sRxedFrame.u16Len + 4);
-
-#if (DEBUG_COMM_MODULE == 1)
-				UART_vPutString("\n\nFULL FRAME:");
-				UART_vPutString("\n  cmd:      ");
-				UART_vPutHEX_u8(sRxedFrame.u8Cmd, true);
-				UART_vPutString("\n  len:      ");
-				UART_vPutHEX_u16(sRxedFrame.u16Len, true);
-				if (sRxedFrame.u16Len != 0) {
-					UART_vPutString("\n  payload:  ");
-					for (uint16_t i = 0; i < sRxedFrame.u16Len; i++) {
-						UART_vPutHEX_u8(sRxedFrame.u8Payload[i], false);
-						UART_vPutString(" ");
-					}
-				} else {
-					UART_vPutString("\n  payload:  ---");
-				}
-				UART_vPutString("\n  crc rxed: ");
-				UART_vPutHEX_u32(sRxedFrame.u32CRC, true);
-				UART_vPutString("\n  crc comp: ");
-				UART_vPutHEX_u32(u32CompCRC, true);
-				UART_vPutString("\n");
-#endif
-
-				if (u32CompCRC == sRxedFrame.u32CRC) {
-#if (DEBUG_COMM_MODULE == 1)
-					UART_vPutString("CRC OK!!!\n\n");
-#endif
-
-					//parse rxed frame:
-					DEBUG_ParseFrame(&sRxedFrame);
-				} else {
-#if (DEBUG_COMM_MODULE == 1)
-					UART_vPutString("CRC ERROR!!!\n\n");
-#endif
-				}
-
-				eProtocolState = eCommIdle;
-			}
-			break;
-
-		default:
-			eProtocolState = eCommIdle;
-			break;
-		}
-
-#if (DEBUG_COMM_MODULE == 1)
-		UART_vPutHEX_u8(eProtocolState, true);
-		UART_vPutString("\n");
-#endif
 	}
 }
 
