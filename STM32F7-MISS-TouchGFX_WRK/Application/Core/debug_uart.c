@@ -19,7 +19,32 @@ volatile uint16_t u16DebugTxOut;
 uint16_t u16DebugTxIn;
 
 LL_USART_InitTypeDef USART1_InitStruct;
+LL_DMA_InitTypeDef DMA_USART1_RX_InitStruct;
 LL_DMA_InitTypeDef DMA_USART1_TX_InitStruct;
+
+//#define DMA_RX_BUFFER_CHK		8
+//#define DMA_RX_BUFFER_SIZE		(DMA_RX_BUFFER_CHK * 13)
+//volatile uint8_t UART1_DMA_RX_Buffer_A[DMA_RX_BUFFER_SIZE];
+//volatile uint8_t UART1_DMA_RX_Buffer_B[DMA_RX_BUFFER_SIZE];
+
+#define DMA_RX_BUFFER_SIZE        64      /* DMA circular buffer size in bytes */
+#define DMA_TIMEOUT_MS      10      /* DMA Timeout duration in msec */
+
+/* Type definitions ----------------------------------------------------------*/
+typedef struct
+{
+    volatile uint8_t  flag;     /* Timeout event flag */
+    uint16_t timer;             /* Timeout duration in msec */
+    uint16_t prevCNDTR;         /* Holds previous value of DMA_CNDTR */
+} DMA_Event_t;
+
+/* DMA Timeout event structure
+ * Note: prevCNDTR initial value must be set to maximum size of DMA buffer!
+*/
+DMA_Event_t dma_uart_rx = {0,0,DMA_RX_BUFFER_SIZE};
+
+uint8_t dma_rx_buf[DMA_RX_BUFFER_SIZE];       /* Circular buffer for DMA */
+uint8_t data[DMA_RX_BUFFER_SIZE] = {'\0'};    /* Data buffer that contains newly received data */
 
 #define UART_1_DMA_TX_BUFFER_SIZE		( 2048 )
 volatile uint8_t UART1_DMA_TX_Buffer[UART_1_DMA_TX_BUFFER_SIZE];
@@ -55,13 +80,38 @@ void DEBUG_UART_Init(void) {
 	USART1_InitStruct.OverSampling = LL_USART_OVERSAMPLING_16;
 	USART1_InitStruct.Parity = LL_USART_PARITY_NONE;
 	USART1_InitStruct.StopBits = LL_USART_STOPBITS_1;
-	USART1_InitStruct.TransferDirection = LL_USART_DIRECTION_TX;
+	USART1_InitStruct.TransferDirection = LL_USART_DIRECTION_RX | LL_USART_DIRECTION_TX;
 	LL_USART_Init(USART1, &USART1_InitStruct);
 
 	DEBUG_UART_ResetComm();
 
 	LL_USART_Enable(USART1);
+	LL_USART_EnableIT_IDLE(USART1);
+
 	LL_USART_EnableDMAReq_TX(USART1);
+	LL_USART_EnableDMAReq_RX(USART1);
+
+	/* Configure DMA for USART RX */
+	LL_DMA_StructInit(&DMA_USART1_RX_InitStruct);
+	DMA_USART1_RX_InitStruct.Channel = LL_DMA_CHANNEL_4;
+	DMA_USART1_RX_InitStruct.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY;
+	DMA_USART1_RX_InitStruct.Mode = LL_DMA_MODE_CIRCULAR;
+	DMA_USART1_RX_InitStruct.Priority = LL_DMA_PRIORITY_VERYHIGH;
+	DMA_USART1_RX_InitStruct.MemoryOrM2MDstAddress = (uint32_t) dma_rx_buf;
+	DMA_USART1_RX_InitStruct.NbData = DMA_RX_BUFFER_SIZE;
+	DMA_USART1_RX_InitStruct.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_INCREMENT;
+	DMA_USART1_RX_InitStruct.PeriphOrM2MSrcAddress = (uint32_t)&USART1->RDR;
+	LL_DMA_Init(DMA2, LL_DMA_STREAM_2, &DMA_USART1_RX_InitStruct);
+
+	LL_DMA_EnableIT_TC(DMA2, LL_DMA_STREAM_2);
+	LL_DMA_EnableStream(DMA2, LL_DMA_STREAM_2);
+
+	/* Enable global DMA stream interrupts */
+	NVIC_SetPriority(DMA2_Stream2_IRQn, 4);
+	NVIC_EnableIRQ(DMA2_Stream2_IRQn);
+
+	NVIC_SetPriority(USART1_IRQn, 4);
+	NVIC_EnableIRQ(USART1_IRQn);
 }
 
 void DEBUG_UART_ResetComm(void) {
@@ -69,6 +119,58 @@ void DEBUG_UART_ResetComm(void) {
 	u16DebugTxIn = 0;
 	u16DebugTxOut = 0;
 	DEBUG_UART_TxFinishedFlag = SET;
+}
+
+void USART1_IRQHandler(void) {
+	/* UART IDLE Interrupt */
+	if((USART1->ISR & USART_ISR_IDLE) != RESET) {
+		USART1->ICR = UART_CLEAR_IDLEF;
+
+		/* Start DMA timer */
+		dma_uart_rx.timer = DMA_TIMEOUT_MS;
+	}
+}
+
+void HAL_UART_RxCompleteCallback(void) {
+    uint16_t i, pos, start, length;
+    uint16_t currCNDTR = LL_DMA_GetDataLength(DMA2, LL_DMA_STREAM_2); //__HAL_DMA_GET_COUNTER(DMA_USART1_RX_InitStruct);
+
+    /* Ignore IDLE Timeout when the received characters exactly filled up the DMA buffer and DMA Rx Complete IT is generated, but there is no new character during timeout */
+    if(dma_uart_rx.flag && currCNDTR == DMA_RX_BUFFER_SIZE) {
+        dma_uart_rx.flag = 0;
+        return;
+    }
+
+    /* Determine start position in DMA buffer based on previous CNDTR value */
+    start = (dma_uart_rx.prevCNDTR < DMA_RX_BUFFER_SIZE) ? (DMA_RX_BUFFER_SIZE - dma_uart_rx.prevCNDTR) : 0;
+
+    if(dma_uart_rx.flag) {
+    	/* Timeout event */
+
+        /* Determine new data length based on previous DMA_CNDTR value:
+         *  If previous CNDTR is less than DMA buffer size: there is old data in DMA buffer (from previous timeout) that has to be ignored.
+         *  If CNDTR == DMA buffer size: entire buffer content is new and has to be processed.
+        */
+        length = (dma_uart_rx.prevCNDTR < DMA_RX_BUFFER_SIZE) ? (dma_uart_rx.prevCNDTR - currCNDTR) : (DMA_RX_BUFFER_SIZE - currCNDTR);
+        dma_uart_rx.prevCNDTR = currCNDTR;
+        dma_uart_rx.flag = 0;
+    } else  {
+    	/* DMA Rx Complete event */
+        length = DMA_RX_BUFFER_SIZE - start;
+        dma_uart_rx.prevCNDTR = DMA_RX_BUFFER_SIZE;
+    }
+
+    /* Copy and Process new data */
+    for(i=0,pos=start; i<length; ++i,++pos) {
+        data[i] = dma_rx_buf[pos];
+    }
+}
+
+void DMA2_Stream2_IRQHandler(void) {
+	if (LL_DMA_IsActiveFlag_TC2(DMA2)) {
+		LL_DMA_ClearFlag_TC2(DMA2);
+		HAL_UART_RxCompleteCallback();
+	}
 }
 
 void DMA2_Stream7_IRQHandler(void) {
@@ -82,6 +184,17 @@ void DMA2_Stream7_IRQHandler(void) {
 
 void DEBUG_UART_SysTick(void) {
 	static uint16_t i16Cnt = 0;
+
+	/* DMA timer */
+	if(dma_uart_rx.timer == 1)
+	{
+		/* DMA Timeout event: set Timeout Flag and call DMA Rx Complete Callback */
+		dma_uart_rx.flag = 1;
+		HAL_UART_RxCompleteCallback();
+//		hdma_usart2_rx.XferCpltCallback(&hdma_usart2_rx);
+	}
+
+	if(dma_uart_rx.timer) { --dma_uart_rx.timer; }
 
 	if (++i16Cnt >= 10) {
 		i16Cnt = 0;
@@ -115,7 +228,6 @@ void DEBUG_UART_SysTick(void) {
 				LL_DMA_Init(DMA2, LL_DMA_STREAM_7, &DMA_USART1_TX_InitStruct);
 
 				LL_DMA_EnableIT_TC(DMA2, LL_DMA_STREAM_7);
-				//	LL_DMA_EnableIT_HT(DMA2, LL_DMA_STREAM_1);
 				LL_DMA_EnableStream(DMA2, LL_DMA_STREAM_7);
 
 				/* Enable global DMA stream interrupts */
