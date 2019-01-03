@@ -7,6 +7,11 @@
 #include "debug_uart.h"
 #include "debug.h"
 
+/* Kernel includes. */
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
 #define DEBUG_COMM_MODULE 		0
 
 #define MAX_PAYLOAD_LENGTH	128
@@ -42,11 +47,25 @@ static eProtocolFrame_t sRxedFrame;
 static inline uint32_t reverse(uint32_t x);
 static inline uint32_t crc32(const uint8_t *frame, uint16_t length);
 
+static void DebugRx_Thread(void * argument);
+
+static TaskHandle_t DebugTaskId = 0;
+QueueHandle_t xDebugData = 0;
+
 void DEBUG_Init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 
+	xDebugData = xQueueCreate( 128, sizeof( uint8_t ) );
+
 	DEBUG_UART_Init();
 	DEBUG_ResetCommunication();
+
+	/* Create actual task */
+	xTaskCreate(DebugRx_Thread, "DebugTask",
+				256,
+				NULL,
+				tskIDLE_PRIORITY + 1,
+				&DebugTaskId);
 
 	//AD_SIG_0, 1, 2, 3, 4, LED0 & LED3
 	__HAL_RCC_GPIOA_CLK_ENABLE();
@@ -82,6 +101,17 @@ void DEBUG_ResetCommunication(void) {
 
 	u8FrmCnt = 0;
 	eProtocolState = eCommIdle;
+}
+
+void DebugRx_Thread(void * argument) {
+	for (;;) {
+		DEBUG_UART_SysTick();
+
+		uint8_t u8RxByte;
+		if (xDebugData && xQueueReceive(xDebugData, &u8RxByte, 25)) {
+			DEBUG_SendTextFrame("rx: %c", u8RxByte);
+		}
+	}
 }
 
 void DEBUG_SendTextHeader(void) {

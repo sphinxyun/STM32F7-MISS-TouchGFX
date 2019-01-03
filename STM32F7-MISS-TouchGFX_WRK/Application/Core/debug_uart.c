@@ -9,6 +9,11 @@
 
 #include <string.h>
 
+#include "FreeRTOS.h"
+#include "queue.h"
+
+extern QueueHandle_t xDebugData;
+
 #ifndef DEBUG_UART_TX_BUFFER_SIZE
 #define DEBUG_UART_TX_BUFFER_SIZE 4192
 #endif
@@ -22,32 +27,27 @@ LL_USART_InitTypeDef USART1_InitStruct;
 LL_DMA_InitTypeDef DMA_USART1_RX_InitStruct;
 LL_DMA_InitTypeDef DMA_USART1_TX_InitStruct;
 
-//#define DMA_RX_BUFFER_CHK		8
-//#define DMA_RX_BUFFER_SIZE		(DMA_RX_BUFFER_CHK * 13)
-//volatile uint8_t UART1_DMA_RX_Buffer_A[DMA_RX_BUFFER_SIZE];
-//volatile uint8_t UART1_DMA_RX_Buffer_B[DMA_RX_BUFFER_SIZE];
-
-#define DMA_RX_BUFFER_SIZE        64      /* DMA circular buffer size in bytes */
-#define DMA_TIMEOUT_MS      10      /* DMA Timeout duration in msec */
-
 /* Type definitions ----------------------------------------------------------*/
-typedef struct
-{
-    volatile uint8_t  flag;     /* Timeout event flag */
+typedef struct {
+    volatile uint8_t flag;      /* Timeout event flag */
     uint16_t timer;             /* Timeout duration in msec */
     uint16_t prevCNDTR;         /* Holds previous value of DMA_CNDTR */
 } DMA_Event_t;
 
+#define UART_1_DMA_TX_BUFFER_SIZE		( 2048 )
+volatile uint8_t UART1_DMA_TX_Buffer[UART_1_DMA_TX_BUFFER_SIZE];
+
+#define UART_1_DMA_RX_BUFFER_SIZE       ( 64 )
+#define DMA_TIMEOUT_MS      	  		( 6 ) // * 25 ms (depends on how often DEBUG_UART_SysTick is called)
+
 /* DMA Timeout event structure
  * Note: prevCNDTR initial value must be set to maximum size of DMA buffer!
 */
-DMA_Event_t dma_uart_rx = {0,0,DMA_RX_BUFFER_SIZE};
+DMA_Event_t dma_uart_rx = {0, 0, UART_1_DMA_RX_BUFFER_SIZE};
 
-uint8_t dma_rx_buf[DMA_RX_BUFFER_SIZE];       /* Circular buffer for DMA */
-uint8_t data[DMA_RX_BUFFER_SIZE] = {'\0'};    /* Data buffer that contains newly received data */
+uint8_t UART1_DMA_RX_Buffer[UART_1_DMA_RX_BUFFER_SIZE];
 
-#define UART_1_DMA_TX_BUFFER_SIZE		( 2048 )
-volatile uint8_t UART1_DMA_TX_Buffer[UART_1_DMA_TX_BUFFER_SIZE];
+void DEBUG_UART_RxCompleteCallback(bool bCallWithinISR);
 
 void DEBUG_UART_Init(void) {
 	/* Peripheral clock enable */
@@ -97,8 +97,8 @@ void DEBUG_UART_Init(void) {
 	DMA_USART1_RX_InitStruct.Direction = LL_DMA_DIRECTION_PERIPH_TO_MEMORY;
 	DMA_USART1_RX_InitStruct.Mode = LL_DMA_MODE_CIRCULAR;
 	DMA_USART1_RX_InitStruct.Priority = LL_DMA_PRIORITY_VERYHIGH;
-	DMA_USART1_RX_InitStruct.MemoryOrM2MDstAddress = (uint32_t) dma_rx_buf;
-	DMA_USART1_RX_InitStruct.NbData = DMA_RX_BUFFER_SIZE;
+	DMA_USART1_RX_InitStruct.MemoryOrM2MDstAddress = (uint32_t) UART1_DMA_RX_Buffer;
+	DMA_USART1_RX_InitStruct.NbData = UART_1_DMA_RX_BUFFER_SIZE;
 	DMA_USART1_RX_InitStruct.MemoryOrM2MDstIncMode = LL_DMA_MEMORY_INCREMENT;
 	DMA_USART1_RX_InitStruct.PeriphOrM2MSrcAddress = (uint32_t)&USART1->RDR;
 	LL_DMA_Init(DMA2, LL_DMA_STREAM_2, &DMA_USART1_RX_InitStruct);
@@ -131,45 +131,10 @@ void USART1_IRQHandler(void) {
 	}
 }
 
-void HAL_UART_RxCompleteCallback(void) {
-    uint16_t i, pos, start, length;
-    uint16_t currCNDTR = LL_DMA_GetDataLength(DMA2, LL_DMA_STREAM_2); //__HAL_DMA_GET_COUNTER(DMA_USART1_RX_InitStruct);
-
-    /* Ignore IDLE Timeout when the received characters exactly filled up the DMA buffer and DMA Rx Complete IT is generated, but there is no new character during timeout */
-    if(dma_uart_rx.flag && currCNDTR == DMA_RX_BUFFER_SIZE) {
-        dma_uart_rx.flag = 0;
-        return;
-    }
-
-    /* Determine start position in DMA buffer based on previous CNDTR value */
-    start = (dma_uart_rx.prevCNDTR < DMA_RX_BUFFER_SIZE) ? (DMA_RX_BUFFER_SIZE - dma_uart_rx.prevCNDTR) : 0;
-
-    if(dma_uart_rx.flag) {
-    	/* Timeout event */
-
-        /* Determine new data length based on previous DMA_CNDTR value:
-         *  If previous CNDTR is less than DMA buffer size: there is old data in DMA buffer (from previous timeout) that has to be ignored.
-         *  If CNDTR == DMA buffer size: entire buffer content is new and has to be processed.
-        */
-        length = (dma_uart_rx.prevCNDTR < DMA_RX_BUFFER_SIZE) ? (dma_uart_rx.prevCNDTR - currCNDTR) : (DMA_RX_BUFFER_SIZE - currCNDTR);
-        dma_uart_rx.prevCNDTR = currCNDTR;
-        dma_uart_rx.flag = 0;
-    } else  {
-    	/* DMA Rx Complete event */
-        length = DMA_RX_BUFFER_SIZE - start;
-        dma_uart_rx.prevCNDTR = DMA_RX_BUFFER_SIZE;
-    }
-
-    /* Copy and Process new data */
-    for(i=0,pos=start; i<length; ++i,++pos) {
-        data[i] = dma_rx_buf[pos];
-    }
-}
-
 void DMA2_Stream2_IRQHandler(void) {
 	if (LL_DMA_IsActiveFlag_TC2(DMA2)) {
 		LL_DMA_ClearFlag_TC2(DMA2);
-		HAL_UART_RxCompleteCallback();
+		DEBUG_UART_RxCompleteCallback(true);
 	}
 }
 
@@ -185,16 +150,14 @@ void DMA2_Stream7_IRQHandler(void) {
 void DEBUG_UART_SysTick(void) {
 	static uint16_t i16Cnt = 0;
 
-	/* DMA timer */
-	if(dma_uart_rx.timer == 1)
-	{
-		/* DMA Timeout event: set Timeout Flag and call DMA Rx Complete Callback */
+	// RX DMA timeout timer - triggered when UART1 IDLE IRQ occurs
+	if (dma_uart_rx.timer == 1) {
+		// DMA Timeout event: set Timeout Flag and call DMA Rx Complete Callback
 		dma_uart_rx.flag = 1;
-		HAL_UART_RxCompleteCallback();
-//		hdma_usart2_rx.XferCpltCallback(&hdma_usart2_rx);
+		DEBUG_UART_RxCompleteCallback(false);
 	}
 
-	if(dma_uart_rx.timer) { --dma_uart_rx.timer; }
+	if (dma_uart_rx.timer) { --dma_uart_rx.timer; }
 
 	if (++i16Cnt >= 10) {
 		i16Cnt = 0;
@@ -236,6 +199,46 @@ void DEBUG_UART_SysTick(void) {
 			}
 		}
 	}
+}
+
+void DEBUG_UART_RxCompleteCallback(bool bCallWithinISR) {
+    uint16_t i, pos, start, length;
+    uint16_t currCNDTR = LL_DMA_GetDataLength(DMA2, LL_DMA_STREAM_2);
+
+    // ignore IDLE Timeout when the received characters exactly filled up the DMA buffer
+    // and DMA Rx Complete IT is generated, but there is no new character during timeout
+    if (dma_uart_rx.flag && currCNDTR == UART_1_DMA_RX_BUFFER_SIZE) {
+        dma_uart_rx.flag = 0;
+        return;
+    }
+
+    // determine start position in DMA buffer based on previous CNDTR value (dma rz struct)
+    start = (dma_uart_rx.prevCNDTR < UART_1_DMA_RX_BUFFER_SIZE) ? (UART_1_DMA_RX_BUFFER_SIZE - dma_uart_rx.prevCNDTR) : 0;
+
+    if (dma_uart_rx.flag) {
+    	// timeout event - determine new data length based on previous DMA_CNDTR value:
+    	//  - if previous CNDTR is less than DMA buffer size:
+    	//    there is old data in DMA buffer (from previous timeout) that has to be ignored.
+    	//  - if CNDTR is equal DMA buffer size:
+    	//    entire buffer content is new and has to be processed.
+        length = (dma_uart_rx.prevCNDTR < UART_1_DMA_RX_BUFFER_SIZE) ? (dma_uart_rx.prevCNDTR - currCNDTR) : (UART_1_DMA_RX_BUFFER_SIZE - currCNDTR);
+        dma_uart_rx.prevCNDTR = currCNDTR;
+        dma_uart_rx.flag = 0;
+    } else  {
+    	// DMA Rx Complete event - no timeout event has occured
+        length = UART_1_DMA_RX_BUFFER_SIZE - start;
+        dma_uart_rx.prevCNDTR = UART_1_DMA_RX_BUFFER_SIZE;
+    }
+
+    // copy rxed data to Debug Task queue:
+    for (i = 0, pos = start; i < length; ++i, ++pos) {
+    	if (xDebugData) {
+    		if (bCallWithinISR)
+    			xQueueSendFromISR( xDebugData, ( void * ) &UART1_DMA_RX_Buffer[pos], ( TickType_t ) 0 );
+    		else
+    			xQueueSend( xDebugData, ( void * ) &UART1_DMA_RX_Buffer[pos], ( TickType_t ) 0 );
+    	}
+    }
 }
 
 bool DEBUG_UART_SendByte(uint8_t u8Data) {
