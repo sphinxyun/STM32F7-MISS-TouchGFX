@@ -12,7 +12,7 @@
 #include "task.h"
 #include "queue.h"
 
-#define DEBUG_COMM_MODULE 		1
+#define DEBUG_COMM_MODULE 		0
 
 #define MAX_PAYLOAD_LENGTH	128
 
@@ -240,8 +240,27 @@ void DEBUG_SendTextHeader(void) {
 
 static inline void DEBUG_ParseFrame(eProtocolFrame_t *sFrame) {
 	switch (sFrame->u8Cmd) {
+	case 'u':
+		DEBUG_SendTextFrame("UPL PID-S");
+		float fP, fI, fD;
+		memcpy(&fP, &sFrame->u8Payload[0], 4);
+		memcpy(&fI, &sFrame->u8Payload[4], 4);
+		memcpy(&fD, &sFrame->u8Payload[8], 4);
+		DEBUG_SendTextFrame("  P: %f", fP);
+		DEBUG_SendTextFrame("  I: %f", fI);
+		DEBUG_SendTextFrame("  D: %f", fD);
+
+		break;
+
 	default:
-		DEBUG_SendTextFrame("  unknown command");
+		DEBUG_SendTextFrame("UNK CMD");
+		DEBUG_SendTextFrame("  cmd:      %x (%c)", sFrame->u8Cmd, sFrame->u8Cmd);
+		DEBUG_SendTextFrame("  len:      %d bytes", sFrame->u16Len);
+		if (sFrame->u16Len != 0) {
+			DEBUG_SendTextFrame("  payload:  %t", &sFrame->u8Payload[0], sFrame->u16Len);
+		} else {
+			DEBUG_SendTextFrame("  payload:  ---");
+		}
 		break;
 	}
 }

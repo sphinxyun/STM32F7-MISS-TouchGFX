@@ -65,7 +65,7 @@ REGULATION_ErrorTypdef REGULATION_TaskStop(void) {
 	return REGULATION_ERROR_NONE;
 }
 
-#define REGULATE	0
+#define REGULATE	1
 
 static void Regulation_Thread(void * argument) {
 	REGULATION_IrrActual_t actualState;
@@ -105,6 +105,10 @@ static void Regulation_Thread(void * argument) {
 				switch (latestPresets.eRegMode) {
 				case eRegIdle:
 					MOTORS_IrrigationStop();
+
+					//reset state:
+					sumErrIRR_S = 0;
+					pT_S = iT_S = ret_S = 0;
 					break;
 
 				case eRegIrrigation:
@@ -121,6 +125,12 @@ static void Regulation_Thread(void * argument) {
 			}
 
 			presetState = latestPresets;
+
+			//when regulator is in idle - overwrite input rpm value
+			if (presetState.eRegMode == eRegIdle) {
+				presetState.i16FlowRPM = 0;
+			}
+
 #if REGULATE == 0
 			MOTORS_IrrigationUpdate(presetState.i16FlowRPM);
 #endif
@@ -152,8 +162,8 @@ static void Regulation_Thread(void * argument) {
 
 //		if (INPUT_SLAVE_PID > 250) {
 			//drive above 250 RPMs
-			KIp_S = 0.36;
-			temp_KIi_S = 0.029;
+			KIp_S = 4.96;
+			temp_KIi_S = 0.099;
 //		} else {
 //			KIp_S = -0.19 * INPUT_SLAVE_PID * INPUT_SLAVE_PID + 44;
 //			temp_KIi_S = -0.035637 * INPUT_SLAVE_PID + 10.2;
@@ -203,13 +213,15 @@ static void Regulation_Thread(void * argument) {
 #endif
 
 		AD_SIG_3_TOGGLE;
+
 #if REGULATE == 1
-		float fTemp[8] = {INPUT_SLAVE_PID, FEEDBACK_SLAVE_PID, ERROR_SLAVE_PID, pT_S, KIp_S, iT_S, sumErrIRR_S, ret_S};
-		DEBUG_SendRpmPidDataFrame(8, fTemp);
+		float fTemp[5] = {INPUT_SLAVE_PID, FEEDBACK_SLAVE_PID, pT_S, iT_S, ret_S};
+		DEBUG_SendRpmPidDataFrame(5, fTemp);
 #else
-		float fTemp[2] = {presetState.i16FlowRPM, actualState.fFlowRPM};
-		DEBUG_SendRpmPidDataFrame(2, fTemp);
+//		float fTemp[2] = {presetState.i16FlowRPM, actualState.fFlowRPM};
+//		DEBUG_SendRpmPidDataFrame(2, fTemp);
 #endif
+
 		if (bUpdate) {
 			actualState.fFlowLPM = FCE_fIrrGetFlowCoeff(actualState.fFlowRPM) * actualState.fFlowRPM;
 			xQueueSend( xRegulationStatus, ( void * ) &actualState, ( TickType_t ) 0 );
