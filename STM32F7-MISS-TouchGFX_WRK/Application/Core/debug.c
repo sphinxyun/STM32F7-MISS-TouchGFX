@@ -12,6 +12,8 @@
 #include "task.h"
 #include "queue.h"
 
+#include "state_machine/state_machine.h"
+
 #define DEBUG_COMM_MODULE 		0
 
 #define MAX_PAYLOAD_LENGTH	128
@@ -25,6 +27,11 @@
 #define RPM_PID_DEBUG_DATA_COMMAND	'p'
 
 uint8_t u8FrmCnt;
+
+extern QueueHandle_t xAudioEffectsQueue;
+extern QueueHandle_t xGuiActions;
+extern QueueHandle_t xGuiStatus;
+
 
 typedef enum {
 	eCommIdle = 0, eCommStart, eCommCmd, eCommFrmCnt, eCommLenHigh, eCommLenLow, eCommPayload, eCommCRC
@@ -103,6 +110,18 @@ void DEBUG_ResetCommunication(void) {
 
 	u8FrmCnt = 0;
 	eProtocolState = eCommIdle;
+}
+
+static inline void pushActionQueue(uint16_t u16ActionCode) {
+	if (xGuiActions) {
+		xQueueSend( xGuiActions, ( void * ) &u16ActionCode, ( TickType_t ) 0 );
+	}
+}
+
+static inline void pushAudioQueue(uint16_t u16SoundCode) {
+	if (xAudioEffectsQueue) {
+		xQueueSend( xAudioEffectsQueue, ( void * ) &u16SoundCode, ( TickType_t ) 0 );
+	}
 }
 
 void DebugRx_Thread(void * argument) {
@@ -249,6 +268,22 @@ static inline void DEBUG_ParseFrame(eProtocolFrame_t *sFrame) {
 		DEBUG_SendTextFrame("  P: %f", fP);
 		DEBUG_SendTextFrame("  I: %f", fI);
 		DEBUG_SendTextFrame("  D: %f", fD);
+
+		break;
+
+	case 'a':
+		DEBUG_SendTextFrame("ACTION CMD");
+		if (sFrame->u8Payload[0] == 1) {
+			pushActionQueue(WM_MAIN_START_ACTION);
+			pushAudioQueue(1);
+			DEBUG_SendTextFrame(" -> START");
+		} else if (sFrame->u8Payload[0] == 2) {
+			pushActionQueue(WM_MAIN_STOP_ACTION);
+			pushAudioQueue(1);
+			DEBUG_SendTextFrame(" -> STOP");
+		} else {
+			DEBUG_SendTextFrame(" -> UNK ERROR");
+		}
 
 		break;
 

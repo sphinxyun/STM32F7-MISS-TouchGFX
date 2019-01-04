@@ -1,5 +1,4 @@
-#include "motors_thread.h"
-
+#include <motors/motors.h>
 #include "drivers/irrigation.h"
 
 /* Kernel includes. */
@@ -78,7 +77,6 @@ static void Motors_Thread(void * argument) {
 		if (xTaskNotifyWait(0x00000000, 0xFFFFFFFF, (uint32_t *)&i32NotifiedValue, 50)) {
 			//1200 (max assumed rpms) / 60 (seconds) / (1 / 0.0125) (sampling freq = 80Hz)
 			fSpeed_RPM = (float)i32NotifiedValue / 250.0 * 60.0;
-//			DEBUG_SendTextFrame("Motors_Thread: %f RPM (%d spd - x2004)", fSpeed_RPM, ulNotifiedValue);
 			AD_SIG_2_TOGGLE;
 
 			xQueueSend( xIrrigationMotorSpeedRPM, ( void * ) &fSpeed_RPM, ( TickType_t ) 0 );

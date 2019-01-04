@@ -1,8 +1,6 @@
+#include <motors/motors.h>
 #include "regulation.h"
 
-#include "motors/motors_thread.h"
-
-/* Kernel includes. */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
