@@ -16,6 +16,8 @@ QueueHandle_t xRegulationStatus;
 extern QueueHandle_t xIrrigationPressureData;
 extern QueueHandle_t xIrrigationMotorSpeedRPM;
 
+extern QueueHandle_t xRegulatorTunningQueue;
+
 static void Regulation_Thread(void * argument);
 static inline float FCE_fIrrGetFlowCoeff(float fRPMSpeed);
 
@@ -69,6 +71,8 @@ static void Regulation_Thread(void * argument) {
 	REGULATION_IrrActual_t actualState;
 	REGULATION_IrrPresets_t presetState;
 
+	DEBUG_PidTunning_t pidTunning;
+
 	sCarmenDataPool_t *sensorData;
 
 	bool bUpdate = false;
@@ -78,11 +82,13 @@ static void Regulation_Thread(void * argument) {
 	//-----------------       REGULATION PROCESS -> IRRIGATION      -----------------
 	//-----------------------------------------=-------------------------------------
 	//! slave regulator Kp in the irrigation section (speed mode)
-	float KIp_S = 0;
+	float KIp_S = 4.96;
 	//! slave regulator Ki in the irrigation section (speed mode)
-	float KIi_S = 0;
+	float KIi_S = 0.099;
 	//! slave regulator old Ki in the irrigation section (speed mode)
-	float KIi_S_old = 0;
+	float KIi_S_old = 0.099;
+
+	float temp_KIi_S = 0;
 
 	float pT_S = 0, iT_S = 0, ret_S = 0;
 
@@ -151,17 +157,26 @@ static void Regulation_Thread(void * argument) {
 		}
 
 #if REGULATE == 1
+		if (xRegulatorTunningQueue && xQueueReceive(xRegulatorTunningQueue, &pidTunning, 0)) {
+			DEBUG_SendTextFrame("  P: %f", pidTunning.fP);
+			DEBUG_SendTextFrame("  I: %f", pidTunning.fI);
+			DEBUG_SendTextFrame("  D: %f", pidTunning.fD);
+
+			KIp_S = pidTunning.fP;
+			temp_KIi_S = pidTunning.fI;
+		}
+
 		float INPUT_SLAVE_PID = presetState.i16FlowRPM;
 		//rpmEN1 is read in the timer ISR routine!!!
 		float FEEDBACK_SLAVE_PID = actualState.fFlowRPM;
 		float ERROR_SLAVE_PID = (INPUT_SLAVE_PID - FEEDBACK_SLAVE_PID);
 
-		float temp_KIi_S = 0;
+
 
 //		if (INPUT_SLAVE_PID > 250) {
 			//drive above 250 RPMs
-			KIp_S = 4.96;
-			temp_KIi_S = 0.099;
+//			KIp_S = 4.96;
+//			temp_KIi_S = 0.099;
 //		} else {
 //			KIp_S = -0.19 * INPUT_SLAVE_PID * INPUT_SLAVE_PID + 44;
 //			temp_KIi_S = -0.035637 * INPUT_SLAVE_PID + 10.2;

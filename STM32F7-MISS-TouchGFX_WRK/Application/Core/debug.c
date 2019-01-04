@@ -12,6 +12,7 @@
 #include "task.h"
 #include "queue.h"
 
+#include "regulation/regulation.h"
 #include "state_machine/state_machine.h"
 
 #define DEBUG_COMM_MODULE 		0
@@ -31,7 +32,6 @@ uint8_t u8FrmCnt;
 extern QueueHandle_t xAudioEffectsQueue;
 extern QueueHandle_t xGuiActions;
 extern QueueHandle_t xGuiStatus;
-
 
 typedef enum {
 	eCommIdle = 0, eCommStart, eCommCmd, eCommFrmCnt, eCommLenHigh, eCommLenLow, eCommPayload, eCommCRC
@@ -60,11 +60,14 @@ static void DebugRx_Thread(void * argument);
 
 static TaskHandle_t DebugTaskId = 0;
 QueueHandle_t xDebugData = 0;
+QueueHandle_t xRegulatorTunningQueue = 0;
 
 void DEBUG_Init(void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 
 	xDebugData = xQueueCreate( 128, sizeof( uint8_t ) );
+
+	xRegulatorTunningQueue = xQueueCreate( 1, sizeof( DEBUG_PidTunning_t ) );
 
 	DEBUG_UART_Init();
 	DEBUG_ResetCommunication();
@@ -168,15 +171,6 @@ void DebugRx_Thread(void * argument) {
 				if (sRxedFrame.u16Len <= MAX_PAYLOAD_LENGTH) {
 					u16RxedBytesCnt = 0;
 
-					//#if (DEBUG_COMM_MODULE == 1)
-					//				UART_vPutString("\n\nHEADER:");
-					//				UART_vPutString("\n  cmd:      ");
-					//				UART_vPutHEX_u8(sRxedFrame.u8Cmd, true);
-					//				UART_vPutString("\n  len:      ");
-					//				UART_vPutHEX_u16(sRxedFrame.u16Len, true);
-					//				UART_vPutString("\n\n");
-					//#endif
-
 					if (sRxedFrame.u16Len != 0) {
 						eProtocolState = eCommPayload;
 					} else {
@@ -261,13 +255,16 @@ static inline void DEBUG_ParseFrame(eProtocolFrame_t *sFrame) {
 	switch (sFrame->u8Cmd) {
 	case 'u':
 		DEBUG_SendTextFrame("UPL PID-S");
-		float fP, fI, fD;
-		memcpy(&fP, &sFrame->u8Payload[0], 4);
-		memcpy(&fI, &sFrame->u8Payload[4], 4);
-		memcpy(&fD, &sFrame->u8Payload[8], 4);
-		DEBUG_SendTextFrame("  P: %f", fP);
-		DEBUG_SendTextFrame("  I: %f", fI);
-		DEBUG_SendTextFrame("  D: %f", fD);
+
+		DEBUG_PidTunning_t sTemp;
+
+		memcpy(&sTemp.fP, &sFrame->u8Payload[0], 4);
+		memcpy(&sTemp.fI, &sFrame->u8Payload[4], 4);
+		memcpy(&sTemp.fD, &sFrame->u8Payload[8], 4);
+
+		if (xRegulatorTunningQueue) {
+			xQueueSend( xRegulatorTunningQueue, ( void * ) &sTemp, ( TickType_t ) 0 );
+		}
 
 		break;
 

@@ -36,6 +36,14 @@ extern "C" {
 #define LED3_SET_HIGH			HAL_GPIO_WritePin(GPIOH, GPIO_PIN_12, GPIO_PIN_SET)
 #define LED3_TOGGLE				HAL_GPIO_TogglePin(GPIOH, GPIO_PIN_12)
 
+typedef struct {
+	uint8_t u8ID;
+
+	float fP;
+	float fI;
+	float fD;
+} DEBUG_PidTunning_t;
+
 void DEBUG_Init(void);
 void DEBUG_ResetCommunication(void);
 
