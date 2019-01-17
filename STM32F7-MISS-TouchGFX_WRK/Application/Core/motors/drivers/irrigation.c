@@ -14,11 +14,14 @@
 
 extern TaskHandle_t MotorsTaskId;
 
-
 TIM_HandleTypeDef    PWM_TimHandle;
 
 TIM_HandleTypeDef    ENCODER_TimHandle;
 TIM_HandleTypeDef 	 SPEED_TimerHandle;
+
+static inline void Configure_ENCODER(void);
+static inline void Configure_PWM(void);
+static inline void Configure_DIAGNOSTICS(void);
 
 volatile uint32_t pulse_count; // Licznik impulsow
 
@@ -26,13 +29,15 @@ TIM_OC_InitTypeDef sPWMConfig;
 
 #define ENCODER_MAX_PULSES		( 2004 - 1 )
 
-//volatile static uint32_t spd = 0;
+#define SHRT_BUFFER_LENGTH	10
+volatile static int32_t i32ShrtSpeedSum;
+volatile static int16_t i16ShrtSpeedBuff[SHRT_BUFFER_LENGTH];
+volatile static uint16_t u16ShrtSpeedIdx = 0;
 
-#define AVG_BUFFER_SIZE	10
-
-volatile static int32_t i32SpeedSum;
-volatile static int32_t i32SpeedBuff[AVG_BUFFER_SIZE];
-volatile static uint16_t u16SpeedIdx = 0;
+#define MED_BUFFER_LENGTH	25
+volatile static int32_t i32MedSpeedSum;
+volatile static int16_t i16MedSpeedBuff[MED_BUFFER_LENGTH];
+volatile static uint16_t u16MedSpeedIdx = 0;
 
 //volatile static int32_t i32Speed = 0;
 
@@ -48,7 +53,6 @@ void TIM3_IRQHandler(void) {
 	BaseType_t xHigherPriorityTaskWoken;
 
 	uint32_t temp = TIM5->CNT;
-	uint32_t pcTemp = pulse_count;
 
 	int32_t speed_pulse = temp - pulse_count;
 	if (speed_pulse > 1500) speed_pulse = -(ENCODER_MAX_PULSES + 1 - temp + pulse_count);
@@ -56,18 +60,26 @@ void TIM3_IRQHandler(void) {
 
 	pulse_count = temp;
 
-	i32SpeedSum -= i32SpeedBuff[u16SpeedIdx];
-	i32SpeedBuff[u16SpeedIdx] = speed_pulse;
-	i32SpeedSum += i32SpeedBuff[u16SpeedIdx];
+	i32ShrtSpeedSum -= i16ShrtSpeedBuff[u16ShrtSpeedIdx];
+	i16ShrtSpeedBuff[u16ShrtSpeedIdx] = speed_pulse;
+	i32ShrtSpeedSum += i16ShrtSpeedBuff[u16ShrtSpeedIdx];
 
-	GET_NEXT_BUFF_U16_IDX(u16SpeedIdx, AVG_BUFFER_SIZE);
+	GET_NEXT_BUFF_U16_IDX(u16ShrtSpeedIdx, SHRT_BUFFER_LENGTH);
+
+//	i32MedSpeedSum -= i16MedSpeedBuff[u16MedSpeedIdx];
+//	i16MedSpeedBuff[u16MedSpeedIdx] = speed_pulse;
+//	i32MedSpeedSum += i16MedSpeedBuff[u16MedSpeedIdx];
+//
+//	GET_NEXT_BUFF_U16_IDX(u16MedSpeedIdx, MED_BUFFER_LENGTH);
+
+	i32ShrtSpeedSum = speed_pulse;
 
 	AD_SIG_1_TOGGLE;
 
 //	static int i = 0;
 //	if (++i >= 2) {
 //		i = 0;
-		xTaskNotifyFromISR( MotorsTaskId, i32SpeedSum, eSetValueWithOverwrite, &xHigherPriorityTaskWoken );
+		xTaskNotifyFromISR( MotorsTaskId, i32ShrtSpeedSum, eSetValueWithOverwrite, &xHigherPriorityTaskWoken );
 		portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
 //	}
 }
@@ -115,15 +127,21 @@ void Configure_ENCODER(void) {
 	}
 }
 
-void StartSpeedMonitoring(void) {
+void IRRIGATION_StartSpeedMonitoring(void) {
 	__HAL_RCC_TIM3_CLK_ENABLE();
 
 	TIM5->CNT = 0;
 	pulse_count = 0;
-	i32SpeedSum = 0;
-	for (uint32_t i = 0; i < AVG_BUFFER_SIZE; i++)
-		i32SpeedBuff[i] = 0;
-	u16SpeedIdx = 0;
+
+	i32ShrtSpeedSum = 0;
+	for (uint32_t i = 0; i < SHRT_BUFFER_LENGTH; i++)
+		i16ShrtSpeedBuff[i] = 0;
+	u16ShrtSpeedIdx = 0;
+
+	i32MedSpeedSum = 0;
+	for (uint32_t i = 0; i < MED_BUFFER_LENGTH; i++)
+		i16MedSpeedBuff[i] = 0;
+	u16MedSpeedIdx = 0;
 
 	/*
 	 TIM3 input clock (TIM3CLK) is same as 2x APB1 clock (PCLK1), because:
@@ -272,6 +290,84 @@ void Configure_PWM(void) {
 	}
 }
 
+#define SPIx_FORCE_RESET()               __HAL_RCC_SPI2_FORCE_RESET()
+#define SPIx_RELEASE_RESET()             __HAL_RCC_SPI2_RELEASE_RESET()
+
+SPI_HandleTypeDef SpiHandle;
+
+#define MOTOR_nSS_SET_LOW		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET)
+#define MOTOR_nSS_SET_HIGH		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET)
+
+
+void Configure_DIAGNOSTICS(void) {
+	GPIO_InitTypeDef  GPIO_InitStruct;
+
+	/* SPI nSS (PA8) GPIO pin configuration  */
+	MOTOR_nSS_SET_HIGH;
+
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	GPIO_InitStruct.Pin = GPIO_PIN_8;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	/* SPI SCK (PI1) GPIO pin configuration  */
+	__HAL_RCC_GPIOI_CLK_ENABLE();
+
+	GPIO_InitStruct.Pin       = GPIO_PIN_1;
+	GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull      = GPIO_PULLUP;
+	GPIO_InitStruct.Speed     = GPIO_SPEED_HIGH;
+	GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
+	HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
+
+	/* SPI MISO (PB14) & MOSI (PB15) GPIO pin configuration  */
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	GPIO_InitStruct.Pin = GPIO_PIN_14 | GPIO_PIN_15;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	__HAL_RCC_SPI2_CLK_ENABLE();
+
+	/* Set the SPI parameters */
+	SpiHandle.Instance               = SPI2;
+	SpiHandle.Init.Mode 			 = SPI_MODE_MASTER;
+	SpiHandle.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+	SpiHandle.Init.Direction         = SPI_DIRECTION_2LINES;
+	SpiHandle.Init.CLKPhase          = SPI_PHASE_2EDGE;
+	SpiHandle.Init.CLKPolarity       = SPI_POLARITY_LOW;
+	SpiHandle.Init.DataSize          = SPI_DATASIZE_8BIT;
+	SpiHandle.Init.FirstBit          = SPI_FIRSTBIT_MSB;
+	SpiHandle.Init.TIMode            = SPI_TIMODE_DISABLE;
+	SpiHandle.Init.CRCCalculation    = SPI_CRCCALCULATION_DISABLE;
+	SpiHandle.Init.CRCPolynomial     = 7;
+	SpiHandle.Init.NSS               = SPI_NSS_SOFT;
+
+	if(HAL_SPI_Init(&SpiHandle) != HAL_OK)
+	{
+		/* Initialization Error */
+//		Error_Handler();
+	}
+}
+
+uint8_t IRRIGATION_ReadDiagnostics(void) {
+	uint8_t u8Temp = 0x00;
+	uint8_t u8Rx;
+
+	MOTOR_nSS_SET_LOW;
+	u8Temp = 0x00;
+	HAL_SPI_TransmitReceive(&SpiHandle, (uint8_t *)&u8Temp, (uint8_t *)&u8Rx, 1, 5000);
+	MOTOR_nSS_SET_HIGH;
+
+	return u8Rx;
+}
+
+void IRRIGATION_Configure(void) {
+	Configure_ENCODER();
+	Configure_PWM();
+	Configure_DIAGNOSTICS();
+}
+
 void IRRIGATION_Start(int16_t i16PWM) {
 //	TIM5->CNT = 0;
 //	pulse_count = 0;
@@ -281,7 +377,7 @@ void IRRIGATION_Start(int16_t i16PWM) {
 //		i32SpeedBuff[i] = 0;
 //	u16SpeedIdx = 0;
 
-	if (ABS(i16PWM) <= 4999) {
+	if (ABS(i16PWM) <= 5000) {
 
 		if (i16PWM >= 0)
 			IRRIGATION_MOTOR_FORWARD_DIR;
@@ -295,7 +391,7 @@ void IRRIGATION_Start(int16_t i16PWM) {
 }
 
 void IRRIGATION_UpdateSpeed(int16_t i16PWM) {
-	if (ABS(i16PWM) <= 4999) {
+	if (ABS(i16PWM) <= 5000) {
 
 		if (i16PWM >= 0)
 			IRRIGATION_MOTOR_FORWARD_DIR;
