@@ -11,7 +11,9 @@ void MainPresenter::activate() {
 
 	view.actualPressureMMHGUpdate(model->getGuiStatus().sIrrigationActual.sPressureData.fPressureMMHG);
 	view.actualFlowLPMUpdate(model->getGuiStatus().sIrrigationActual.fFlowLPM);
-	view.actualFlowRPMUpdate(model->getGuiStatus().sIrrigationActual.fFlowRPM);
+	view.actualFlowRPMUpdate(model->getGuiStatus().sIrrigationActual.sMotorData.fSpeedRPM);
+	view.actualFlowDiagnosticsUpdate((model->getGuiStatus().sIrrigationActual.sMotorData.u32Diagnostics >> 16) & 0x0000FFFF,
+			(model->getGuiStatus().sIrrigationActual.sMotorData.u32Diagnostics >> 0) & 0x0000FFFF);
 
 	view.presetPressureMMHGUpdate(model->getGuiStatus().sIrrigationPresets.u8PressureMMHG);
 	view.presetFlowLPMUpdate(model->getGuiStatus().sIrrigationPresets.fFlowLPM);
@@ -36,6 +38,10 @@ void MainPresenter::actualFlowLPMUpdate(float fVal) {
 
 void MainPresenter::actualFlowRPMUpdate(float fVal) {
 	view.actualFlowRPMUpdate(fVal);
+}
+
+void MainPresenter::actualFlowDiagnosticsUpdate(uint16_t u16Diag, uint16_t u16Current) {
+	view.actualFlowDiagnosticsUpdate(u16Diag, u16Current);
 }
 
 void MainPresenter::presetPressureMMHGUpdate(uint8_t u8Val) {

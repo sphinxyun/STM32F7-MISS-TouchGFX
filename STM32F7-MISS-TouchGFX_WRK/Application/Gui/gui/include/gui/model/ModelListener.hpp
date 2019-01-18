@@ -31,6 +31,7 @@ public:
     virtual void actualPressureMMHGUpdate(float fVal) {}
     virtual void actualFlowLPMUpdate(float fVal) {}
     virtual void actualFlowRPMUpdate(float fVal) {}
+    virtual void actualFlowDiagnosticsUpdate(uint16_t u16Diag, uint16_t u16Current) {}
 
     virtual void presetPressureMMHGUpdate(uint8_t fVal) {}
 	virtual void presetFlowLPMUpdate(float fVal) {}

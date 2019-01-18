@@ -157,17 +157,17 @@ MainViewBase::MainViewBase() :
     levelBtn.setTextColors(touchgfx::Color::getColorFrom24BitRGB(10, 10, 10), touchgfx::Color::getColorFrom24BitRGB(8, 224, 27));
     levelBtn.setPosition(12, 424, 150, 48);
 
-    textArea1_1_2_1.setXY(12, 327);
+    textArea1_1_2_1.setXY(12, 317);
     textArea1_1_2_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea1_1_2_1.setLinespacing(0);
     textArea1_1_2_1.setTypedText(TypedText(T_SINGLEUSEID61));
 
-    textArea1_1_2_1_1.setXY(12, 361);
+    textArea1_1_2_1_1.setXY(12, 351);
     textArea1_1_2_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea1_1_2_1_1.setLinespacing(0);
     textArea1_1_2_1_1.setTypedText(TypedText(T_SINGLEUSEID62));
 
-    actualTemp.setXY(228, 327);
+    actualTemp.setXY(228, 317);
     actualTemp.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     actualTemp.setLinespacing(0);
     Unicode::snprintf(actualTempBuffer, ACTUALTEMP_SIZE, "%s", TypedText(T_SINGLEUSEID64).getText());
@@ -175,7 +175,7 @@ MainViewBase::MainViewBase() :
     actualTemp.resizeToCurrentText();
     actualTemp.setTypedText(TypedText(T_SINGLEUSEID63));
 
-    errorStats.setPosition(157, 361, 182, 20);
+    errorStats.setPosition(157, 351, 182, 20);
     errorStats.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     errorStats.setLinespacing(0);
     Unicode::snprintf(errorStatsBuffer1, ERRORSTATSBUFFER1_SIZE, "%s", TypedText(T_SINGLEUSEID68).getText());
@@ -204,6 +204,20 @@ MainViewBase::MainViewBase() :
     stopBtnAlarm.setBitmaps(Bitmap(BITMAP_STOP_ID), Bitmap(BITMAP_STOP_DISABLED_ID));
     stopBtnAlarm.setAction(buttonCallback);
     alarmWindow.add(stopBtnAlarm);
+
+    textArea1_1_2_1_1_1.setXY(12, 385);
+    textArea1_1_2_1_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1_1_2_1_1_1.setLinespacing(0);
+    textArea1_1_2_1_1_1.setTypedText(TypedText(T_SINGLEUSEID69));
+
+    motorDiagnostics.setPosition(175, 385, 125, 20);
+    motorDiagnostics.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    motorDiagnostics.setLinespacing(0);
+    Unicode::snprintf(motorDiagnosticsBuffer1, MOTORDIAGNOSTICSBUFFER1_SIZE, "%s", TypedText(T_SINGLEUSEID71).getText());
+    motorDiagnostics.setWildcard1(motorDiagnosticsBuffer1);
+    Unicode::snprintf(motorDiagnosticsBuffer2, MOTORDIAGNOSTICSBUFFER2_SIZE, "%s", TypedText(T_SINGLEUSEID72).getText());
+    motorDiagnostics.setWildcard2(motorDiagnosticsBuffer2);
+    motorDiagnostics.setTypedText(TypedText(T_SINGLEUSEID70));
 
     add(box1);
     add(homeBtn);
@@ -236,6 +250,8 @@ MainViewBase::MainViewBase() :
     add(actualTemp);
     add(errorStats);
     add(alarmWindow);
+    add(textArea1_1_2_1_1_1);
+    add(motorDiagnostics);
 }
 
 void MainViewBase::setupScreen()

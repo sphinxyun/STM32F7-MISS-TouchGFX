@@ -92,6 +92,15 @@ void MainView::actualFlowRPMUpdate(float fVal) {
 	actualFlowRPM.invalidate();
 }
 
+void MainView::actualFlowDiagnosticsUpdate(uint16_t u16Diag, uint16_t u16Current) {
+	Unicode::snprintf(motorDiagnosticsBuffer1, MOTORDIAGNOSTICSBUFFER1_SIZE, "%x", u16Diag);
+	Unicode::snprintf(motorDiagnosticsBuffer2, MOTORDIAGNOSTICSBUFFER2_SIZE, "%x", u16Current);
+
+	motorDiagnostics.setWildcard1(motorDiagnosticsBuffer1);
+	motorDiagnostics.setWildcard2(motorDiagnosticsBuffer2);
+	motorDiagnostics.invalidate();
+}
+
 void MainView::presetPressureMMHGUpdate(uint8_t fVal) {
 	Unicode::snprintf(presetlPressureBuffer, PRESETLPRESSURE_SIZE, "%d", (int)fVal);
 	presetlPressure.setWildcard(presetlPressureBuffer);

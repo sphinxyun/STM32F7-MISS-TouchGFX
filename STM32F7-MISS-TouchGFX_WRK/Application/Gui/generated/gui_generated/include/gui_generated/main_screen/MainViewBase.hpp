@@ -99,6 +99,8 @@ protected:
     touchgfx::TextArea textArea4;
     touchgfx::Button stopBtnAlarm;
 
+    touchgfx::TextArea textArea1_1_2_1_1_1;
+    touchgfx::TextAreaWithTwoWildcards motorDiagnostics;
 
     /*
      * Wildcard Buffers
@@ -123,6 +125,10 @@ protected:
     touchgfx::Unicode::UnicodeChar errorStatsBuffer1[ERRORSTATSBUFFER1_SIZE];
     static const uint16_t ERRORSTATSBUFFER2_SIZE = 10;
     touchgfx::Unicode::UnicodeChar errorStatsBuffer2[ERRORSTATSBUFFER2_SIZE];
+    static const uint16_t MOTORDIAGNOSTICSBUFFER1_SIZE = 6;
+    touchgfx::Unicode::UnicodeChar motorDiagnosticsBuffer1[MOTORDIAGNOSTICSBUFFER1_SIZE];
+    static const uint16_t MOTORDIAGNOSTICSBUFFER2_SIZE = 6;
+    touchgfx::Unicode::UnicodeChar motorDiagnosticsBuffer2[MOTORDIAGNOSTICSBUFFER2_SIZE];
 
 private:
 

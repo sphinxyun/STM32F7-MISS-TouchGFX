@@ -15,6 +15,7 @@ public:
     void actualPressureMMHGUpdate(float fVal);
     void actualFlowLPMUpdate(float fVal);
     void actualFlowRPMUpdate(float fVal);
+    void actualFlowDiagnosticsUpdate(uint16_t u16Diag, uint16_t u16Current);
 
     void presetPressureMMHGUpdate(uint8_t fVal);
 	void presetFlowLPMUpdate(float fVal);

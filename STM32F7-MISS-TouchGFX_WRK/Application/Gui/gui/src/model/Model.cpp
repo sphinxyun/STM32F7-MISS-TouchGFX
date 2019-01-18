@@ -57,7 +57,9 @@ void Model::tick() {
 
 		modelListener->actualPressureMMHGUpdate(guiStatus->status.sIrrigationActual.sPressureData.fPressureMMHG);
 		modelListener->actualFlowLPMUpdate(guiStatus->status.sIrrigationActual.fFlowLPM);
-		modelListener->actualFlowRPMUpdate(guiStatus->status.sIrrigationActual.fFlowRPM);
+		modelListener->actualFlowRPMUpdate(guiStatus->status.sIrrigationActual.sMotorData.fSpeedRPM);
+		modelListener->actualFlowDiagnosticsUpdate((guiStatus->status.sIrrigationActual.sMotorData.u32Diagnostics >> 16) & 0x0000FFFF,
+				(guiStatus->status.sIrrigationActual.sMotorData.u32Diagnostics >> 0) & 0x0000FFFF);
 
 		modelListener->presetPressureMMHGUpdate(guiStatus->status.sIrrigationPresets.u8PressureMMHG);
 		modelListener->presetFlowLPMUpdate(guiStatus->status.sIrrigationPresets.fFlowLPM);
