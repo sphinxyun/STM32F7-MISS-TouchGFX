@@ -3,19 +3,21 @@
 
 #include "global.h"
 
-typedef enum {
-	eVsUndervoltage = 0x3,
-	eShortToVsAtO1andO2 = 0x5,
-	eShortToGndAtO1andVsAtO2 = 0x6,
-	eShortToVsAtO2 = 0x7,
-	eShortToVsAtO1andGndAtO2 = 0x9,
-	eShortToGndAtO1andO2 = 0xA,
-	eShortToGndAtO2 = 0xB,
-	eOpenLoad = 0xC,
-	eShortToVsAtO1 = 0xD,
-	eShortToGndAtO1 = 0xE,
-	eNoFailure = 0xF
-};
+//typedef enum {
+//	eVsUndervoltage = 0x3,
+//	eShortToVsAtO1andO2 = 0x5,
+//	eShortToGndAtO1andVsAtO2 = 0x6,
+//	eShortToVsAtO2 = 0x7,
+//	eShortToVsAtO1andGndAtO2 = 0x9,
+//	eShortToGndAtO1andO2 = 0xA,
+//	eShortToGndAtO2 = 0xB,
+//	eOpenLoad = 0xC,
+//	eShortToVsAtO1 = 0xD,
+//	eShortToGndAtO1 = 0xE,
+//	eNoFailure = 0xF
+//};
+
+#define MAX_IRRIGATION_DRIVE		6666.0
 
 void IRRIGATION_Configure(void);
 

@@ -7,6 +7,13 @@ extern "C" {
 
 #include "global.h"
 
+#include "drivers/irrigation.h"
+
+typedef struct {
+	float fSpeedRPM;
+	uint32_t u32Diagnostics;
+} sMotorData_t;
+
 typedef enum {
 	MOTORS_ERROR_NONE = 0
 } MOTORS_ErrorTypdef;

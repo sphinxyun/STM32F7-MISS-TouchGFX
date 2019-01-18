@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include "pressure_sensor/pressure_sensor_thread.h"
+#include "motors/motors.h"
 
 typedef enum {
 	eRegIdle = 0,
@@ -25,7 +26,7 @@ typedef struct {
 	sCarmenData_t sPressureData;
 
 	float fFlowLPM;
-	float fFlowRPM;
+	sMotorData_t sMotorData;
 } REGULATION_IrrActual_t;
 
 typedef enum {

@@ -71,6 +71,8 @@ static void Regulation_Thread(void * argument) {
 	REGULATION_IrrActual_t actualState;
 	REGULATION_IrrPresets_t presetState;
 
+	sMotorData_t motorData;
+
 	DEBUG_PidTunning_t pidTunning;
 
 	sCarmenDataPool_t *sensorData;
@@ -140,7 +142,7 @@ static void Regulation_Thread(void * argument) {
 #endif
 		}
 
-		if (xIrrigationPressureData && xQueueReceive(xIrrigationPressureData, &sensorData, 15)) {
+		if (xIrrigationPressureData && xQueueReceive(xIrrigationPressureData, &sensorData, 0)) {
 			actualState.sPressureData = sensorData->data;
 			free_sensor_struct(sensorData);
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: %f", status.fIrrigationActualPressureMMHG);
@@ -149,7 +151,8 @@ static void Regulation_Thread(void * argument) {
 //			DEBUG_SendTextFrame("Regulation_Thread PRESSURE: ---");
 		}
 
-		if (xIrrigationMotorSpeedRPM && xQueueReceive(xIrrigationMotorSpeedRPM, &actualState.fFlowRPM, 15)) {
+		if (xIrrigationMotorSpeedRPM && xQueueReceive(xIrrigationMotorSpeedRPM, &motorData, 5)) {
+			actualState.sMotorData = motorData;
 //			DEBUG_SendTextFrame("Regulation_Thread SPEED: %f", status.fIrrigationActualSpeedRPM);
 			bUpdate = true;
 		} else {
@@ -168,7 +171,7 @@ static void Regulation_Thread(void * argument) {
 
 		float INPUT_SLAVE_PID = presetState.i16FlowRPM;
 		//rpmEN1 is read in the timer ISR routine!!!
-		float FEEDBACK_SLAVE_PID = actualState.fFlowRPM;
+		float FEEDBACK_SLAVE_PID = actualState.sMotorData.fSpeedRPM;
 		float ERROR_SLAVE_PID = (INPUT_SLAVE_PID - FEEDBACK_SLAVE_PID);
 
 
@@ -201,12 +204,12 @@ static void Regulation_Thread(void * argument) {
 
 			//calculate I TERM and limit integral runaway:
 			float temp = sumErrIRR_S + ERROR_SLAVE_PID;
-			if (temp > 4000.0 / KIi_S) {
-				sumErrIRR_S = 4000.0 / KIi_S;
-				iT_S = 3999;
-			} else if (temp < -4000.0 / KIi_S) {
-				sumErrIRR_S = -4000.0 / KIi_S;
-				iT_S = -3999;
+			if (temp > MAX_IRRIGATION_DRIVE / KIi_S) {
+				sumErrIRR_S = MAX_IRRIGATION_DRIVE / KIi_S;
+				iT_S = MAX_IRRIGATION_DRIVE;
+			} else if (temp < -MAX_IRRIGATION_DRIVE / KIi_S) {
+				sumErrIRR_S = -MAX_IRRIGATION_DRIVE / KIi_S;
+				iT_S = -MAX_IRRIGATION_DRIVE;
 			} else {
 				iT_S = KIi_S * sumErrIRR_S;
 				sumErrIRR_S = temp;
@@ -215,10 +218,10 @@ static void Regulation_Thread(void * argument) {
 			//slave output:
 			ret_S = (pT_S + iT_S);
 
-			if (ret_S > 3999) {
-				ret_S = 3999;
-			} else if (ret_S < -3999) {
-				ret_S = -3999;
+			if (ret_S > MAX_IRRIGATION_DRIVE) {
+				ret_S = MAX_IRRIGATION_DRIVE;
+			} else if (ret_S < -MAX_IRRIGATION_DRIVE) {
+				ret_S = -MAX_IRRIGATION_DRIVE;
 			}
 
 			MOTORS_IrrigationUpdate(ret_S);
@@ -236,7 +239,7 @@ static void Regulation_Thread(void * argument) {
 #endif
 
 		if (bUpdate) {
-			actualState.fFlowLPM = FCE_fIrrGetFlowCoeff(actualState.fFlowRPM) * actualState.fFlowRPM;
+			actualState.fFlowLPM = FCE_fIrrGetFlowCoeff(actualState.sMotorData.fSpeedRPM) * actualState.sMotorData.fSpeedRPM;
 			xQueueSend( xRegulationStatus, ( void * ) &actualState, ( TickType_t ) 0 );
 		}
 	}

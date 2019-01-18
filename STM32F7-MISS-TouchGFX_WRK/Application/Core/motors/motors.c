@@ -15,9 +15,7 @@ QueueHandle_t xIrrigationMotorSpeedRPM = 0;
 static void Motors_Thread(void * argument);
 
 MOTORS_ErrorTypdef MOTORS_Init(void) {
-
-
-	xIrrigationMotorSpeedRPM = xQueueCreate( 5, sizeof( float ) );
+	xIrrigationMotorSpeedRPM = xQueueCreate( 5, sizeof( sMotorData_t ) );
 
     xTaskCreate(Motors_Thread, "MotorsTask",
                 512,
@@ -32,24 +30,6 @@ MOTORS_ErrorTypdef MOTORS_Init(void) {
 
 	return MOTORS_ERROR_NONE;
 }
-
-//void HAL_SPI_MspDeInit(SPI_HandleTypeDef *hspi)
-//{
-//  if(hspi->Instance == SPIx)
-//  {
-//    /*##-1- Reset peripherals ##################################################*/
-//    SPIx_FORCE_RESET();
-//    SPIx_RELEASE_RESET();
-//
-//    /*##-2- Disable peripherals and GPIO Clocks ################################*/
-//    /* Configure SPI SCK as alternate function  */
-//    HAL_GPIO_DeInit(SPIx_SCK_GPIO_PORT, SPIx_SCK_PIN);
-//    /* Configure SPI MISO as alternate function  */
-//    HAL_GPIO_DeInit(SPIx_MISO_GPIO_PORT, SPIx_MISO_PIN);
-//    /* Configure SPI MOSI as alternate function  */
-//    HAL_GPIO_DeInit(SPIx_MOSI_GPIO_PORT, SPIx_MOSI_PIN);
-//  }
-//}
 
 MOTORS_ErrorTypdef MOTORS_DeInit(void) {
 	return MOTORS_ERROR_NONE;
@@ -90,27 +70,28 @@ MOTORS_ErrorTypdef MOTORS_TaskStop(void) {
 
 static void Motors_Thread(void * argument) {
 	int32_t i32NotifiedValue;
+	sMotorData_t sMotorData;
 
-	IRRIGATION_ReadDiagnostics();
+	sMotorData.u32Diagnostics = IRRIGATION_ReadDiagnostics();
 	TickType_t lastRun = xTaskGetTickCount();
 
-	float fSpeed_RPM;
+
 
 	for (;;) {
 		if (xTaskNotifyWait(0x00000000, 0xFFFFFFFF, (uint32_t *)&i32NotifiedValue, 50)) {
 			//1200 (max assumed rpms) / 60 (seconds) / (1 / 0.0125) (sampling freq = 80Hz)
-			//fSpeed_RPM = (float)i32NotifiedValue / 250.0 * 60.0;
-			fSpeed_RPM = (float)i32NotifiedValue / 25.0 * 60.0;
+			//sMotorData.fSpeedRPM = (float)i32NotifiedValue / 250.0 * 60.0;
+			sMotorData.fSpeedRPM = (float)i32NotifiedValue / 25.0 * 60.0;
 			AD_SIG_2_TOGGLE;
 
-			xQueueSend( xIrrigationMotorSpeedRPM, ( void * ) &fSpeed_RPM, ( TickType_t ) 0 );
+			xQueueSend( xIrrigationMotorSpeedRPM, ( void * ) &sMotorData, ( TickType_t ) 0 );
 		} else {
 
 		}
 
-		if (xTaskGetTickCount() > lastRun + 500) {
+		if (xTaskGetTickCount() > lastRun + 250) {
 			lastRun = xTaskGetTickCount();
-			IRRIGATION_ReadDiagnostics();
+			sMotorData.u32Diagnostics = IRRIGATION_ReadDiagnostics();
 		}
 	}
 }

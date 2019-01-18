@@ -228,7 +228,7 @@ void Configure_PWM(void) {
 	PWM_TimHandle.Instance = TIM12;
 	PWM_TimHandle.Init.Prescaler = 0;
 	PWM_TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
-	PWM_TimHandle.Init.Period = 5000 - 1;
+	PWM_TimHandle.Init.Period = MAX_IRRIGATION_DRIVE - 1;
 	PWM_TimHandle.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 	PWM_TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
@@ -298,6 +298,24 @@ SPI_HandleTypeDef SpiHandle;
 #define MOTOR_nSS_SET_LOW		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET)
 #define MOTOR_nSS_SET_HIGH		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET)
 
+
+//void HAL_SPI_MspDeInit(SPI_HandleTypeDef *hspi)
+//{
+//  if(hspi->Instance == SPIx)
+//  {
+//    /*##-1- Reset peripherals ##################################################*/
+//    SPIx_FORCE_RESET();
+//    SPIx_RELEASE_RESET();
+//
+//    /*##-2- Disable peripherals and GPIO Clocks ################################*/
+//    /* Configure SPI SCK as alternate function  */
+//    HAL_GPIO_DeInit(SPIx_SCK_GPIO_PORT, SPIx_SCK_PIN);
+//    /* Configure SPI MISO as alternate function  */
+//    HAL_GPIO_DeInit(SPIx_MISO_GPIO_PORT, SPIx_MISO_PIN);
+//    /* Configure SPI MOSI as alternate function  */
+//    HAL_GPIO_DeInit(SPIx_MOSI_GPIO_PORT, SPIx_MOSI_PIN);
+//  }
+//}
 
 void Configure_DIAGNOSTICS(void) {
 	GPIO_InitTypeDef  GPIO_InitStruct;
@@ -377,7 +395,7 @@ void IRRIGATION_Start(int16_t i16PWM) {
 //		i32SpeedBuff[i] = 0;
 //	u16SpeedIdx = 0;
 
-	if (ABS(i16PWM) <= 5000) {
+	if (ABS(i16PWM) <= MAX_IRRIGATION_DRIVE) {
 
 		if (i16PWM >= 0)
 			IRRIGATION_MOTOR_FORWARD_DIR;
@@ -391,7 +409,7 @@ void IRRIGATION_Start(int16_t i16PWM) {
 }
 
 void IRRIGATION_UpdateSpeed(int16_t i16PWM) {
-	if (ABS(i16PWM) <= 5000) {
+	if (ABS(i16PWM) <= MAX_IRRIGATION_DRIVE) {
 
 		if (i16PWM >= 0)
 			IRRIGATION_MOTOR_FORWARD_DIR;
